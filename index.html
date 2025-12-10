@@ -156,6 +156,24 @@
             animation: pulse 1.5s infinite;
         }
 
+        .device-gateway-warning {
+            position: absolute;
+            bottom: -8px;
+            left: -8px;
+            background: #17a2b8;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            z-index: 20;
+            animation: pulse 1.5s infinite;
+        }
+
         @keyframes pulse {
             0%, 100% {
                 transform: scale(1);
@@ -942,6 +960,8 @@
 
         function updateDeviceGateway(id, value) {
             state.devices[id].gateway = value;
+            // Update conflict badges to check for gateway mismatches
+            updateConflictBadges();
         }
 
         function updateInterface(routerId, targetId, value) {
@@ -1096,8 +1116,19 @@
 
                     const duration = 1500;
                     const startTime = Date.now();
+                    let animationId;
 
                     function animate() {
+                        // Check if animation should stop
+                        if (state.stopAnimation) {
+                            packet.remove();
+                            if (cableElement) {
+                                cableElement.classList.remove('highlighted');
+                            }
+                            resolve();
+                            return;
+                        }
+
                         const elapsed = Date.now() - startTime;
                         const progress = Math.min(elapsed / duration, 1);
 
@@ -1108,7 +1139,7 @@
                         packet.style.top = `${currentY - 12}px`;
 
                         if (progress < 1) {
-                            requestAnimationFrame(animate);
+                            animationId = requestAnimationFrame(animate);
                         } else {
                             packet.remove();
                             if (cableElement) {
@@ -1326,12 +1357,25 @@
 
             // Check if devices in same network have different subnet masks
             const subnetMismatchDevices = new Set();
+            const gatewayMismatchDevices = new Set();
+            
             Object.values(networkGroups).forEach(group => {
                 if (group.length > 1) {
                     const subnets = [...new Set(group.map(d => d.subnet))];
                     if (subnets.length > 1) {
                         // Different subnet masks in same network - this is wrong!
                         group.forEach(d => subnetMismatchDevices.add(d.id));
+                    }
+
+                    // Check if gateways are different in same network
+                    const gateways = [...new Set(group.map(d => d.gateway).filter(g => g && g !== ''))];
+                    if (gateways.length > 1) {
+                        // Different gateways in same network - this is wrong!
+                        group.forEach(d => {
+                            if (d.gateway && d.gateway !== '') {
+                                gatewayMismatchDevices.add(d.id);
+                            }
+                        });
                     }
                 }
             });
@@ -1343,6 +1387,7 @@
 
                 let hasConflict = false;
                 let hasSubnetMismatch = false;
+                let hasGatewayMismatch = false;
 
                 // Check if device IP has conflict
                 if (device.ip && conflictIPs.has(device.ip)) {
@@ -1361,6 +1406,11 @@
                 // Check if device has subnet mask mismatch with others in same network
                 if (subnetMismatchDevices.has(device.id)) {
                     hasSubnetMismatch = true;
+                }
+
+                // Check if device has gateway mismatch with others in same network
+                if (gatewayMismatchDevices.has(device.id)) {
+                    hasGatewayMismatch = true;
                 }
 
                 // Add or remove conflict indicator
@@ -1396,6 +1446,23 @@
                     const subnetBadge = deviceEl.querySelector('.device-subnet-warning');
                     if (subnetBadge) {
                         subnetBadge.remove();
+                    }
+                }
+
+                // Add or remove gateway mismatch indicator
+                if (hasGatewayMismatch) {
+                    let gatewayBadge = deviceEl.querySelector('.device-gateway-warning');
+                    if (!gatewayBadge) {
+                        gatewayBadge = document.createElement('div');
+                        gatewayBadge.className = 'device-gateway-warning';
+                        gatewayBadge.textContent = 'G';
+                        gatewayBadge.title = 'Gateway berbeda dengan device lain di network yang sama!';
+                        deviceEl.appendChild(gatewayBadge);
+                    }
+                } else {
+                    const gatewayBadge = deviceEl.querySelector('.device-gateway-warning');
+                    if (gatewayBadge) {
+                        gatewayBadge.remove();
                     }
                 }
             });
@@ -1465,6 +1532,15 @@
             const sourcePc = state.devices[sourceId];
             const destPc = state.devices[destId];
 
+            // Check if they are in same subnet and have different gateways
+            if (canCommunicateDirectly(sourcePc, destPc)) {
+                if (sourcePc.gateway && destPc.gateway && sourcePc.gateway !== destPc.gateway) {
+                    tampilkanHasil(`❌ Gateway tidak sama! ${sourcePc.name} gateway: ${sourcePc.gateway}, ${destPc.name} gateway: ${destPc.gateway}. Device dalam satu subnet harus memiliki gateway yang sama.`, false);
+                    addLog("Gateway berbeda dalam satu subnet terdeteksi, uji koneksi dibatalkan", true);
+                    return;
+                }
+            }
+
             const sameSubnet = subnetMatch(sourcePc.ip, destPc.ip, sourcePc.subnet);
             const connectedToSameSwitch = findPathWithRouting(sourceId, destId).success && findPathWithRouting(sourceId, destId).path.length === 2;
 
@@ -1517,35 +1593,67 @@
             const path = pathResult.path;
             addLog(`Jalur ditemukan: ${path.map(id => state.devices[id].name).join(' -> ')}`);
 
-            for (let i = 0; i < path.length - 1; i++) {
+            // Loop 10 kali
+            for (let loop = 1; loop <= 10; loop++) {
                 if (state.stopAnimation) {
+                    addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
                     return;
                 }
-                const from = state.devices[path[i]];
-                const to = state.devices[path[i + 1]];
-                const logMessage = (from.type === 'switch' || to.type === 'switch') ?
-                    `Paket melintasi ${from.type === 'switch' ? from.name : to.name}` :
-                    `Paket dari ${from.name} ke ${to.name}`;
-                await animatePacket(path[i], path[i + 1], 0, logMessage);
-            }
 
-            if (state.stopAnimation) {
-                return;
-            }
+                addLog(`🔄 Loop ${loop}/10 - Mengirim paket...`);
 
-            await new Promise(resolve => setTimeout(resolve, 500));
-            addLog("Mengirim paket balasan...");
+                // Forward: kirim paket dari source ke destination
+                for (let i = 0; i < path.length - 1; i++) {
+                    const from = state.devices[path[i]];
+                    const to = state.devices[path[i + 1]];
+                    const logMessage = (from.type === 'switch' || to.type === 'switch') ?
+                        `Paket melintasi ${from.type === 'switch' ? from.name : to.name}` :
+                        `Paket dari ${from.name} ke ${to.name}`;
+                    await animatePacket(path[i], path[i + 1], 0, logMessage);
+                    
+                    if (state.stopAnimation) {
+                        addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
+                        return;
+                    }
+                }
 
-            for (let i = path.length - 1; i > 0; i--) {
                 if (state.stopAnimation) {
+                    addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
                     return;
                 }
-                const from = state.devices[path[i]];
-                const to = state.devices[path[i - 1]];
-                const logMessage = (from.type === 'switch' || to.type === 'switch') ?
-                    `Balasan melintasi ${from.type === 'switch' ? from.name : to.name}` :
-                    `Balasan dari ${from.name} ke ${to.name}`;
-                await animatePacket(path[i], path[i - 1], 0, logMessage);
+
+                await new Promise(resolve => setTimeout(resolve, 300));
+                
+                if (state.stopAnimation) {
+                    addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
+                    return;
+                }
+                
+                addLog(`↩️ Loop ${loop}/10 - Mengirim paket balasan...`);
+
+                // Reply: kirim paket balasan dari destination ke source
+                for (let i = path.length - 1; i > 0; i--) {
+                    const from = state.devices[path[i]];
+                    const to = state.devices[path[i - 1]];
+                    const logMessage = (from.type === 'switch' || to.type === 'switch') ?
+                        `Balasan melintasi ${from.type === 'switch' ? from.name : to.name}` :
+                        `Balasan dari ${from.name} ke ${to.name}`;
+                    await animatePacket(path[i], path[i - 1], 0, logMessage);
+                    
+                    if (state.stopAnimation) {
+                        addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
+                        return;
+                    }
+                }
+
+                // Delay sebelum loop berikutnya (kecuali loop terakhir)
+                if (loop < 10) {
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    if (state.stopAnimation) {
+                        addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
+                        return;
+                    }
+                }
             }
 
             if (state.stopAnimation) {
@@ -1553,8 +1661,8 @@
             }
 
             setTimeout(() => {
-                tampilkanHasil(`✅ Koneksi berhasil! ${sourcePc.name} dapat mencapai ${destPc.name}.`, true);
-                addLog(`✅ Koneksi antara ${sourcePc.name} dan ${destPc.name} berhasil disimulasikan.`);
+                tampilkanHasil(`✅ Koneksi berhasil! ${sourcePc.name} dapat mencapai ${destPc.name}. (10 paket dikirim dan diterima)`, true);
+                addLog(`✅ Koneksi antara ${sourcePc.name} dan ${destPc.name} berhasil disimulasikan (10x loop).`);
                 state.isAnimating = false;
                 state.stopAnimation = false;
                 
