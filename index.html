@@ -493,39 +493,102 @@
             font-size: 14px;
             z-index: 15;
             touch-action: manipulation;
-            /* Agar bisa disentuh tanpa konflik */
         }
 
         .device:hover .delete-btn {
             display: flex;
         }
 
-        /* Mobile: Always show delete button and make it bigger */
+        /* Mobile: Always show delete button and make it much bigger */
         @media (max-width: 768px) {
             .delete-btn {
                 display: flex !important;
-                width: 28px;
-                height: 28px;
-                font-size: 16px;
-                top: -8px;
-                right: -8px;
+                width: 32px;
+                height: 32px;
+                font-size: 18px;
+                font-weight: bold;
+                top: -10px;
+                right: -10px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.3);
             }
         }
 
-        /* Delete mode styling */
-        .delete-mode .device {
-            animation: shake 0.5s infinite;
+        /* Delete confirmation overlay */
+        .delete-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.2s ease;
         }
 
-        .delete-mode .delete-btn {
-            display: flex !important;
-            animation: pulse 1s infinite;
+        .delete-overlay.active {
+            display: flex;
         }
 
-        @keyframes shake {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-2deg); }
-            75% { transform: rotate(2deg); }
+        .delete-confirm {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 320px;
+            margin: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: scaleIn 0.3s ease;
+        }
+
+        .delete-confirm h3 {
+            margin: 0 0 15px 0;
+            color: #dc3545;
+            font-size: 20px;
+        }
+
+        .delete-confirm p {
+            margin: 0 0 20px 0;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .delete-confirm-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .delete-confirm-buttons button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            min-width: 100px;
+        }
+
+        .delete-confirm-yes {
+            background: #dc3545;
+            color: white;
+        }
+
+        .delete-confirm-no {
+            background: #6c757d;
+            color: white;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         .routing-table {
@@ -573,7 +636,7 @@
                 menambahkan ke canvas</li>
             <li><strong>Pindahkan:</strong> Klik dan seret perangkat ke posisi yang diinginkan</li>
             <li><strong>Hapus (Desktop):</strong> Arahkan kursor ke perangkat dan klik tombol ❌</li>
-            <li><strong>Hapus (Mobile):</strong> Klik tombol "✂️ Mode Hapus" lalu klik tombol ❌ merah di perangkat</li>
+            <li><strong>Hapus (Mobile):</strong> Tahan/hold perangkat beberapa detik, lalu konfirmasi hapus</li>
             <li><strong>Hubungkan:</strong> Klik "Mode Kabel", lalu klik 2 perangkat untuk menghubungkan</li>
             <li><strong>Hapus Kabel:</strong> Klik "Mode Kabel", lalu klik 2 perangkat yang terhubung untuk memilih
                 kabelnya, klik "Mode Kabel" lagi untuk menghapusnya.</li>
@@ -599,7 +662,6 @@
             <span>Tambah Switch</span>
         </div>
         <button id="cableMode" onclick="toggleCableMode()">🔌 Mode Kabel</button>
-        <button id="deleteMode" onclick="toggleDeleteMode()" class="danger" style="display: none;">✂️ Mode Hapus</button>
         <button onclick="clearAll()" class="danger">🗑️ Hapus Semua</button>
         <button onclick="autoArrange()">📐 Atur Otomatis</button>
     </div>
@@ -646,7 +708,6 @@
             connections: [],
             deviceIdCounter: 0,
             cableMode: false,
-            deleteMode: false,
             selectedDevice: null,
             cableToDelete: null,
             isAnimating: false,
@@ -666,27 +727,6 @@
         const testBtn = document.getElementById('testBtn');
         const zoomLevelSpan = document.getElementById('zoomLevel');
         const cableModeBtn = document.getElementById('cableMode');
-        const deleteModeBtn = document.getElementById('deleteMode');
-
-        // Show delete mode button on mobile
-        if (window.innerWidth <= 768) {
-            deleteModeBtn.style.display = 'inline-block';
-        }
-
-        // Toggle Delete Mode
-        function toggleDeleteMode() {
-            state.deleteMode = !state.deleteMode;
-            
-            if (state.deleteMode) {
-                canvasInner.classList.add('delete-mode');
-                deleteModeBtn.textContent = '✅ Selesai Hapus';
-                deleteModeBtn.style.background = '#28a745';
-            } else {
-                canvasInner.classList.remove('delete-mode');
-                deleteModeBtn.textContent = '✂️ Mode Hapus';
-                deleteModeBtn.style.background = '#dc3545';
-            }
-        }
 
         // Zoom Functions
         function zoomIn() {
@@ -804,7 +844,15 @@
             deleteBtn.textContent = '❌';
             deleteBtn.onclick = (e) => {
                 e.stopPropagation();
-                deleteDevice(id);
+                // On mobile, show confirmation dialog
+                if (window.innerWidth <= 768) {
+                    showDeleteConfirmation(id);
+                } else {
+                    // Desktop: direct delete
+                    if (confirm(`Hapus ${device.name}?`)) {
+                        deleteDevice(id);
+                    }
+                }
             };
 
             const iconMap = {
@@ -861,14 +909,33 @@
                 document.addEventListener('mouseup', onMouseUp);
             });
 
-            // Event Listener untuk menyeret (touch)
+            // Event Listener untuk menyeret (touch) dengan long press detection
             el.addEventListener('touchstart', (e) => {
                 if (state.cableMode) return;
                 e.preventDefault(); // Mencegah scroll saat menyeret
-                isDragging = true;
+                
+                // Long press detection
+                let longPressTimer;
+                let hasMoved = false;
+                
                 const touch = e.touches[0];
+                const startTouchX = touch.clientX;
+                const startTouchY = touch.clientY;
+                
+                isDragging = true;
                 startX = touch.clientX - device.x;
                 startY = touch.clientY - device.y;
+
+                // Start long press timer (800ms)
+                longPressTimer = setTimeout(() => {
+                    if (!hasMoved) {
+                        // Long press detected - show delete confirmation
+                        isDragging = false;
+                        showDeleteConfirmation(id);
+                        document.removeEventListener('touchmove', onTouchMove);
+                        document.removeEventListener('touchend', onTouchEnd);
+                    }
+                }, 800);
 
                 function moveAt(pageX, pageY) {
                     device.x = pageX - startX;
@@ -882,11 +949,20 @@
                     if (isDragging) {
                         e.preventDefault();
                         const touch = e.touches[0];
+                        
+                        // Check if moved more than 10px
+                        const moveDistance = Math.abs(touch.clientX - startTouchX) + Math.abs(touch.clientY - startTouchY);
+                        if (moveDistance > 10) {
+                            hasMoved = true;
+                            clearTimeout(longPressTimer);
+                        }
+                        
                         moveAt(touch.clientX, touch.clientY);
                     }
                 }
 
                 function onTouchEnd() {
+                    clearTimeout(longPressTimer);
                     isDragging = false;
                     document.removeEventListener('touchmove', onTouchMove);
                     document.removeEventListener('touchend', onTouchEnd);
@@ -897,6 +973,31 @@
             });
 
             canvasInner.appendChild(el);
+        }
+
+        // Delete confirmation dialog
+        let deviceToDelete = null;
+        const deleteOverlay = document.getElementById('deleteOverlay');
+        const deleteDeviceNameEl = document.getElementById('deleteDeviceName');
+
+        function showDeleteConfirmation(deviceId) {
+            deviceToDelete = deviceId;
+            const device = state.devices[deviceId];
+            deleteDeviceNameEl.textContent = `Apakah Anda yakin ingin menghapus ${device.name}?`;
+            deleteOverlay.classList.add('active');
+        }
+
+        function cancelDelete() {
+            deviceToDelete = null;
+            deleteOverlay.classList.remove('active');
+        }
+
+        function confirmDelete() {
+            if (deviceToDelete) {
+                deleteDevice(deviceToDelete);
+                deviceToDelete = null;
+            }
+            deleteOverlay.classList.remove('active');
         }
 
         function deleteDevice(id) {
@@ -1867,6 +1968,19 @@
         }
 
     </script>
+
+    <!-- Delete Confirmation Overlay -->
+    <div id="deleteOverlay" class="delete-overlay">
+        <div class="delete-confirm">
+            <h3>🗑️ Hapus Perangkat?</h3>
+            <p id="deleteDeviceName">Apakah Anda yakin ingin menghapus perangkat ini?</p>
+            <div class="delete-confirm-buttons">
+                <button class="delete-confirm-no" onclick="cancelDelete()">Batal</button>
+                <button class="delete-confirm-yes" onclick="confirmDelete()">Hapus</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>
