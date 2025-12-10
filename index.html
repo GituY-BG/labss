@@ -1,4 +1,4 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -655,7 +655,7 @@
             <li><strong>Tambah Perangkat:</strong> Klik tombol "Tambah PC", "Tambah Router", atau "Tambah Switch" untuk
                 menambahkan ke canvas</li>
             <li><strong>Pindahkan:</strong> Klik dan seret perangkat ke posisi yang diinginkan</li>
-            <li><strong>Hapus (Desktop):</strong> Arahkan kursor ke perangkat dan klik tombol ❌</li>
+            <li><strong>Hapus (Desktop):</strong> Arahkan kursor ke perangkat di canvas dan klik tombol ❌, atau klik tombol 🗑️ di panel konfigurasi</li>
             <li><strong>Hapus (Mobile):</strong> Scroll ke "Konfigurasi Perangkat", klik tombol 🗑️ di sebelah nama perangkat</li>
             <li><strong>Hubungkan:</strong> Klik "Mode Kabel", lalu klik 2 perangkat untuk menghubungkan</li>
             <li><strong>Hapus Kabel:</strong> Klik "Mode Kabel", lalu klik 2 perangkat yang terhubung untuk memilih
@@ -988,12 +988,23 @@
 
         // Delete confirmation dialog
         let deviceToDelete = null;
-        const deleteOverlay = document.getElementById('deleteOverlay');
-        const deleteDeviceNameEl = document.getElementById('deleteDeviceName');
 
         function showDeleteConfirmation(deviceId) {
             console.log('=== showDeleteConfirmation START ===');
             console.log('deviceId:', deviceId);
+            
+            // Get elements inside function to ensure DOM is ready
+            const deleteOverlay = document.getElementById('deleteOverlay');
+            const deleteDeviceNameEl = document.getElementById('deleteDeviceName');
+            
+            console.log('deleteOverlay:', deleteOverlay);
+            console.log('deleteDeviceNameEl:', deleteDeviceNameEl);
+            
+            if (!deleteOverlay || !deleteDeviceNameEl) {
+                console.error('ERROR: Delete overlay elements not found in DOM!');
+                alert('Error: Dialog tidak ditemukan. Silakan refresh halaman.');
+                return;
+            }
             
             deviceToDelete = deviceId;
             console.log('deviceToDelete set to:', deviceToDelete);
@@ -1019,7 +1030,10 @@
         function cancelDelete() {
             console.log('=== cancelDelete called ===');
             deviceToDelete = null;
-            deleteOverlay.classList.remove('active');
+            const deleteOverlay = document.getElementById('deleteOverlay');
+            if (deleteOverlay) {
+                deleteOverlay.classList.remove('active');
+            }
         }
 
         function confirmDelete() {
@@ -1036,7 +1050,10 @@
             }
             
             console.log('Hiding overlay...');
-            deleteOverlay.classList.remove('active');
+            const deleteOverlay = document.getElementById('deleteOverlay');
+            if (deleteOverlay) {
+                deleteOverlay.classList.remove('active');
+            }
             console.log('=== confirmDelete END ===');
         }
 
@@ -1238,19 +1255,31 @@
                 `;
                 header.appendChild(nameSpan);
 
-                // Add delete button for mobile
-                const isMobile = window.innerWidth <= 768;
-                if (isMobile) {
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.className = 'delete-device-btn';
-                    deleteBtn.title = `Hapus ${device.name}`;
-                    deleteBtn.innerHTML = '<span class="material-symbols-outlined">delete</span>';
-                    deleteBtn.addEventListener('click', function() {
-                        console.log('Delete button clicked for:', device.id);
-                        deleteDeviceFromConfig(device.id);
+                // Add delete button - always visible in config panel
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'delete-device-btn';
+                deleteBtn.title = `Hapus ${device.name}`;
+                deleteBtn.innerHTML = '<span class="material-symbols-outlined">delete</span>';
+                
+                // Use closure to capture device.id properly
+                (function(devId) {
+                    deleteBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('=== BUTTON CLICKED ===');
+                        console.log('Device ID:', devId);
+                        
+                        // Call function directly
+                        if (typeof deleteDeviceFromConfig === 'function') {
+                            console.log('Calling deleteDeviceFromConfig...');
+                            deleteDeviceFromConfig(devId);
+                        } else {
+                            console.error('deleteDeviceFromConfig is not a function!');
+                        }
                     });
-                    header.appendChild(deleteBtn);
-                }
+                })(device.id);
+                
+                header.appendChild(deleteBtn);
 
                 configDiv.appendChild(header);
 
@@ -1307,7 +1336,11 @@
                     html += '<p style="color: #6c757d; font-style: italic;">Switch tidak memerlukan konfigurasi IP.</p>';
                 }
 
-                configDiv.innerHTML = html;
+                // Append HTML content without overwriting header
+                const contentDiv = document.createElement('div');
+                contentDiv.innerHTML = html;
+                configDiv.appendChild(contentDiv);
+                
                 configContainer.appendChild(configDiv);
             });
         }
@@ -2063,11 +2096,6 @@
             hasilDiv.className = "result " + (type || (sukses ? "success" : "error"));
             hasilDiv.style.display = "block";
         }
-
-        // Make functions accessible globally for onclick attributes in HTML
-        window.deleteDeviceFromConfig = deleteDeviceFromConfig;
-        window.cancelDelete = cancelDelete;
-        window.confirmDelete = confirmDelete;
 
     </script>
 
