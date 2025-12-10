@@ -140,53 +140,9 @@
             box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
             z-index: 10;
             border: 2px solid transparent;
-            transition: border-color 0.2s, transform 0.1s;
+            transition: border-color 0.2s;
             font-size: 13px;
             touch-action: none;
-            /* Penting untuk mencegah scroll saat menyeret */
-        }
-
-        .device.long-pressing {
-            transform: scale(1.05);
-            border-color: #dc3545;
-            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
-        }
-
-        /* Long press indicator */
-        .long-press-indicator {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(220, 53, 69, 0.9);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 20;
-            animation: scaleUp 0.5s ease;
-        }
-
-        .device.long-pressing .long-press-indicator {
-            display: flex;
-        }
-
-        .long-press-indicator::after {
-            content: '🗑️';
-            font-size: 24px;
-        }
-
-        @keyframes scaleUp {
-            from {
-                transform: translate(-50%, -50%) scale(0);
-                opacity: 0;
-            }
-            to {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 1;
-            }
         }
 
         /* Mobile responsive */
@@ -397,6 +353,34 @@
             margin: 0 0 8px 0;
             color: #007bff;
             font-size: 16px;
+        }
+
+        .delete-device-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.2s;
+            min-height: 40px;
+        }
+
+        .delete-device-btn:hover {
+            background: #c82333;
+        }
+
+        .delete-device-btn:active {
+            transform: scale(0.95);
+        }
+
+        .delete-device-btn .material-symbols-outlined {
+            font-size: 20px;
         }
 
         .config-row {
@@ -679,7 +663,7 @@
                 menambahkan ke canvas</li>
             <li><strong>Pindahkan:</strong> Klik dan seret perangkat ke posisi yang diinginkan</li>
             <li><strong>Hapus (Desktop):</strong> Arahkan kursor ke perangkat dan klik tombol ❌</li>
-            <li><strong>Hapus (Mobile):</strong> Tahan/hold perangkat selama 1 detik (akan muncul icon 🗑️), lalu konfirmasi hapus. Atau klik tombol ❌</li>
+            <li><strong>Hapus (Mobile):</strong> Scroll ke "Konfigurasi Perangkat", klik tombol 🗑️ di sebelah nama perangkat</li>
             <li><strong>Hubungkan:</strong> Klik "Mode Kabel", lalu klik 2 perangkat untuk menghubungkan</li>
             <li><strong>Hapus Kabel:</strong> Klik "Mode Kabel", lalu klik 2 perangkat yang terhubung untuk memilih
                 kabelnya, klik "Mode Kabel" lagi untuk menghapusnya.</li>
@@ -905,7 +889,6 @@
             };
 
             el.innerHTML = `
-                <div class="long-press-indicator"></div>
                 <div class="device-icon">
                     <span class="material-symbols-outlined">${iconMap[device.type]}</span>
                 </div>
@@ -953,48 +936,14 @@
                 document.addEventListener('mouseup', onMouseUp);
             });
 
-            // Event Listener untuk menyeret (touch) dengan long press detection
-            let longPressTimer = null;
-            let touchStartTime = 0;
-            let touchMoved = false;
-            
+            // Event Listener untuk menyeret (touch)
             el.addEventListener('touchstart', (e) => {
                 if (state.cableMode) return;
                 
-                touchStartTime = Date.now();
-                touchMoved = false;
-                
                 const touch = e.touches[0];
-                const startTouchX = touch.clientX;
-                const startTouchY = touch.clientY;
-                
                 startX = touch.clientX - device.x;
                 startY = touch.clientY - device.y;
-
-                // Visual feedback for long press (500ms)
-                longPressTimer = setTimeout(() => {
-                    if (!touchMoved && !state.cableMode) {
-                        el.classList.add('long-pressing');
-                        // Vibrate if supported
-                        if (navigator.vibrate) {
-                            navigator.vibrate(100);
-                        }
-                    }
-                }, 500);
-
-                // Show delete dialog after 1 second
-                const deleteTimer = setTimeout(() => {
-                    if (!touchMoved && !state.cableMode) {
-                        el.classList.remove('long-pressing');
-                        isDragging = false;
-                        showDeleteConfirmation(id);
-                        clearTimeout(longPressTimer);
-                        // Vibrate again
-                        if (navigator.vibrate) {
-                            navigator.vibrate(200);
-                        }
-                    }
-                }, 1000);
+                isDragging = false;
 
                 function moveAt(pageX, pageY) {
                     device.x = pageX - startX;
@@ -1005,36 +954,14 @@
                 }
 
                 function onTouchMove(e) {
+                    e.preventDefault();
+                    isDragging = true;
                     const touch = e.touches[0];
-                    
-                    // Check if moved more than 15px
-                    const moveDistance = Math.sqrt(
-                        Math.pow(touch.clientX - startTouchX, 2) + 
-                        Math.pow(touch.clientY - startTouchY, 2)
-                    );
-                    
-                    if (moveDistance > 15) {
-                        if (!touchMoved) {
-                            touchMoved = true;
-                            isDragging = true;
-                            clearTimeout(longPressTimer);
-                            clearTimeout(deleteTimer);
-                            el.classList.remove('long-pressing');
-                        }
-                        
-                        if (isDragging) {
-                            e.preventDefault();
-                            moveAt(touch.clientX, touch.clientY);
-                        }
-                    }
+                    moveAt(touch.clientX, touch.clientY);
                 }
 
                 function onTouchEnd(e) {
-                    clearTimeout(longPressTimer);
-                    clearTimeout(deleteTimer);
-                    el.classList.remove('long-pressing');
                     isDragging = false;
-                    touchMoved = false;
                     document.removeEventListener('touchmove', onTouchMove);
                     document.removeEventListener('touchend', onTouchEnd);
                 }
@@ -1044,6 +971,23 @@
             });
 
             canvasInner.appendChild(el);
+        }
+
+        // Delete device from config panel (mobile-friendly)
+        function deleteDeviceFromConfig(deviceId) {
+            const device = state.devices[deviceId];
+            if (!device) return;
+            
+            // Show confirmation dialog
+            if (window.innerWidth <= 768) {
+                // Mobile: use custom dialog
+                showDeleteConfirmation(deviceId);
+            } else {
+                // Desktop: use browser confirm
+                if (confirm(`Hapus ${device.name}?`)) {
+                    deleteDevice(deviceId);
+                }
+            }
         }
 
         // Delete confirmation dialog
@@ -1225,9 +1169,19 @@
                 const configDiv = document.createElement('div');
                 configDiv.className = 'device-config';
 
-                let html = `<h4>
-                    <span class="material-symbols-outlined" style="vertical-align: middle;">${iconMap[device.type]}</span>
-                    ${device.name} (${device.type.toUpperCase()})
+                // Check if mobile
+                const isMobile = window.innerWidth <= 768;
+                const deleteButton = isMobile ? 
+                    `<button onclick="deleteDeviceFromConfig('${device.id}')" class="delete-device-btn" title="Hapus ${device.name}">
+                        <span class="material-symbols-outlined">delete</span>
+                    </button>` : '';
+
+                let html = `<h4 style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>
+                        <span class="material-symbols-outlined" style="vertical-align: middle;">${iconMap[device.type]}</span>
+                        ${device.name} (${device.type.toUpperCase()})
+                    </span>
+                    ${deleteButton}
                 </h4>`;
 
                 if (device.type !== 'switch') {
