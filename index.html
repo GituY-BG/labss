@@ -998,8 +998,10 @@
         function showDeleteConfirmation(deviceId) {
             deviceToDelete = deviceId;
             const device = state.devices[deviceId];
-            deleteDeviceNameEl.textContent = `Apakah Anda yakin ingin menghapus ${device.name}?`;
-            deleteOverlay.classList.add('active');
+            if (device) {
+                deleteDeviceNameEl.textContent = `Apakah Anda yakin ingin menghapus ${device.name}?`;
+                deleteOverlay.classList.add('active');
+            }
         }
 
         function cancelDelete() {
@@ -1015,17 +1017,28 @@
             deleteOverlay.classList.remove('active');
         }
 
+        // Make functions globally accessible for onclick
+        window.deleteDeviceFromConfig = deleteDeviceFromConfig;
+        window.cancelDelete = cancelDelete;
+        window.confirmDelete = confirmDelete;
+
         function deleteDevice(id) {
             // Hapus koneksi yang terkait
             state.connections = state.connections.filter(c => c.from !== id && c.to !== id);
+            
             // Hapus elemen dari DOM
-            document.getElementById(id)?.remove();
+            const element = document.getElementById(id);
+            if (element) {
+                element.remove();
+            }
+            
             // Hapus dari state
             delete state.devices[id];
 
             drawConnections();
             updateConfig();
             updatePcSelectors();
+            console.log('deleteDevice completed');
         }
 
         // --- Cable & Connection Logic ---
@@ -1991,6 +2004,11 @@
             hasilDiv.className = "result " + (type || (sukses ? "success" : "error"));
             hasilDiv.style.display = "block";
         }
+
+        // Make functions accessible globally for onclick attributes in HTML
+        window.deleteDeviceFromConfig = deleteDeviceFromConfig;
+        window.cancelDelete = cancelDelete;
+        window.confirmDelete = confirmDelete;
 
     </script>
 
