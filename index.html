@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -526,17 +526,10 @@
             display: flex;
         }
 
-        /* Mobile: Always show delete button and make it much bigger */
+        /* Mobile: Hide delete button on canvas (use config panel button instead) */
         @media (max-width: 768px) {
             .delete-btn {
-                display: flex !important;
-                width: 32px;
-                height: 32px;
-                font-size: 18px;
-                font-weight: bold;
-                top: -10px;
-                right: -10px;
-                box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+                display: none !important;
             }
         }
 
@@ -975,19 +968,22 @@
 
         // Delete device from config panel (mobile-friendly)
         function deleteDeviceFromConfig(deviceId) {
-            const device = state.devices[deviceId];
-            if (!device) return;
+            console.log('=== deleteDeviceFromConfig START ===');
+            console.log('deviceId:', deviceId);
+            console.log('typeof deviceId:', typeof deviceId);
+            console.log('state.devices:', Object.keys(state.devices));
             
-            // Show confirmation dialog
-            if (window.innerWidth <= 768) {
-                // Mobile: use custom dialog
-                showDeleteConfirmation(deviceId);
-            } else {
-                // Desktop: use browser confirm
-                if (confirm(`Hapus ${device.name}?`)) {
-                    deleteDevice(deviceId);
-                }
+            const device = state.devices[deviceId];
+            console.log('device found:', device);
+            
+            if (!device) {
+                console.error('ERROR: Device not found in state!');
+                return;
             }
+            
+            console.log('Calling showDeleteConfirmation...');
+            showDeleteConfirmation(deviceId);
+            console.log('=== deleteDeviceFromConfig END ===');
         }
 
         // Delete confirmation dialog
@@ -996,25 +992,52 @@
         const deleteDeviceNameEl = document.getElementById('deleteDeviceName');
 
         function showDeleteConfirmation(deviceId) {
+            console.log('=== showDeleteConfirmation START ===');
+            console.log('deviceId:', deviceId);
+            
             deviceToDelete = deviceId;
+            console.log('deviceToDelete set to:', deviceToDelete);
+            
             const device = state.devices[deviceId];
-            if (device) {
-                deleteDeviceNameEl.textContent = `Apakah Anda yakin ingin menghapus ${device.name}?`;
-                deleteOverlay.classList.add('active');
+            console.log('device:', device);
+            
+            if (!device) {
+                console.error('ERROR: Device not found!');
+                return;
             }
+            
+            console.log('Setting dialog text...');
+            deleteDeviceNameEl.textContent = `Apakah Anda yakin ingin menghapus ${device.name}?`;
+            
+            console.log('Showing overlay...');
+            deleteOverlay.classList.add('active');
+            
+            console.log('Overlay classes:', deleteOverlay.className);
+            console.log('=== showDeleteConfirmation END ===');
         }
 
         function cancelDelete() {
+            console.log('=== cancelDelete called ===');
             deviceToDelete = null;
             deleteOverlay.classList.remove('active');
         }
 
         function confirmDelete() {
+            console.log('=== confirmDelete START ===');
+            console.log('deviceToDelete:', deviceToDelete);
+            
             if (deviceToDelete) {
+                console.log('Calling deleteDevice with:', deviceToDelete);
                 deleteDevice(deviceToDelete);
                 deviceToDelete = null;
+                console.log('Device deleted, deviceToDelete cleared');
+            } else {
+                console.error('ERROR: No deviceToDelete set!');
             }
+            
+            console.log('Hiding overlay...');
             deleteOverlay.classList.remove('active');
+            console.log('=== confirmDelete END ===');
         }
 
         // Make functions globally accessible for onclick
@@ -1023,22 +1046,42 @@
         window.confirmDelete = confirmDelete;
 
         function deleteDevice(id) {
+            console.log('=== deleteDevice START ===');
+            console.log('id:', id);
+            console.log('typeof id:', typeof id);
+            console.log('Current devices:', Object.keys(state.devices));
+            
             // Hapus koneksi yang terkait
+            console.log('Removing connections...');
+            const beforeConnCount = state.connections.length;
             state.connections = state.connections.filter(c => c.from !== id && c.to !== id);
+            console.log(`Connections: ${beforeConnCount} -> ${state.connections.length}`);
             
             // Hapus elemen dari DOM
+            console.log('Removing DOM element...');
             const element = document.getElementById(id);
+            console.log('Element found:', element);
             if (element) {
                 element.remove();
+                console.log('Element removed from DOM');
+            } else {
+                console.error('ERROR: Element not found in DOM!');
             }
             
             // Hapus dari state
+            console.log('Removing from state...');
+            console.log('Device exists in state:', id in state.devices);
             delete state.devices[id];
+            console.log('Remaining devices:', Object.keys(state.devices));
 
+            console.log('Updating UI...');
             drawConnections();
+            console.log('drawConnections done');
             updateConfig();
+            console.log('updateConfig done');
             updatePcSelectors();
-            console.log('deleteDevice completed');
+            console.log('updatePcSelectors done');
+            console.log('=== deleteDevice END ===');
         }
 
         // --- Cable & Connection Logic ---
@@ -1182,20 +1225,36 @@
                 const configDiv = document.createElement('div');
                 configDiv.className = 'device-config';
 
-                // Check if mobile
-                const isMobile = window.innerWidth <= 768;
-                const deleteButton = isMobile ? 
-                    `<button onclick="deleteDeviceFromConfig('${device.id}')" class="delete-device-btn" title="Hapus ${device.name}">
-                        <span class="material-symbols-outlined">delete</span>
-                    </button>` : '';
+                // Create header with delete button for mobile
+                const header = document.createElement('h4');
+                header.style.display = 'flex';
+                header.style.justifyContent = 'space-between';
+                header.style.alignItems = 'center';
+                
+                const nameSpan = document.createElement('span');
+                nameSpan.innerHTML = `
+                    <span class="material-symbols-outlined" style="vertical-align: middle;">${iconMap[device.type]}</span>
+                    ${device.name} (${device.type.toUpperCase()})
+                `;
+                header.appendChild(nameSpan);
 
-                let html = `<h4 style="display: flex; justify-content: space-between; align-items: center;">
-                    <span>
-                        <span class="material-symbols-outlined" style="vertical-align: middle;">${iconMap[device.type]}</span>
-                        ${device.name} (${device.type.toUpperCase()})
-                    </span>
-                    ${deleteButton}
-                </h4>`;
+                // Add delete button for mobile
+                const isMobile = window.innerWidth <= 768;
+                if (isMobile) {
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'delete-device-btn';
+                    deleteBtn.title = `Hapus ${device.name}`;
+                    deleteBtn.innerHTML = '<span class="material-symbols-outlined">delete</span>';
+                    deleteBtn.addEventListener('click', function() {
+                        console.log('Delete button clicked for:', device.id);
+                        deleteDeviceFromConfig(device.id);
+                    });
+                    header.appendChild(deleteBtn);
+                }
+
+                configDiv.appendChild(header);
+
+                let html = '';
 
                 if (device.type !== 'switch') {
                     html += `
