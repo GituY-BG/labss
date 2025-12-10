@@ -76,20 +76,107 @@
             overflow: auto;
         }
 
+        #canvas-wrapper {
+            position: relative;
+        }
+
+        #canvas-inner {
+            width: 100%;
+            min-width: 800px;
+            min-height: 600px;
+            position: relative;
+            transform-origin: 0 0;
+            transition: transform 0.2s ease;
+        }
+
+        .zoom-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .zoom-btn {
+            width: 35px;
+            height: 35px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .zoom-btn:active {
+            background: #0056b3;
+        }
+
+        .zoom-level {
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+
         .device {
             position: absolute;
-            width: 140px;
+            width: 110px;
             text-align: center;
             cursor: move;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
             z-index: 10;
-            border: 3px solid transparent;
+            border: 2px solid transparent;
             transition: border-color 0.2s;
-            font-size: 15px;
+            font-size: 13px;
             touch-action: none;
             /* Penting untuk mencegah scroll saat menyeret */
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .device {
+                width: 85px;
+                padding: 8px;
+                font-size: 11px;
+            }
+
+            .device-icon {
+                font-size: 20px !important;
+                margin-bottom: 2px;
+            }
+
+            .device-label {
+                font-size: 11px !important;
+                margin-bottom: 2px;
+            }
+
+            .device-ip {
+                font-size: 9px !important;
+            }
+
+            #canvas {
+                height: 50vh;
+                min-height: 300px;
+            }
+
+            #canvas-inner {
+                min-width: 1200px;
+                min-height: 800px;
+            }
         }
 
         .device:hover {
@@ -116,23 +203,23 @@
         }
 
         .device-icon {
-            font-size: 32px;
-            margin-bottom: 5px;
+            font-size: 26px;
+            margin-bottom: 3px;
         }
 
         .device-conflict-badge {
             position: absolute;
-            top: -8px;
-            left: -8px;
+            top: -6px;
+            left: -6px;
             background: #dc3545;
             color: white;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 13px;
             font-weight: bold;
             z-index: 20;
             animation: pulse 1.5s infinite;
@@ -140,17 +227,17 @@
 
         .device-subnet-warning {
             position: absolute;
-            top: -8px;
-            right: -8px;
+            top: -6px;
+            right: -6px;
             background: #ffc107;
             color: black;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 13px;
             font-weight: bold;
             z-index: 20;
             animation: pulse 1.5s infinite;
@@ -158,17 +245,17 @@
 
         .device-gateway-warning {
             position: absolute;
-            bottom: -8px;
-            left: -8px;
+            bottom: -6px;
+            left: -6px;
             background: #17a2b8;
             color: white;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 13px;
             font-weight: bold;
             z-index: 20;
             animation: pulse 1.5s infinite;
@@ -191,12 +278,12 @@
 
         .device-label {
             font-weight: bold;
-            font-size: 15px;
-            margin-bottom: 4px;
+            font-size: 13px;
+            margin-bottom: 3px;
         }
 
         .device-ip {
-            font-size: 13px;
+            font-size: 11px;
             opacity: 0.9;
         }
 
@@ -413,6 +500,34 @@
             display: flex;
         }
 
+        /* Mobile: Always show delete button and make it bigger */
+        @media (max-width: 768px) {
+            .delete-btn {
+                display: flex !important;
+                width: 28px;
+                height: 28px;
+                font-size: 16px;
+                top: -8px;
+                right: -8px;
+            }
+        }
+
+        /* Delete mode styling */
+        .delete-mode .device {
+            animation: shake 0.5s infinite;
+        }
+
+        .delete-mode .delete-btn {
+            display: flex !important;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-2deg); }
+            75% { transform: rotate(2deg); }
+        }
+
         .routing-table {
             margin-top: 8px;
             font-size: 13px;
@@ -457,7 +572,8 @@
             <li><strong>Tambah Perangkat:</strong> Klik tombol "Tambah PC", "Tambah Router", atau "Tambah Switch" untuk
                 menambahkan ke canvas</li>
             <li><strong>Pindahkan:</strong> Klik dan seret perangkat ke posisi yang diinginkan</li>
-            <li><strong>Hapus:</strong> Arahkan kursor ke perangkat dan klik tombol ❌</li>
+            <li><strong>Hapus (Desktop):</strong> Arahkan kursor ke perangkat dan klik tombol ❌</li>
+            <li><strong>Hapus (Mobile):</strong> Klik tombol "✂️ Mode Hapus" lalu klik tombol ❌ merah di perangkat</li>
             <li><strong>Hubungkan:</strong> Klik "Mode Kabel", lalu klik 2 perangkat untuk menghubungkan</li>
             <li><strong>Hapus Kabel:</strong> Klik "Mode Kabel", lalu klik 2 perangkat yang terhubung untuk memilih
                 kabelnya, klik "Mode Kabel" lagi untuk menghapusnya.</li>
@@ -483,11 +599,22 @@
             <span>Tambah Switch</span>
         </div>
         <button id="cableMode" onclick="toggleCableMode()">🔌 Mode Kabel</button>
+        <button id="deleteMode" onclick="toggleDeleteMode()" class="danger" style="display: none;">✂️ Mode Hapus</button>
         <button onclick="clearAll()" class="danger">🗑️ Hapus Semua</button>
         <button onclick="autoArrange()">📐 Atur Otomatis</button>
     </div>
 
-    <div id="canvas"></div>
+    <div id="canvas-wrapper" style="position: relative;">
+        <div class="zoom-controls">
+            <button class="zoom-btn" onclick="zoomOut()" title="Zoom Out">−</button>
+            <span class="zoom-level" id="zoomLevel">100%</span>
+            <button class="zoom-btn" onclick="zoomIn()" title="Zoom In">+</button>
+            <button class="zoom-btn" onclick="resetZoom()" title="Reset Zoom">⟲</button>
+        </div>
+        <div id="canvas">
+            <div id="canvas-inner"></div>
+        </div>
+    </div>
 
     <div class="form">
         <h3>⚙️ Konfigurasi Perangkat</h3>
@@ -519,22 +646,78 @@
             connections: [],
             deviceIdCounter: 0,
             cableMode: false,
+            deleteMode: false,
             selectedDevice: null,
             cableToDelete: null,
             isAnimating: false,
             stopAnimation: false,
-            animationLog: []
+            animationLog: [],
+            zoomLevel: 1
         };
 
         // DOM Elements
         const canvas = document.getElementById('canvas');
+        const canvasInner = document.getElementById('canvas-inner');
         const configContainer = document.getElementById('configContainer');
         const sourcePcSelect = document.getElementById('sourcePc');
         const destPcSelect = document.getElementById('destPc');
         const hasilDiv = document.getElementById('hasil');
         const animationLogDiv = document.getElementById('animationLog');
         const testBtn = document.getElementById('testBtn');
+        const zoomLevelSpan = document.getElementById('zoomLevel');
         const cableModeBtn = document.getElementById('cableMode');
+        const deleteModeBtn = document.getElementById('deleteMode');
+
+        // Show delete mode button on mobile
+        if (window.innerWidth <= 768) {
+            deleteModeBtn.style.display = 'inline-block';
+        }
+
+        // Toggle Delete Mode
+        function toggleDeleteMode() {
+            state.deleteMode = !state.deleteMode;
+            
+            if (state.deleteMode) {
+                canvasInner.classList.add('delete-mode');
+                deleteModeBtn.textContent = '✅ Selesai Hapus';
+                deleteModeBtn.style.background = '#28a745';
+            } else {
+                canvasInner.classList.remove('delete-mode');
+                deleteModeBtn.textContent = '✂️ Mode Hapus';
+                deleteModeBtn.style.background = '#dc3545';
+            }
+        }
+
+        // Zoom Functions
+        function zoomIn() {
+            if (state.zoomLevel < 1.5) {
+                state.zoomLevel += 0.1;
+                updateZoom();
+            }
+        }
+
+        function zoomOut() {
+            if (state.zoomLevel > 0.5) {
+                state.zoomLevel -= 0.1;
+                updateZoom();
+            }
+        }
+
+        function resetZoom() {
+            state.zoomLevel = 1;
+            updateZoom();
+        }
+
+        function updateZoom() {
+            canvasInner.style.transform = `scale(${state.zoomLevel})`;
+            zoomLevelSpan.textContent = Math.round(state.zoomLevel * 100) + '%';
+            
+            // Update canvas inner size to accommodate zoom
+            const baseWidth = 800;
+            const baseHeight = 600;
+            canvasInner.style.minWidth = (baseWidth * state.zoomLevel) + 'px';
+            canvasInner.style.minHeight = (baseHeight * state.zoomLevel) + 'px';
+        }
 
         // --- Helper Functions ---
         function ipToLong(ip) {
@@ -713,7 +896,7 @@
                 document.addEventListener('touchend', onTouchEnd);
             });
 
-            canvas.appendChild(el);
+            canvasInner.appendChild(el);
         }
 
         function deleteDevice(id) {
@@ -828,8 +1011,8 @@
                 const to = state.devices[conn.to];
                 if (!from || !to) return;
 
-                const fromCenter = { x: from.x + 70, y: from.y + 50 };
-                const toCenter = { x: to.x + 70, y: to.y + 50 };
+                const fromCenter = { x: from.x + 55, y: from.y + 40 };
+                const toCenter = { x: to.x + 55, y: to.y + 40 };
 
                 const line = document.createElement('div');
                 line.className = 'connection-line';
@@ -846,7 +1029,7 @@
                 line.style.top = `${fromCenter.y}px`;
                 line.style.transform = `rotate(${angle}deg)`;
 
-                canvas.appendChild(line);
+                canvasInner.appendChild(line);
             });
         }
 
@@ -1018,27 +1201,30 @@
             const routers = deviceList.filter(d => d.type === 'router');
             const switches = deviceList.filter(d => d.type === 'switch');
 
-            const canvasRect = canvas.getBoundingClientRect();
-            const width = canvasRect.width;
-            const height = canvasRect.height;
+            // Use larger canvas area for arrangement with better spacing
+            const isMobile = window.innerWidth <= 768;
+            const width = isMobile ? 1200 : 800;
+            const height = isMobile ? 800 : 600;
+            const spacing = isMobile ? 110 : 130;
+            const columns = isMobile ? 8 : 6;
 
             pcs.forEach((pc, i) => {
-                pc.x = 20 + i * 160;
-                pc.y = 20;
+                pc.x = 20 + (i % columns) * spacing;
+                pc.y = 20 + Math.floor(i / columns) * 120;
                 document.getElementById(pc.id).style.left = `${pc.x}px`;
                 document.getElementById(pc.id).style.top = `${pc.y}px`;
             });
 
             routers.forEach((router, i) => {
-                router.x = 20 + i * 160;
-                router.y = height * 0.4;
+                router.x = 20 + (i % columns) * spacing;
+                router.y = height * 0.5;
                 document.getElementById(router.id).style.left = `${router.x}px`;
                 document.getElementById(router.id).style.top = `${router.y}px`;
             });
 
             switches.forEach((sw, i) => {
-                sw.x = 20 + i * 160;
-                sw.y = height * 0.7;
+                sw.x = 20 + (i % columns) * spacing;
+                sw.y = height * 0.75;
                 document.getElementById(sw.id).style.left = `${sw.x}px`;
                 document.getElementById(sw.id).style.top = `${sw.y}px`;
             });
@@ -1096,8 +1282,8 @@
                     return;
                 }
 
-                const fromCenter = { x: from.x + 70, y: from.y + 50 };
-                const toCenter = { x: to.x + 70, y: to.y + 50 };
+                const fromCenter = { x: from.x + 55, y: from.y + 40 };
+                const toCenter = { x: to.x + 55, y: to.y + 40 };
 
                 setTimeout(() => {
                     addLog(message);
@@ -1112,7 +1298,7 @@
                     packet.textContent = '📦';
                     packet.style.left = `${fromCenter.x - 12}px`;
                     packet.style.top = `${fromCenter.y - 12}px`;
-                    canvas.appendChild(packet);
+                    canvasInner.appendChild(packet);
 
                     const duration = 1500;
                     const startTime = Date.now();
