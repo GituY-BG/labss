@@ -18,6 +18,8 @@
             background: #f5f7fa;
             padding: 10px;
             font-size: 16px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .toolbar {
@@ -74,6 +76,7 @@
             background: white;
             position: relative;
             overflow: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         #canvas-wrapper {
@@ -142,7 +145,8 @@
             border: 2px solid transparent;
             transition: border-color 0.2s;
             font-size: 13px;
-            touch-action: none;
+            touch-action: pan-y;
+            /* Allow vertical scroll, but we'll handle horizontal drag */
         }
 
         /* Mobile responsive */
@@ -930,13 +934,20 @@
             });
 
             // Event Listener untuk menyeret (touch)
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let hasDragged = false;
+            
             el.addEventListener('touchstart', (e) => {
                 if (state.cableMode) return;
                 
                 const touch = e.touches[0];
+                touchStartX = touch.clientX;
+                touchStartY = touch.clientY;
                 startX = touch.clientX - device.x;
                 startY = touch.clientY - device.y;
                 isDragging = false;
+                hasDragged = false;
 
                 function moveAt(pageX, pageY) {
                     device.x = pageX - startX;
@@ -947,10 +958,18 @@
                 }
 
                 function onTouchMove(e) {
-                    e.preventDefault();
-                    isDragging = true;
                     const touch = e.touches[0];
-                    moveAt(touch.clientX, touch.clientY);
+                    const deltaX = Math.abs(touch.clientX - touchStartX);
+                    const deltaY = Math.abs(touch.clientY - touchStartY);
+                    
+                    // Only start dragging if moved more horizontally than vertically
+                    // This allows vertical scrolling
+                    if (deltaX > 10 && deltaX > deltaY) {
+                        e.preventDefault(); // Prevent scroll only when dragging
+                        isDragging = true;
+                        hasDragged = true;
+                        moveAt(touch.clientX, touch.clientY);
+                    }
                 }
 
                 function onTouchEnd(e) {
