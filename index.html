@@ -737,6 +737,7 @@
         </div>
 
         <button onclick="handleTestButton()" id="testBtn" class="success" style="display: block;">🚀 Uji Koneksi</button>
+        <button onclick="scrollToCanvas()" style="display: block; background: #17a2b8; margin-top: 10px;">⬆️ Lihat Canvas</button>
         <div id="hasil" class="result" style="display:none;"></div>
         <div id="animationLog" class="animation-log" style="display:none;"></div>
     </div>
@@ -2132,22 +2133,80 @@
             hasilDiv.style.display = "block";
         }
 
+        // Scroll to Canvas helper function
+        function scrollToCanvas() {
+            console.log('Scrolling to canvas...');
+            
+            // Multiple methods to ensure scroll works
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+            
+            // Force enable scroll
+            document.body.style.overflow = 'auto';
+            document.documentElement.style.overflow = 'auto';
+            
+            console.log('Scrolled to top');
+        }
+
+        // Make function global
+        window.scrollToCanvas = scrollToCanvas;
+
         // --- WebView Scroll Fix ---
         // Handle input focus/blur to maintain scroll capability in WebView
         document.addEventListener('DOMContentLoaded', function() {
-            // Force scroll restoration after input blur
+            console.log('DOM Loaded - Setting up WebView scroll fixes');
+            
+            // Method 1: Force scroll restoration after input blur
             document.addEventListener('focusout', function(e) {
                 if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-                    // Small delay to allow keyboard to close
+                    console.log('Input blurred, restoring scroll...');
+                    // Multiple attempts to restore scroll
                     setTimeout(function() {
-                        // Force scroll capability
-                        window.scrollTo(0, window.scrollY);
-                        document.body.scrollTop = document.body.scrollTop;
+                        window.scrollTo(0, 0);
+                        document.documentElement.scrollTop = 0;
+                        document.body.scrollTop = 0;
+                        console.log('Scroll restored to top');
                     }, 100);
+                    
+                    setTimeout(function() {
+                        // Enable scroll again
+                        document.body.style.overflow = 'auto';
+                        document.documentElement.style.overflow = 'auto';
+                        console.log('Overflow set to auto');
+                    }, 150);
                 }
             });
 
-            // Prevent page zoom on double tap for inputs
+            // Method 2: Restore scroll on ANY touch outside input
+            document.addEventListener('touchstart', function(e) {
+                if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA' && e.target.tagName !== 'BUTTON') {
+                    // Force enable scroll
+                    document.body.style.overflow = 'auto';
+                    document.documentElement.style.overflow = 'auto';
+                    document.body.style.webkitOverflowScrolling = 'touch';
+                }
+            });
+
+            // Method 3: Periodic scroll check (aggressive)
+            setInterval(function() {
+                // Check if any input has focus
+                const activeElement = document.activeElement;
+                if (activeElement.tagName !== 'INPUT' && activeElement.tagName !== 'TEXTAREA') {
+                    // No input focused, ensure scroll is enabled
+                    if (document.body.style.overflow !== 'auto') {
+                        document.body.style.overflow = 'auto';
+                        document.documentElement.style.overflow = 'auto';
+                        console.log('Periodic: Scroll restored');
+                    }
+                }
+            }, 500);
+
+            // Prevent page zoom on double tap
             let lastTouchEnd = 0;
             document.addEventListener('touchend', function(e) {
                 const now = Date.now();
@@ -2156,6 +2215,8 @@
                 }
                 lastTouchEnd = now;
             }, false);
+
+            console.log('WebView scroll fixes activated');
         });
 
     </script>
