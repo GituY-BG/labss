@@ -568,6 +568,39 @@
             animation: fadeIn 0.2s ease;
         }
 
+        /* Floating scroll button - always visible */
+        #floatingScrollBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #17a2b8;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        #floatingScrollBtn:active {
+            transform: scale(0.9);
+            background: #138496;
+        }
+
+        #floatingScrollBtn .btn-text {
+            font-size: 10px;
+            margin-top: 2px;
+        }
+
         .delete-overlay.active {
             display: flex;
         }
@@ -670,7 +703,7 @@
     <h2 style="text-align: center; margin: 10px 0;">🌐 Simulasi Routing Statis Interaktif</h2>
 
     <div class="instructions">
-        <h4>📋 Cara Penggunaan1:</h4>
+        <h4>📋 Cara Penggunaan55:</h4>
         <ul>
             <li><strong>Tambah Perangkat:</strong> Klik tombol "Tambah PC", "Tambah Router", atau "Tambah Switch" untuk
                 menambahkan ke canvas</li>
@@ -2137,20 +2170,27 @@
         function scrollToCanvas() {
             console.log('Scrolling to canvas...');
             
-            // Multiple methods to ensure scroll works
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-            
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
+            // Get canvas element
+            const canvas = document.getElementById('canvas-wrapper');
+            if (canvas) {
+                // Scroll to canvas position
+                canvas.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            } else {
+                // Fallback: scroll to top
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
             
             // Force enable scroll
             document.body.style.overflow = 'auto';
             document.documentElement.style.overflow = 'auto';
             
-            console.log('Scrolled to top');
+            console.log('Scrolled to canvas');
         }
 
         // Make function global
@@ -2161,23 +2201,16 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM Loaded - Setting up WebView scroll fixes');
             
-            // Method 1: Force scroll restoration after input blur
+            // Method 1: Enable scroll after input blur (NO auto-scroll)
             document.addEventListener('focusout', function(e) {
                 if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-                    console.log('Input blurred, restoring scroll...');
-                    // Multiple attempts to restore scroll
+                    console.log('Input blurred, enabling scroll...');
                     setTimeout(function() {
-                        window.scrollTo(0, 0);
-                        document.documentElement.scrollTop = 0;
-                        document.body.scrollTop = 0;
-                        console.log('Scroll restored to top');
-                    }, 100);
-                    
-                    setTimeout(function() {
-                        // Enable scroll again
+                        // Just enable scroll, don't move position
                         document.body.style.overflow = 'auto';
                         document.documentElement.style.overflow = 'auto';
-                        console.log('Overflow set to auto');
+                        document.body.style.webkitOverflowScrolling = 'touch';
+                        console.log('Scroll enabled (position maintained)');
                     }, 150);
                 }
             });
@@ -2189,10 +2222,11 @@
                     document.body.style.overflow = 'auto';
                     document.documentElement.style.overflow = 'auto';
                     document.body.style.webkitOverflowScrolling = 'touch';
+                    console.log('Touch outside: Scroll enabled');
                 }
-            });
+            }, { passive: true });
 
-            // Method 3: Periodic scroll check (aggressive)
+            // Method 3: Periodic scroll check
             setInterval(function() {
                 // Check if any input has focus
                 const activeElement = document.activeElement;
@@ -2201,10 +2235,11 @@
                     if (document.body.style.overflow !== 'auto') {
                         document.body.style.overflow = 'auto';
                         document.documentElement.style.overflow = 'auto';
-                        console.log('Periodic: Scroll restored');
+                        document.body.style.webkitOverflowScrolling = 'touch';
+                        console.log('Periodic: Scroll enabled');
                     }
                 }
-            }, 500);
+            }, 1000);
 
             // Prevent page zoom on double tap
             let lastTouchEnd = 0;
@@ -2233,7 +2268,12 @@
         </div>
     </div>
 
+    <!-- Floating Scroll to Canvas Button -->
+    <button id="floatingScrollBtn" onclick="scrollToCanvas()">
+        ⬆️
+        <div class="btn-text">Canvas</div>
+    </button>
+
 </body>
 
 </html>
-
