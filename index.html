@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Simulasi Routing Statis Interaktif</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
@@ -13,13 +13,21 @@
             box-sizing: border-box;
         }
 
+        html {
+            height: 100%;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background: #f5f7fa;
             padding: 10px;
             font-size: 16px;
+            min-height: 100%;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            position: relative;
         }
 
         .toolbar {
@@ -409,6 +417,14 @@
             font-size: 16px;
             flex: 1;
             min-height: 40px;
+            touch-action: manipulation;
+        }
+
+        /* Prevent zoom on input focus in WebView */
+        input:focus,
+        select:focus,
+        textarea:focus {
+            font-size: 16px;
         }
 
         button {
@@ -2115,6 +2131,32 @@
             hasilDiv.className = "result " + (type || (sukses ? "success" : "error"));
             hasilDiv.style.display = "block";
         }
+
+        // --- WebView Scroll Fix ---
+        // Handle input focus/blur to maintain scroll capability in WebView
+        document.addEventListener('DOMContentLoaded', function() {
+            // Force scroll restoration after input blur
+            document.addEventListener('focusout', function(e) {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                    // Small delay to allow keyboard to close
+                    setTimeout(function() {
+                        // Force scroll capability
+                        window.scrollTo(0, window.scrollY);
+                        document.body.scrollTop = document.body.scrollTop;
+                    }, 100);
+                }
+            });
+
+            // Prevent page zoom on double tap for inputs
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(e) {
+                const now = Date.now();
+                if (now - lastTouchEnd <= 300) {
+                    e.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+        });
 
     </script>
 
