@@ -1,4 +1,4 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -736,7 +736,7 @@
             <h2 style="text-align: center; margin: 10px 0;">🌐 Simulasi Routing Statis Interaktif</h2>
 
             <div class="instructions">
-                <h4>📋 Cara Penggunaan 9191:</h4>
+                <h4>📋 Cara Penggunaan 1970:</h4>
                 <ul>
                     <li><strong>Tambah Perangkat:</strong> Klik tombol "Tambah PC", "Tambah Router", atau "Tambah
                         Switch" untuk
@@ -975,102 +975,71 @@
                 }
 
                 function renderDevice(id) {
-                    console.log('=== renderDevice START ===');
-                    console.log('id:', id);
-                    console.log('canvasInner:', canvasInner);
-
                     const device = state.devices[id];
-                    console.log('device:', device);
-
                     if (!device) {
                         console.error('Device not found!');
                         return;
                     }
-
                     if (!canvasInner) {
                         console.error('canvasInner is NULL!');
                         alert('Error: Canvas inner tidak ditemukan');
                         return;
                     }
-                }
 
-                const el = document.createElement('div');
-                el.className = `device ${device.type}`;
-                el.id = id;
-                el.style.left = `${device.x}px`;
-                el.style.top = `${device.y}px`;
+                    // Hapus elemen lama jika sudah ada
+                    const existing = document.getElementById(id);
+                    if (existing) existing.remove();
 
-                const deleteBtn = document.createElement('div');
-                deleteBtn.className = 'delete-btn';
-                deleteBtn.textContent = '❌';
-                deleteBtn.onclick = (e) => {
-                    e.stopPropagation();
-                    // On mobile, show confirmation dialog
-                    if (window.innerWidth <= 768) {
-                        showDeleteConfirmation(id);
-                    } else {
-                        // Desktop: direct delete
-                        if (confirm(`Hapus ${device.name}?`)) {
-                            deleteDevice(id);
+                    const el = document.createElement('div');
+                    el.className = `device ${device.type}`;
+                    el.id = id;
+                    el.style.left = `${device.x}px`;
+                    el.style.top = `${device.y}px`;
+
+                    const deleteBtn = document.createElement('div');
+                    deleteBtn.className = 'delete-btn';
+                    deleteBtn.textContent = '❌';
+                    deleteBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        if (window.innerWidth <= 768) {
+                            showDeleteConfirmation(id);
+                        } else {
+                            if (confirm(`Hapus ${device.name}?`)) {
+                                deleteDevice(id);
+                            }
                         }
-                    }
-                };
+                    };
 
-                const iconMap = {
-                    'pc': 'computer',
-                    'router': 'router',
-                    'switch': 'hub'
-                };
+                    const iconMap = {
+                        'pc': 'computer',
+                        'router': 'router',
+                        'switch': 'hub'
+                    };
 
-                el.innerHTML = `
-                <div class="device-icon">
-                    <span class="material-symbols-outlined">${iconMap[device.type]}</span>
-                </div>
-                <div class="device-label">${device.name}</div>
-                <div class="device-ip">${device.ip || 'Belum dikonfigurasi'}</div>
-            `;
-                el.appendChild(deleteBtn);
+                    el.innerHTML = `
+        <div class="device-icon">
+            <span class="material-symbols-outlined">${iconMap[device.type]}</span>
+        </div>
+        <div class="device-label">${device.name}</div>
+        <div class="device-ip">${device.ip || 'Belum dikonfigurasi'}</div>
+    `;
 
-                el.onclick = (e) => {
-                    e.stopPropagation();
-                    if (state.cableMode) {
-                        handleCableClick(id);
-                    }
-                };
+                    el.appendChild(deleteBtn);
 
-                // Event Listener untuk menyeret (mouse)
-                let isDragging = false;
-                let startX, startY;
+                    el.onclick = (e) => {
+                        e.stopPropagation();
+                        if (state.cableMode) {
+                            handleCableClick(id);
+                        }
+                    };
 
-                el.addEventListener('mousedown'), (e) => {
-                    if (state.cableMode) return;
-                    isDragging = true;
-                    startX = e.clientX - device.x;
-                    startY = e.clientY - device.y;
-
-                    function moveAt(pageX, pageY) {
-                        device.x = pageX - startX;
-                        device.y = pageY - startY;
-                        el.style.left = `${device.x}px`;
-                        el.style.top = `${device.y}px`;
-                        drawConnections();
-                    }
-
-                    function onMouseMove(e) {
-                        if (isDragging) moveAt(e.pageX, e.pageY);
-                    }
-                }
-
-                function onMouseUp() {
-                    isDragging = false;
-                    document.removeEventListener('mousemove', onMouseMove);
-                    // Event Listener untuk menyeret - Mouse Events (Desktop)
+                    // --- Mouse Drag ---
+                    let isDragging = false;
                     el.addEventListener('mousedown', (e) => {
                         if (state.cableMode) return;
                         e.preventDefault();
-
-                        startX = e.pageX - device.x;
-                        startY = e.pageY - device.y;
+                        const startX = e.pageX - device.x;
+                        const startY = e.pageY - device.y;
                         isDragging = true;
 
                         function moveAt(pageX, pageY) {
@@ -1095,17 +1064,13 @@
                         document.addEventListener('mouseup', onMouseUp);
                     });
 
-                    // Event Listener untuk menyeret - Touch Events (Mobile)
-                    // Scoped to element only, not document-level
+                    // --- Touch Drag (Mobile) ---
                     el.addEventListener('touchstart', (e) => {
                         if (state.cableMode) return;
-
                         const touch = e.touches[0];
-                        startX = touch.pageX - device.x;
-                        startY = touch.pageY - device.y;
+                        const startX = touch.pageX - device.x;
+                        const startY = touch.pageY - device.y;
                         isDragging = true;
-
-                        // Prevent default only on device, not whole page
                         e.stopPropagation();
 
                         function moveAt(pageX, pageY) {
@@ -1120,7 +1085,6 @@
                             if (isDragging && e.touches.length > 0) {
                                 const touch = e.touches[0];
                                 moveAt(touch.pageX, touch.pageY);
-                                // Only prevent default when actually dragging device
                                 e.preventDefault();
                                 e.stopPropagation();
                             }
@@ -1132,7 +1096,6 @@
                             el.removeEventListener('touchend', onTouchEnd);
                         }
 
-                        // Attach to element, NOT document
                         el.addEventListener('touchmove', onTouchMove, { passive: false });
                         el.addEventListener('touchend', onTouchEnd);
                     });
@@ -2324,8 +2287,8 @@
                 window.resetZoom = resetZoom;
                 window.handleTestButton = handleTestButton;
                 window.updateDeviceIP = updateDeviceIP;
-                window.updateSubnet = updateSubnet;
-                window.updateGateway = updateGateway;
+                window.updateDeviceSubnet = updateDeviceSubnet;
+                window.updateDeviceGateway = updateDeviceGateway;
                 window.updateInterface = updateInterface;
                 window.addRoute = addRoute;
                 window.updateRoute = updateRoute;
@@ -2351,4 +2314,4 @@
 
         </div><!-- /content-wrapper -->
     </div><!-- /main-container -->
-    </body>
+</body>
