@@ -720,7 +720,7 @@
     <h2 style="text-align: center; margin: 10px 0;">🌐 Simulasi Routing Statis Interaktif</h2>
 
     <div class="instructions">
-        <h4>📋 Cara Penggunaan 1999:</h4>
+        <h4>📋 Cara Penggunaan 2099:</h4>
         <ul>
             <li><strong>Tambah Perangkat:</strong> Klik tombol "Tambah PC", "Tambah Router", atau "Tambah Switch" untuk
                 menambahkan ke canvas</li>
@@ -792,6 +792,10 @@
     </div>
 
     <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM fully loaded, initializing app...');
+            
         // State Management
         const state = {
             devices: {},
@@ -2246,6 +2250,31 @@
         window.scrollToCanvas = scrollToCanvas;
         window.scrollToSection = scrollToSection;
 
+        // Make functions global for onclick attributes
+        window.addDeviceFromToolbar = addDeviceFromToolbar;
+        window.toggleCableMode = toggleCableMode;
+        window.clearAll = clearAll;
+        window.autoArrange = autoArrange;
+        window.zoomIn = zoomIn;
+        window.zoomOut = zoomOut;
+        window.resetZoom = resetZoom;
+        window.handleTestButton = handleTestButton;
+        window.updateDeviceIP = updateDeviceIP;
+        window.updateSubnet = updateSubnet;
+        window.updateGateway = updateGateway;
+        window.updateInterface = updateInterface;
+        window.addRoute = addRoute;
+        window.updateRoute = updateRoute;
+        window.deleteDeviceFromConfig = deleteDeviceFromConfig;
+        window.cancelDelete = cancelDelete;
+        window.confirmDelete = confirmDelete;
+        window.scrollToCanvas = scrollToCanvas;
+        window.scrollToSection = scrollToSection;
+        
+        console.log('App initialized successfully!');
+        
+        }); // End DOMContentLoaded
+
     </script>
 
     <!-- Delete Confirmation Overlay -->
@@ -2261,11 +2290,6 @@
     </div>
 
     <!-- Floating Scroll to Canvas Button -->
-    <button id="floatingScrollBtn" onclick="scrollToCanvas()">
-        ⬆️
-        <div class="btn-text">Canvas</div>
-    </button>
-
         </div><!-- /content-wrapper -->
     </div><!-- /main-container -->
 </body>
