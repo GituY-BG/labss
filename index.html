@@ -720,7 +720,7 @@
     <h2 style="text-align: center; margin: 10px 0;">🌐 Simulasi Routing Statis Interaktif</h2>
 
     <div class="instructions">
-        <h4>📋 Cara Penggunaan 2099:</h4>
+        <h4>📋 Cara Penggunaan 8899:</h4>
         <ul>
             <li><strong>Tambah Perangkat:</strong> Klik tombol "Tambah PC", "Tambah Router", atau "Tambah Switch" untuk
                 menambahkan ke canvas</li>
@@ -822,6 +822,19 @@
         const zoomLevelSpan = document.getElementById('zoomLevel');
         const cableModeBtn = document.getElementById('cableMode');
 
+        // Debug: Check if all elements are found
+        console.log('DOM Elements Check:');
+        console.log('canvas:', canvas);
+        console.log('canvasInner:', canvasInner);
+        console.log('configContainer:', configContainer);
+        console.log('testBtn:', testBtn);
+        
+        if (!canvas || !canvasInner) {
+            console.error('CRITICAL: Canvas elements not found!');
+            alert('Error: Canvas tidak ditemukan. Silakan refresh halaman.');
+            return;
+        }
+
         // Zoom Functions
         function zoomIn() {
             if (state.zoomLevel < 1.5) {
@@ -889,9 +902,23 @@
 
         // --- Device Management ---
         function addDeviceFromToolbar(type) {
+            console.log('=== addDeviceFromToolbar called ===');
+            console.log('type:', type);
+            console.log('canvas:', canvas);
+            
+            if (!canvas) {
+                console.error('Canvas is null!');
+                alert('Error: Canvas tidak tersedia');
+                return;
+            }
+            
             const rect = canvas.getBoundingClientRect();
+            console.log('canvas rect:', rect);
+            
             const x = Math.random() * (rect.width - 100);
             const y = Math.random() * (rect.height - 100);
+            console.log('Position:', x, y);
+            
             addDevice(type, x, y);
         }
 
@@ -926,7 +953,24 @@
         }
 
         function renderDevice(id) {
+            console.log('=== renderDevice START ===');
+            console.log('id:', id);
+            console.log('canvasInner:', canvasInner);
+            
             const device = state.devices[id];
+            console.log('device:', device);
+            
+            if (!device) {
+                console.error('Device not found!');
+                return;
+            }
+            
+            if (!canvasInner) {
+                console.error('canvasInner is NULL!');
+                alert('Error: Canvas inner tidak ditemukan');
+                return;
+            }
+            
             const el = document.createElement('div');
             el.className = `device ${device.type}`;
             el.id = id;
