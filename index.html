@@ -697,7 +697,7 @@
     <h2 style="text-align: center; margin: 10px 0;">🌐 Simulasi Routing Statis Interaktif</h2>
 
     <div class="instructions">
-        <h4>📋 Cara Penggunaan:</h4>
+        <h4>📋 Cara Penggunaan 99:</h4>
         <ul>
             <li><strong>Tambah Perangkat:</strong> Klik tombol "Tambah PC", "Tambah Router", atau "Tambah Switch" untuk
                 menambahkan ke canvas</li>
@@ -993,6 +993,8 @@
             let touchStartX = 0;
             let touchStartY = 0;
             let hasDragged = false;
+            let touchMoveHandler = null;
+            let touchEndHandler = null;
             
             el.addEventListener('touchstart', (e) => {
                 if (state.cableMode) return;
@@ -1018,24 +1020,44 @@
                     const deltaX = Math.abs(touch.clientX - touchStartX);
                     const deltaY = Math.abs(touch.clientY - touchStartY);
                     
-                    // Only start dragging if moved more horizontally than vertically
-                    // This allows vertical scrolling
-                    if (deltaX > 10 && deltaX > deltaY) {
-                        e.preventDefault(); // Prevent scroll only when dragging
+                    // Only start dragging if moved significantly horizontally
+                    if (deltaX > 15 && deltaX > deltaY * 1.5) {
+                        // Only prevent default when actually dragging
+                        e.preventDefault();
+                        e.stopPropagation();
                         isDragging = true;
                         hasDragged = true;
                         moveAt(touch.clientX, touch.clientY);
                     }
+                    // Otherwise, allow normal scroll
                 }
 
                 function onTouchEnd(e) {
                     isDragging = false;
-                    document.removeEventListener('touchmove', onTouchMove);
-                    document.removeEventListener('touchend', onTouchEnd);
+                    // Clean up listeners immediately
+                    if (touchMoveHandler) {
+                        document.removeEventListener('touchmove', touchMoveHandler);
+                        touchMoveHandler = null;
+                    }
+                    if (touchEndHandler) {
+                        document.removeEventListener('touchend', touchEndHandler);
+                        touchEndHandler = null;
+                    }
+                    
+                    // Force enable scroll after touch ends
+                    setTimeout(function() {
+                        document.body.style.overflow = 'visible';
+                        document.body.style.overflowY = 'scroll';
+                    }, 50);
                 }
 
+                // Store handlers for cleanup
+                touchMoveHandler = onTouchMove;
+                touchEndHandler = onTouchEnd;
+
+                // Use passive: false only when necessary
                 document.addEventListener('touchmove', onTouchMove, { passive: false });
-                document.addEventListener('touchend', onTouchEnd);
+                document.addEventListener('touchend', onTouchEnd, { passive: true });
             });
 
             canvasInner.appendChild(el);
@@ -2237,63 +2259,29 @@
         window.scrollToSection = scrollToSection;
 
         // --- WebView Scroll Fix ---
-        // AGGRESSIVE scroll fix for Kodular WebView
+        // Lightweight scroll restoration
         (function() {
-            console.log('Initializing aggressive scroll fix...');
+            console.log('Initializing scroll fix...');
             
-            // Force enable scroll immediately
-            function forceEnableScroll() {
-                document.body.style.overflow = 'visible';
-                document.body.style.overflowY = 'scroll';
-                document.documentElement.style.overflow = 'visible';
-                document.documentElement.style.overflowY = 'scroll';
-                document.body.style.height = 'auto';
-                document.body.style.position = 'static';
-            }
-            
-            // Call immediately
-            forceEnableScroll();
-            
-            // After DOM ready
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', forceEnableScroll);
-            }
-            
-            // After any input interaction
-            document.addEventListener('input', function() {
-                setTimeout(forceEnableScroll, 100);
-            }, true);
-            
-            document.addEventListener('change', function() {
-                setTimeout(forceEnableScroll, 100);
-            }, true);
-            
-            document.addEventListener('blur', function(e) {
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-                    console.log('Input blurred');
-                    setTimeout(forceEnableScroll, 100);
-                    setTimeout(forceEnableScroll, 300);
-                    setTimeout(forceEnableScroll, 500);
-                }
-            }, true);
-            
-            // Touch anywhere = force enable
+            // Simple: ensure scroll enabled after any touch interaction ends
             document.addEventListener('touchend', function() {
-                forceEnableScroll();
+                setTimeout(function() {
+                    document.body.style.overflow = 'visible';
+                    document.body.style.overflowY = 'scroll';
+                    document.documentElement.style.overflow = 'visible';
+                }, 100);
             }, { passive: true });
             
-            // Super aggressive: every 500ms
-            setInterval(forceEnableScroll, 500);
-            
-            // Prevent double-tap zoom
-            let lastTouchEnd = 0;
-            document.addEventListener('touchend', function(event) {
-                const now = Date.now();
-                if (now - lastTouchEnd <= 300) {
-                    event.preventDefault();
+            // After input blur
+            document.addEventListener('focusout', function(e) {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                    setTimeout(function() {
+                        document.body.style.overflow = 'visible';
+                        document.body.style.overflowY = 'scroll';
+                        document.documentElement.style.overflow = 'visible';
+                    }, 150);
                 }
-                lastTouchEnd = now;
-            }, false);
+            });
             
             console.log('Scroll fix initialized');
         })();
