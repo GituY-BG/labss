@@ -165,6 +165,9 @@
             border: 2px solid transparent;
             transition: border-color 0.2s;
             font-size: 13px;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         /* Mobile responsive */
@@ -717,7 +720,7 @@
     <h2 style="text-align: center; margin: 10px 0;">🌐 Simulasi Routing Statis Interaktif</h2>
 
     <div class="instructions">
-        <h4>📋 Cara Penggunaan 100:</h4>
+        <h4>📋 Cara Penggunaan 1999:</h4>
         <ul>
             <li><strong>Tambah Perangkat:</strong> Klik tombol "Tambah PC", "Tambah Router", atau "Tambah Switch" untuk
                 menambahkan ke canvas</li>
@@ -752,19 +755,6 @@
         <button onclick="clearAll()" class="danger">🗑️ Hapus Semua</button>
         <button onclick="autoArrange()">📐 Atur Otomatis</button>
     </div>
-    <!-- STICKY NAVIGATION BUTTONS FOR MOBILE -->
-    <div style="position: sticky; top: 0; z-index: 9999; background: #fff; padding: 8px; border-bottom: 2px solid #ddd; display: flex; gap: 8px; justify-content: center;">
-        <button onclick="scrollToSection('canvas')" style="background: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 5px; font-size: 14px; font-weight: bold;">
-            📐 Canvas
-        </button>
-        <button onclick="scrollToSection('configContainer')" style="background: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 5px; font-size: 14px; font-weight: bold;">
-            ⚙️ Config
-        </button>
-        <button onclick="scrollToSection('testSection')" style="background: #17a2b8; color: white; border: none; padding: 10px 15px; border-radius: 5px; font-size: 14px; font-weight: bold;">
-            🚀 Test
-        </button>
-    </div>
-
     <div id="canvas-wrapper" style="position: relative;">
         <div class="zoom-controls">
             <button class="zoom-btn" onclick="zoomOut()" title="Zoom Out">−</button>
@@ -1002,16 +992,10 @@
                 function onMouseUp() {
                     isDragging = false;
                     document.removeEventListener('mousemove', onMouseMove);
-                    document.removeEventListener('mouseup', onMouseUp);
-                }
-
-                document.addEventListener('mousemove', onMouseMove);
-                document.addEventListener('mouseup', onMouseUp);
-            });
-
-            // Event Listener untuk menyeret (mouse/touch - via pointer events)
+            // Event Listener untuk menyeret - Mouse Events (Desktop)
             el.addEventListener('mousedown', (e) => {
                 if (state.cableMode) return;
+                e.preventDefault();
                 
                 startX = e.pageX - device.x;
                 startY = e.pageY - device.y;
@@ -1037,6 +1021,48 @@
 
                 document.addEventListener('mousemove', onMouseMove);
                 document.addEventListener('mouseup', onMouseUp);
+            });
+
+            // Event Listener untuk menyeret - Touch Events (Mobile)
+            // Scoped to element only, not document-level
+            el.addEventListener('touchstart', (e) => {
+                if (state.cableMode) return;
+                
+                const touch = e.touches[0];
+                startX = touch.pageX - device.x;
+                startY = touch.pageY - device.y;
+                isDragging = true;
+                
+                // Prevent default only on device, not whole page
+                e.stopPropagation();
+
+                function moveAt(pageX, pageY) {
+                    device.x = pageX - startX;
+                    device.y = pageY - startY;
+                    el.style.left = `${device.x}px`;
+                    el.style.top = `${device.y}px`;
+                    drawConnections();
+                }
+
+                function onTouchMove(e) {
+                    if (isDragging && e.touches.length > 0) {
+                        const touch = e.touches[0];
+                        moveAt(touch.pageX, touch.pageY);
+                        // Only prevent default when actually dragging device
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                }
+
+                function onTouchEnd() {
+                    isDragging = false;
+                    el.removeEventListener('touchmove', onTouchMove);
+                    el.removeEventListener('touchend', onTouchEnd);
+                }
+
+                // Attach to element, NOT document
+                el.addEventListener('touchmove', onTouchMove, { passive: false });
+                el.addEventListener('touchend', onTouchEnd);
             });
 
             canvasInner.appendChild(el);
