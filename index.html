@@ -720,7 +720,7 @@
     <h2 style="text-align: center; margin: 10px 0;">🌐 Simulasi Routing Statis Interaktif</h2>
 
     <div class="instructions">
-        <h4>📋 Cara Penggunaan 6564:</h4>
+        <h4>📋 Cara Penggunaan 2026 Wisuda:</h4>
         <ul>
             <li><strong>Tambah Perangkat:</strong> Klik tombol "Tambah PC", "Tambah Router", atau "Tambah Switch" untuk
                 menambahkan ke canvas</li>
@@ -827,8 +827,9 @@
         
         if (!canvas || !canvasInner) {
             console.error('CRITICAL: Canvas elements not found!');
-            alert('Error: Canvas tidak ditemukan. Silakan refresh halaman.');
-            return;
+            console.error('canvas:', canvas, 'canvasInner:', canvasInner);
+            // Don't use return at top level - it's illegal
+            // Just log error and continue
         }
 
         // Zoom Functions
@@ -2325,4 +2326,4 @@
     </div><!-- /main-container -->
 </body>
 
-</html>
+</html>f
