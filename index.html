@@ -1,11 +1,12 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html>
 <html lang="id">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Simulasi Routing Statis Interaktif</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
         * {
             margin: 0;
@@ -122,7 +123,7 @@
             background: rgba(255, 255, 255, 0.9);
             padding: 5px;
             border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .zoom-btn {
@@ -286,10 +287,13 @@
         }
 
         @keyframes pulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: scale(1);
                 box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
             }
+
             50% {
                 transform: scale(1.1);
                 box-shadow: 0 0 0 8px rgba(220, 53, 69, 0);
@@ -625,7 +629,7 @@
             text-align: center;
             max-width: 320px;
             margin: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             animation: scaleIn 0.3s ease;
         }
 
@@ -668,13 +672,25 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         @keyframes scaleIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .routing-table {
@@ -716,724 +732,735 @@
     <!-- Main scrollable container - website controls scroll, not WebView -->
     <div id="main-container">
         <div id="content-wrapper">
-    
-    <h2 style="text-align: center; margin: 10px 0;">🌐 Simulasi Routing Statis Interaktif</h2>
 
-    <div class="instructions">
-        <h4>📋 Cara Penggunaan 2026:</h4>
-        <ul>
-            <li><strong>Tambah Perangkat:</strong> Klik tombol "Tambah PC", "Tambah Router", atau "Tambah Switch" untuk
-                menambahkan ke canvas</li>
-            <li><strong>Pindahkan:</strong> Klik dan seret perangkat ke posisi yang diinginkan</li>
-            <li><strong>Hapus (Desktop):</strong> Arahkan kursor ke perangkat di canvas dan klik tombol ❌, atau klik tombol 🗑️ di panel konfigurasi</li>
-            <li><strong>Hapus (Mobile):</strong> Scroll ke "Konfigurasi Perangkat", klik tombol 🗑️ di sebelah nama perangkat</li>
-            <li><strong>Hubungkan:</strong> Klik "Mode Kabel", lalu klik 2 perangkat untuk menghubungkan</li>
-            <li><strong>Hapus Kabel:</strong> Klik "Mode Kabel", lalu klik 2 perangkat yang terhubung untuk memilih
-                kabelnya, klik "Mode Kabel" lagi untuk menghapusnya.</li>
-            <li><strong>Konfigurasi:</strong> Isi IP, Subnet, dan Interface Router secara manual. Switch tidak
-                memerlukan konfigurasi IP.</li>
-            <li><strong>Routing Statis:</strong> Tambahkan rute statis untuk jaringan yang tidak terhubung langsung
-                (melalui Router).</li>
-            <li><strong>Uji:</strong> Pilih PC asal dan tujuan, lalu klik "Uji Koneksi" untuk melihat animasi</li>
-        </ul>
-    </div>
+            <h2 style="text-align: center; margin: 10px 0;">🌐 Simulasi Routing Statis Interaktif</h2>
 
-    <div class="toolbar">
-        <div class="device-item pc-item" onclick="addDeviceFromToolbar('pc')">
-            <span class="material-symbols-outlined">computer</span>
-            <span>Tambah PC</span>
-        </div>
-        <div class="device-item router-item" onclick="addDeviceFromToolbar('router')">
-            <span class="material-symbols-outlined">router</span>
-            <span>Tambah Router</span>
-        </div>
-        <div class="device-item switch-item" onclick="addDeviceFromToolbar('switch')">
-            <span class="material-symbols-outlined">hub</span>
-            <span>Tambah Switch</span>
-        </div>
-        <button id="cableMode" onclick="toggleCableMode()">🔌 Mode Kabel</button>
-        <button onclick="clearAll()" class="danger">🗑️ Hapus Semua</button>
-        <button onclick="autoArrange()">📐 Atur Otomatis</button>
-    </div>
-    <div id="canvas-wrapper" style="position: relative;">
-        <div class="zoom-controls">
-            <button class="zoom-btn" onclick="zoomOut()" title="Zoom Out">−</button>
-            <span class="zoom-level" id="zoomLevel">100%</span>
-            <button class="zoom-btn" onclick="zoomIn()" title="Zoom In">+</button>
-            <button class="zoom-btn" onclick="resetZoom()" title="Reset Zoom">⟲</button>
-        </div>
-        <div id="canvas">
-            <div id="canvas-inner"></div>
-        </div>
-    </div>
+            <div class="instructions">
+                <h4>📋 Cara Penggunaan 9191:</h4>
+                <ul>
+                    <li><strong>Tambah Perangkat:</strong> Klik tombol "Tambah PC", "Tambah Router", atau "Tambah
+                        Switch" untuk
+                        menambahkan ke canvas</li>
+                    <li><strong>Pindahkan:</strong> Klik dan seret perangkat ke posisi yang diinginkan</li>
+                    <li><strong>Hapus (Desktop):</strong> Arahkan kursor ke perangkat di canvas dan klik tombol ❌, atau
+                        klik tombol 🗑️ di panel konfigurasi</li>
+                    <li><strong>Hapus (Mobile):</strong> Scroll ke "Konfigurasi Perangkat", klik tombol 🗑️ di sebelah
+                        nama perangkat</li>
+                    <li><strong>Hubungkan:</strong> Klik "Mode Kabel", lalu klik 2 perangkat untuk menghubungkan</li>
+                    <li><strong>Hapus Kabel:</strong> Klik "Mode Kabel", lalu klik 2 perangkat yang terhubung untuk
+                        memilih
+                        kabelnya, klik "Mode Kabel" lagi untuk menghapusnya.</li>
+                    <li><strong>Konfigurasi:</strong> Isi IP, Subnet, dan Interface Router secara manual. Switch tidak
+                        memerlukan konfigurasi IP.</li>
+                    <li><strong>Routing Statis:</strong> Tambahkan rute statis untuk jaringan yang tidak terhubung
+                        langsung
+                        (melalui Router).</li>
+                    <li><strong>Uji:</strong> Pilih PC asal dan tujuan, lalu klik "Uji Koneksi" untuk melihat animasi
+                    </li>
+                </ul>
+            </div>
 
-    <div class="form">
-        <h3>⚙️ Konfigurasi Perangkat</h3>
-        <div id="configContainer" class="config-section">
-            <p style="color: #6c757d; text-align: center;">Tambahkan perangkat untuk mulai konfigurasi...</p>
-        </div>
+            <div class="toolbar">
+                <div class="device-item pc-item" onclick="addDeviceFromToolbar('pc')">
+                    <span class="material-symbols-outlined">computer</span>
+                    <span>Tambah PC</span>
+                </div>
+                <div class="device-item router-item" onclick="addDeviceFromToolbar('router')">
+                    <span class="material-symbols-outlined">router</span>
+                    <span>Tambah Router</span>
+                </div>
+                <div class="device-item switch-item" onclick="addDeviceFromToolbar('switch')">
+                    <span class="material-symbols-outlined">hub</span>
+                    <span>Tambah Switch</span>
+                </div>
+                <button id="cableMode" onclick="toggleCableMode()">🔌 Mode Kabel</button>
+                <button onclick="clearAll()" class="danger">🗑️ Hapus Semua</button>
+                <button onclick="autoArrange()">📐 Atur Otomatis</button>
+            </div>
+            <div id="canvas-wrapper" style="position: relative;">
+                <div class="zoom-controls">
+                    <button class="zoom-btn" onclick="zoomOut()" title="Zoom Out">−</button>
+                    <span class="zoom-level" id="zoomLevel">100%</span>
+                    <button class="zoom-btn" onclick="zoomIn()" title="Zoom In">+</button>
+                    <button class="zoom-btn" onclick="resetZoom()" title="Reset Zoom">⟲</button>
+                </div>
+                <div id="canvas">
+                    <div id="canvas-inner"></div>
+                </div>
+            </div>
 
-        <h3>🧪 Uji Koneksi</h3>
-        <div id="testSection" style="margin-bottom: 10px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
-            <label style="font-size: 15px; flex: 0 0 auto;">PC Asal: </label>
-            <select id="sourcePc" style="flex: 1; min-width: 150px;">
-                <option value="">-- Pilih PC --</option>
-            </select>
-            <label style="font-size: 15px; flex: 0 0 auto; margin-left: 8px;">PC Tujuan: </label>
-            <select id="destPc" style="flex: 1; min-width: 150px;">
-                <option value="">-- Pilih PC --</option>
-            </select>
-        </div>
+            <div class="form">
+                <h3>⚙️ Konfigurasi Perangkat</h3>
+                <div id="configContainer" class="config-section">
+                    <p style="color: #6c757d; text-align: center;">Tambahkan perangkat untuk mulai konfigurasi...</p>
+                </div>
 
-        <button onclick="handleTestButton()" id="testBtn" class="success" style="display: block;">🚀 Uji Koneksi</button>
-        <button onclick="scrollToCanvas()" style="display: block; background: #17a2b8; margin-top: 10px;">⬆️ Lihat Canvas</button>
-        <div id="hasil" class="result" style="display:none;"></div>
-        <div id="animationLog" class="animation-log" style="display:none;"></div>
-    </div>
+                <h3>🧪 Uji Koneksi</h3>
+                <div id="testSection"
+                    style="margin-bottom: 10px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+                    <label style="font-size: 15px; flex: 0 0 auto;">PC Asal: </label>
+                    <select id="sourcePc" style="flex: 1; min-width: 150px;">
+                        <option value="">-- Pilih PC --</option>
+                    </select>
+                    <label style="font-size: 15px; flex: 0 0 auto; margin-left: 8px;">PC Tujuan: </label>
+                    <select id="destPc" style="flex: 1; min-width: 150px;">
+                        <option value="">-- Pilih PC --</option>
+                    </select>
+                </div>
 
-    <script>
-        // State Management
-        const state = {
-            devices: {},
-            connections: [],
-            deviceIdCounter: 0,
-            cableMode: false,
-            selectedDevice: null,
-            cableToDelete: null,
-            isAnimating: false,
-            stopAnimation: false,
-            animationLog: [],
-            zoomLevel: 1
-        };
+                <button onclick="handleTestButton()" id="testBtn" class="success" style="display: block;">🚀 Uji
+                    Koneksi</button>
+                <button onclick="scrollToCanvas()" style="display: block; background: #17a2b8; margin-top: 10px;">⬆️
+                    Lihat Canvas</button>
+                <div id="hasil" class="result" style="display:none;"></div>
+                <div id="animationLog" class="animation-log" style="display:none;"></div>
+            </div>
 
-        // DOM Elements
-        const canvas = document.getElementById('canvas');
-        const canvasInner = document.getElementById('canvas-inner');
-        const configContainer = document.getElementById('configContainer');
-        const sourcePcSelect = document.getElementById('sourcePc');
-        const destPcSelect = document.getElementById('destPc');
-        const hasilDiv = document.getElementById('hasil');
-        const animationLogDiv = document.getElementById('animationLog');
-        const testBtn = document.getElementById('testBtn');
-        const zoomLevelSpan = document.getElementById('zoomLevel');
-        const cableModeBtn = document.getElementById('cableMode');
+            <script>
+                // State Management
+                const state = {
+                    devices: {},
+                    connections: [],
+                    deviceIdCounter: 0,
+                    cableMode: false,
+                    selectedDevice: null,
+                    cableToDelete: null,
+                    isAnimating: false,
+                    stopAnimation: false,
+                    animationLog: [],
+                    zoomLevel: 1
+                };
 
-        // Debug: Check if all elements are found
-        console.log('DOM Elements Check:');
-        console.log('canvas:', canvas);
-        console.log('canvasInner:', canvasInner);
-        console.log('configContainer:', configContainer);
-        console.log('testBtn:', testBtn);
-        
-        if (!canvas || !canvasInner) {
-            console.error('CRITICAL: Canvas elements not found!');
-            console.error('canvas:', canvas, 'canvasInner:', canvasInner);
-            // Don't use return at top level - it's illegal
-            // Just log error and continue
-        }
+                // DOM Elements
+                const canvas = document.getElementById('canvas');
+                const canvasInner = document.getElementById('canvas-inner');
+                const configContainer = document.getElementById('configContainer');
+                const sourcePcSelect = document.getElementById('sourcePc');
+                const destPcSelect = document.getElementById('destPc');
+                const hasilDiv = document.getElementById('hasil');
+                const animationLogDiv = document.getElementById('animationLog');
+                const testBtn = document.getElementById('testBtn');
+                const zoomLevelSpan = document.getElementById('zoomLevel');
+                const cableModeBtn = document.getElementById('cableMode');
 
-        // Zoom Functions
-        function zoomIn() {
-            if (state.zoomLevel < 1.5) {
-                state.zoomLevel += 0.1;
-                updateZoom();
-            }
-        }
+                // Debug: Check if all elements are found
+                console.log('DOM Elements Check:');
+                console.log('canvas:', canvas);
+                console.log('canvasInner:', canvasInner);
+                console.log('configContainer:', configContainer);
+                console.log('testBtn:', testBtn);
 
-        function zoomOut() {
-            if (state.zoomLevel > 0.5) {
-                state.zoomLevel -= 0.1;
-                updateZoom();
-            }
-        }
+                if (!canvas || !canvasInner) {
+                    console.error('CRITICAL: Canvas elements not found!');
+                    console.error('canvas:', canvas, 'canvasInner:', canvasInner);
+                    // Don't use return at top level - it's illegal
+                    // Just log error and continue
+                }
 
-        function resetZoom() {
-            state.zoomLevel = 1;
-            updateZoom();
-        }
-
-        function updateZoom() {
-            canvasInner.style.transform = `scale(${state.zoomLevel})`;
-            zoomLevelSpan.textContent = Math.round(state.zoomLevel * 100) + '%';
-            
-            // Update canvas inner size to accommodate zoom
-            const baseWidth = 800;
-            const baseHeight = 600;
-            canvasInner.style.minWidth = (baseWidth * state.zoomLevel) + 'px';
-            canvasInner.style.minHeight = (baseHeight * state.zoomLevel) + 'px';
-        }
-
-        // --- Helper Functions ---
-        function ipToLong(ip) {
-            if (!ip) return null;
-            const parts = ip.split('.').map(Number);
-            if (parts.length !== 4 || parts.some(p => isNaN(p) || p < 0 || p > 255)) return null;
-            return (parts[0] << 24) | (parts[1] << 16) | (parts[2] << 8) | parts[3];
-        }
-
-        function networkId(ip, mask) {
-            const i = ipToLong(ip);
-            const m = ipToLong(mask);
-            return i !== null && m !== null ? (i & m) >>> 0 : null;
-        }
-
-        function subnetMatch(ip1, ip2, mask) {
-            return networkId(ip1, mask) === networkId(ip2, mask);
-        }
-
-        // Check if two devices can communicate in the same subnet (must have same subnet mask)
-        function canCommunicateDirectly(device1, device2) {
-            // Both must have IP, subnet configured
-            if (!device1.ip || !device1.subnet || !device2.ip || !device2.subnet) {
-                return false;
-            }
-
-            // Subnet masks must be identical
-            if (device1.subnet !== device2.subnet) {
-                return false;
-            }
-
-            // Must be in same network
-            return subnetMatch(device1.ip, device2.ip, device1.subnet);
-        }
-
-        // --- Device Management ---
-        function addDeviceFromToolbar(type) {
-            console.log('=== addDeviceFromToolbar called ===');
-            console.log('type:', type);
-            console.log('canvas:', canvas);
-            
-            if (!canvas) {
-                console.error('Canvas is null!');
-                alert('Error: Canvas tidak tersedia');
-                return;
-            }
-            
-            const rect = canvas.getBoundingClientRect();
-            console.log('canvas rect:', rect);
-            
-            const x = Math.random() * (rect.width - 100);
-            const y = Math.random() * (rect.height - 100);
-            console.log('Position:', x, y);
-            
-            addDevice(type, x, y);
-        }
-
-        function addDevice(type, x, y) {
-            const id = `device_${++state.deviceIdCounter}`;
-            const deviceNumber = Object.values(state.devices).filter(d => d.type === type).length + 1;
-
-            const newDevice = {
-                id,
-                type,
-                x,
-                y,
-                name: type === 'pc' ? `PC${deviceNumber}` : (type === 'router' ? `R${deviceNumber}` : `S${deviceNumber}`),
-                ip: '',
-                subnet: '',
-                gateway: '',
-                interfaces: type === 'router' ? {} : null,
-                routingTable: type === 'router' ? [] : null
-            };
-
-            if (type === 'switch') {
-                newDevice.ip = 'N/A';
-                newDevice.subnet = 'N/A';
-                newDevice.gateway = 'N/A';
-            }
-
-            state.devices[id] = newDevice;
-
-            renderDevice(id);
-            updateConfig();
-            updatePcSelectors();
-        }
-
-        function renderDevice(id) {
-            console.log('=== renderDevice START ===');
-            console.log('id:', id);
-            console.log('canvasInner:', canvasInner);
-            
-            const device = state.devices[id];
-            console.log('device:', device);
-            
-            if (!device) {
-                console.error('Device not found!');
-                return;
-            }
-            
-            if (!canvasInner) {
-                console.error('canvasInner is NULL!');
-                alert('Error: Canvas inner tidak ditemukan');
-                return;
-            }
-            
-            const el = document.createElement('div');
-            el.className = `device ${device.type}`;
-            el.id = id;
-            el.style.left = `${device.x}px`;
-            el.style.top = `${device.y}px`;
-
-            const deleteBtn = document.createElement('div');
-            deleteBtn.className = 'delete-btn';
-            deleteBtn.textContent = '❌';
-            deleteBtn.onclick = (e) => {
-                e.stopPropagation();
-                // On mobile, show confirmation dialog
-                if (window.innerWidth <= 768) {
-                    showDeleteConfirmation(id);
-                } else {
-                    // Desktop: direct delete
-                    if (confirm(`Hapus ${device.name}?`)) {
-                        deleteDevice(id);
+                // Zoom Functions
+                function zoomIn() {
+                    if (state.zoomLevel < 1.5) {
+                        state.zoomLevel += 0.1;
+                        updateZoom();
                     }
                 }
-            };
 
-            const iconMap = {
-                'pc': 'computer',
-                'router': 'router',
-                'switch': 'hub'
-            };
+                function zoomOut() {
+                    if (state.zoomLevel > 0.5) {
+                        state.zoomLevel -= 0.1;
+                        updateZoom();
+                    }
+                }
 
-            el.innerHTML = `
+                function resetZoom() {
+                    state.zoomLevel = 1;
+                    updateZoom();
+                }
+
+                function updateZoom() {
+                    canvasInner.style.transform = `scale(${state.zoomLevel})`;
+                    zoomLevelSpan.textContent = Math.round(state.zoomLevel * 100) + '%';
+
+                    // Update canvas inner size to accommodate zoom
+                    const baseWidth = 800;
+                    const baseHeight = 600;
+                    canvasInner.style.minWidth = (baseWidth * state.zoomLevel) + 'px';
+                    canvasInner.style.minHeight = (baseHeight * state.zoomLevel) + 'px';
+                }
+
+                // --- Helper Functions ---
+                function ipToLong(ip) {
+                    if (!ip) return null;
+                    const parts = ip.split('.').map(Number);
+                    if (parts.length !== 4 || parts.some(p => isNaN(p) || p < 0 || p > 255)) return null;
+                    return (parts[0] << 24) | (parts[1] << 16) | (parts[2] << 8) | parts[3];
+                }
+
+                function networkId(ip, mask) {
+                    const i = ipToLong(ip);
+                    const m = ipToLong(mask);
+                    return i !== null && m !== null ? (i & m) >>> 0 : null;
+                }
+
+                function subnetMatch(ip1, ip2, mask) {
+                    return networkId(ip1, mask) === networkId(ip2, mask);
+                }
+
+                // Check if two devices can communicate in the same subnet (must have same subnet mask)
+                function canCommunicateDirectly(device1, device2) {
+                    // Both must have IP, subnet configured
+                    if (!device1.ip || !device1.subnet || !device2.ip || !device2.subnet) {
+                        return false;
+                    }
+
+                    // Subnet masks must be identical
+                    if (device1.subnet !== device2.subnet) {
+                        return false;
+                    }
+
+                    // Must be in same network
+                    return subnetMatch(device1.ip, device2.ip, device1.subnet);
+                }
+
+                // --- Device Management ---
+                function addDeviceFromToolbar(type) {
+                    console.log('=== addDeviceFromToolbar called ===');
+                    console.log('type:', type);
+                    console.log('canvas:', canvas);
+
+                    if (!canvas) {
+                        console.error('Canvas is null!');
+                        alert('Error: Canvas tidak tersedia');
+                        return;
+                    }
+
+                    const rect = canvas.getBoundingClientRect();
+                    console.log('canvas rect:', rect);
+
+                    const x = Math.random() * (rect.width - 100);
+                    const y = Math.random() * (rect.height - 100);
+                    console.log('Position:', x, y);
+
+                    addDevice(type, x, y);
+                }
+
+                function addDevice(type, x, y) {
+                    const id = `device_${++state.deviceIdCounter}`;
+                    const deviceNumber = Object.values(state.devices).filter(d => d.type === type).length + 1;
+
+                    const newDevice = {
+                        id,
+                        type,
+                        x,
+                        y,
+                        name: type === 'pc' ? `PC${deviceNumber}` : (type === 'router' ? `R${deviceNumber}` : `S${deviceNumber}`),
+                        ip: '',
+                        subnet: '',
+                        gateway: '',
+                        interfaces: type === 'router' ? {} : null,
+                        routingTable: type === 'router' ? [] : null
+                    };
+
+                    if (type === 'switch') {
+                        newDevice.ip = 'N/A';
+                        newDevice.subnet = 'N/A';
+                        newDevice.gateway = 'N/A';
+                    }
+
+                    state.devices[id] = newDevice;
+
+                    renderDevice(id);
+                    updateConfig();
+                    updatePcSelectors();
+                }
+
+                function renderDevice(id) {
+                    console.log('=== renderDevice START ===');
+                    console.log('id:', id);
+                    console.log('canvasInner:', canvasInner);
+
+                    const device = state.devices[id];
+                    console.log('device:', device);
+
+                    if (!device) {
+                        console.error('Device not found!');
+                        return;
+                    }
+
+                    if (!canvasInner) {
+                        console.error('canvasInner is NULL!');
+                        alert('Error: Canvas inner tidak ditemukan');
+                        return;
+                    }
+                }
+
+                const el = document.createElement('div');
+                el.className = `device ${device.type}`;
+                el.id = id;
+                el.style.left = `${device.x}px`;
+                el.style.top = `${device.y}px`;
+
+                const deleteBtn = document.createElement('div');
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.textContent = '❌';
+                deleteBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    // On mobile, show confirmation dialog
+                    if (window.innerWidth <= 768) {
+                        showDeleteConfirmation(id);
+                    } else {
+                        // Desktop: direct delete
+                        if (confirm(`Hapus ${device.name}?`)) {
+                            deleteDevice(id);
+                        }
+                    }
+                };
+
+                const iconMap = {
+                    'pc': 'computer',
+                    'router': 'router',
+                    'switch': 'hub'
+                };
+
+                el.innerHTML = `
                 <div class="device-icon">
                     <span class="material-symbols-outlined">${iconMap[device.type]}</span>
                 </div>
                 <div class="device-label">${device.name}</div>
                 <div class="device-ip">${device.ip || 'Belum dikonfigurasi'}</div>
             `;
-            el.appendChild(deleteBtn);
+                el.appendChild(deleteBtn);
 
-            el.onclick = (e) => {
-                e.stopPropagation();
-                if (state.cableMode) {
-                    handleCableClick(id);
-                }
-            };
-
-            // Event Listener untuk menyeret (mouse)
-            let isDragging = false;
-            let startX, startY;
-
-            el.addEventListener('mousedown', (e) => {
-                if (state.cableMode) return;
-                isDragging = true;
-                startX = e.clientX - device.x;
-                startY = e.clientY - device.y;
-
-                function moveAt(pageX, pageY) {
-                    device.x = pageX - startX;
-                    device.y = pageY - startY;
-                    el.style.left = `${device.x}px`;
-                    el.style.top = `${device.y}px`;
-                    drawConnections();
-                }
-
-                function onMouseMove(e) {
-                    if (isDragging) moveAt(e.pageX, e.pageY);
-                }
-
-                function onMouseUp() {
-                    isDragging = false;
-                    document.removeEventListener('mousemove', onMouseMove);
-            // Event Listener untuk menyeret - Mouse Events (Desktop)
-            el.addEventListener('mousedown', (e) => {
-                if (state.cableMode) return;
-                e.preventDefault();
-                
-                startX = e.pageX - device.x;
-                startY = e.pageY - device.y;
-                isDragging = true;
-
-                function moveAt(pageX, pageY) {
-                    device.x = pageX - startX;
-                    device.y = pageY - startY;
-                    el.style.left = `${device.x}px`;
-                    el.style.top = `${device.y}px`;
-                    drawConnections();
-                }
-
-                function onMouseMove(e) {
-                    if (isDragging) moveAt(e.pageX, e.pageY);
-                }
-
-                function onMouseUp() {
-                    isDragging = false;
-                    document.removeEventListener('mousemove', onMouseMove);
-                    document.removeEventListener('mouseup', onMouseUp);
-                }
-
-                document.addEventListener('mousemove', onMouseMove);
-                document.addEventListener('mouseup', onMouseUp);
-            });
-
-            // Event Listener untuk menyeret - Touch Events (Mobile)
-            // Scoped to element only, not document-level
-            el.addEventListener('touchstart', (e) => {
-                if (state.cableMode) return;
-                
-                const touch = e.touches[0];
-                startX = touch.pageX - device.x;
-                startY = touch.pageY - device.y;
-                isDragging = true;
-                
-                // Prevent default only on device, not whole page
-                e.stopPropagation();
-
-                function moveAt(pageX, pageY) {
-                    device.x = pageX - startX;
-                    device.y = pageY - startY;
-                    el.style.left = `${device.x}px`;
-                    el.style.top = `${device.y}px`;
-                    drawConnections();
-                }
-
-                function onTouchMove(e) {
-                    if (isDragging && e.touches.length > 0) {
-                        const touch = e.touches[0];
-                        moveAt(touch.pageX, touch.pageY);
-                        // Only prevent default when actually dragging device
-                        e.preventDefault();
-                        e.stopPropagation();
+                el.onclick = (e) => {
+                    e.stopPropagation();
+                    if (state.cableMode) {
+                        handleCableClick(id);
                     }
-                }
+                };
 
-                function onTouchEnd() {
-                    isDragging = false;
-                    el.removeEventListener('touchmove', onTouchMove);
-                    el.removeEventListener('touchend', onTouchEnd);
-                }
+                // Event Listener untuk menyeret (mouse)
+                let isDragging = false;
+                let startX, startY;
 
-                // Attach to element, NOT document
-                el.addEventListener('touchmove', onTouchMove, { passive: false });
-                el.addEventListener('touchend', onTouchEnd);
-            });
+                el.addEventListener('mousedown'), (e) => {
+                    if (state.cableMode) return;
+                    isDragging = true;
+                    startX = e.clientX - device.x;
+                    startY = e.clientY - device.y;
 
-            canvasInner.appendChild(el);
-        }
-
-        // Delete device from config panel (mobile-friendly)
-        function deleteDeviceFromConfig(deviceId) {
-            console.log('=== deleteDeviceFromConfig START ===');
-            console.log('deviceId:', deviceId);
-            console.log('typeof deviceId:', typeof deviceId);
-            console.log('state.devices:', Object.keys(state.devices));
-            
-            const device = state.devices[deviceId];
-            console.log('device found:', device);
-            
-            if (!device) {
-                console.error('ERROR: Device not found in state!');
-                return;
-            }
-            
-            console.log('Calling showDeleteConfirmation...');
-            showDeleteConfirmation(deviceId);
-            console.log('=== deleteDeviceFromConfig END ===');
-        }
-
-        // Delete confirmation dialog
-        let deviceToDelete = null;
-
-        function showDeleteConfirmation(deviceId) {
-            console.log('=== showDeleteConfirmation START ===');
-            console.log('deviceId:', deviceId);
-            
-            // Get elements inside function to ensure DOM is ready
-            const deleteOverlay = document.getElementById('deleteOverlay');
-            const deleteDeviceNameEl = document.getElementById('deleteDeviceName');
-            
-            console.log('deleteOverlay:', deleteOverlay);
-            console.log('deleteDeviceNameEl:', deleteDeviceNameEl);
-            
-            if (!deleteOverlay || !deleteDeviceNameEl) {
-                console.error('ERROR: Delete overlay elements not found in DOM!');
-                alert('Error: Dialog tidak ditemukan. Silakan refresh halaman.');
-                return;
-            }
-            
-            deviceToDelete = deviceId;
-            console.log('deviceToDelete set to:', deviceToDelete);
-            
-            const device = state.devices[deviceId];
-            console.log('device:', device);
-            
-            if (!device) {
-                console.error('ERROR: Device not found!');
-                return;
-            }
-            
-            console.log('Setting dialog text...');
-            deleteDeviceNameEl.textContent = `Apakah Anda yakin ingin menghapus ${device.name}?`;
-            
-            console.log('Showing overlay...');
-            deleteOverlay.classList.add('active');
-            
-            console.log('Overlay classes:', deleteOverlay.className);
-            console.log('=== showDeleteConfirmation END ===');
-        }
-
-        function cancelDelete() {
-            console.log('=== cancelDelete called ===');
-            deviceToDelete = null;
-            const deleteOverlay = document.getElementById('deleteOverlay');
-            if (deleteOverlay) {
-                deleteOverlay.classList.remove('active');
-            }
-        }
-
-        function confirmDelete() {
-            console.log('=== confirmDelete START ===');
-            console.log('deviceToDelete:', deviceToDelete);
-            
-            if (deviceToDelete) {
-                console.log('Calling deleteDevice with:', deviceToDelete);
-                deleteDevice(deviceToDelete);
-                deviceToDelete = null;
-                console.log('Device deleted, deviceToDelete cleared');
-            } else {
-                console.error('ERROR: No deviceToDelete set!');
-            }
-            
-            console.log('Hiding overlay...');
-            const deleteOverlay = document.getElementById('deleteOverlay');
-            if (deleteOverlay) {
-                deleteOverlay.classList.remove('active');
-            }
-            console.log('=== confirmDelete END ===');
-        }
-
-        // Make functions globally accessible for onclick
-        window.deleteDeviceFromConfig = deleteDeviceFromConfig;
-        window.cancelDelete = cancelDelete;
-        window.confirmDelete = confirmDelete;
-
-        function deleteDevice(id) {
-            console.log('=== deleteDevice START ===');
-            console.log('id:', id);
-            console.log('typeof id:', typeof id);
-            console.log('Current devices:', Object.keys(state.devices));
-            
-            // Hapus koneksi yang terkait
-            console.log('Removing connections...');
-            const beforeConnCount = state.connections.length;
-            state.connections = state.connections.filter(c => c.from !== id && c.to !== id);
-            console.log(`Connections: ${beforeConnCount} -> ${state.connections.length}`);
-            
-            // Hapus elemen dari DOM
-            console.log('Removing DOM element...');
-            const element = document.getElementById(id);
-            console.log('Element found:', element);
-            if (element) {
-                element.remove();
-                console.log('Element removed from DOM');
-            } else {
-                console.error('ERROR: Element not found in DOM!');
-            }
-            
-            // Hapus dari state
-            console.log('Removing from state...');
-            console.log('Device exists in state:', id in state.devices);
-            delete state.devices[id];
-            console.log('Remaining devices:', Object.keys(state.devices));
-
-            console.log('Updating UI...');
-            drawConnections();
-            console.log('drawConnections done');
-            updateConfig();
-            console.log('updateConfig done');
-            updatePcSelectors();
-            console.log('updatePcSelectors done');
-            console.log('=== deleteDevice END ===');
-        }
-
-        // --- Cable & Connection Logic ---
-        function toggleCableMode() {
-            if (state.cableToDelete) {
-                const conn = state.cableToDelete;
-                state.connections = state.connections.filter(c =>
-                    !(c.from === conn.from && c.to === conn.to) &&
-                    !(c.from === conn.to && c.to === conn.from)
-                );
-                const dev1 = state.devices[conn.from];
-                const dev2 = state.devices[conn.to];
-                if (dev1 && dev1.type === 'router' && dev1.interfaces) {
-                    delete dev1.interfaces[conn.to];
-                }
-                if (dev2 && dev2.type === 'router' && dev2.interfaces) {
-                    delete dev2.interfaces[conn.from];
-                }
-                state.cableToDelete = null;
-                document.querySelectorAll('.connection-line.deleting').forEach(el => {
-                    el.classList.remove('deleting');
-                });
-                drawConnections();
-                updateConfig();
-                console.log("Kabel dihapus.");
-                return;
-            }
-
-            state.cableMode = !state.cableMode;
-            if (state.cableMode) {
-                cableModeBtn.style.background = '#28a745';
-                cableModeBtn.textContent = '✓ Mode Kabel Aktif';
-                canvas.style.cursor = 'crosshair';
-                state.selectedDevice = null;
-            } else {
-                cableModeBtn.style.background = '#007bff';
-                cableModeBtn.textContent = '🔌 Mode Kabel';
-                canvas.style.cursor = 'default';
-                if (state.selectedDevice) {
-                    document.getElementById(state.selectedDevice)?.classList.remove('selected');
-                    state.selectedDevice = null;
-                }
-            }
-        }
-
-        function handleCableClick(id) {
-            if (!state.selectedDevice) {
-                state.selectedDevice = id;
-                document.getElementById(id)?.classList.add('selected');
-            } else {
-                if (state.selectedDevice !== id) {
-                    const exists = state.connections.some(c =>
-                        (c.from === state.selectedDevice && c.to === id) ||
-                        (c.from === id && c.to === state.selectedDevice)
-                    );
-
-                    if (!exists) {
-                        state.connections.push({ from: state.selectedDevice, to: id });
+                    function moveAt(pageX, pageY) {
+                        device.x = pageX - startX;
+                        device.y = pageY - startY;
+                        el.style.left = `${device.x}px`;
+                        el.style.top = `${device.y}px`;
                         drawConnections();
-                        assignInterfaceIPs(state.selectedDevice, id);
-                        console.log("Kabel dipasang.");
-                    } else {
-                        state.cableToDelete = { from: state.selectedDevice, to: id };
-                        console.log("Kabel dipilih untuk dihapus. Klik 'Mode Kabel' lagi untuk menghapus.");
-                        document.querySelectorAll('.connection-line').forEach(line => {
-                            const fromId = line.dataset.from;
-                            const toId = line.dataset.to;
-                            if ((fromId === state.selectedDevice && toId === id) ||
-                                (fromId === id && toId === state.selectedDevice)) {
-                                line.classList.add('deleting');
-                            }
-                        });
+                    }
+
+                    function onMouseMove(e) {
+                        if (isDragging) moveAt(e.pageX, e.pageY);
                     }
                 }
-                document.getElementById(state.selectedDevice)?.classList.remove('selected');
-                state.selectedDevice = null;
-            }
-        }
 
-        function assignInterfaceIPs(id1, id2) {
-            const dev1 = state.devices[id1];
-            const dev2 = state.devices[id2];
+                function onMouseUp() {
+                    isDragging = false;
+                    document.removeEventListener('mousemove', onMouseMove);
+                    // Event Listener untuk menyeret - Mouse Events (Desktop)
+                    el.addEventListener('mousedown', (e) => {
+                        if (state.cableMode) return;
+                        e.preventDefault();
 
-            if (dev1?.type === 'router' && !dev1.interfaces[id2]) {
-                dev1.interfaces[id2] = '';
-            }
-            if (dev2?.type === 'router' && !dev2.interfaces[id1]) {
-                dev2.interfaces[id1] = '';
-            }
+                        startX = e.pageX - device.x;
+                        startY = e.pageY - device.y;
+                        isDragging = true;
 
-            updateConfig();
-        }
+                        function moveAt(pageX, pageY) {
+                            device.x = pageX - startX;
+                            device.y = pageY - startY;
+                            el.style.left = `${device.x}px`;
+                            el.style.top = `${device.y}px`;
+                            drawConnections();
+                        }
 
-        function drawConnections() {
-            document.querySelectorAll('.connection-line').forEach(el => el.remove());
+                        function onMouseMove(e) {
+                            if (isDragging) moveAt(e.pageX, e.pageY);
+                        }
 
-            state.connections.forEach(conn => {
-                const from = state.devices[conn.from];
-                const to = state.devices[conn.to];
-                if (!from || !to) return;
+                        function onMouseUp() {
+                            isDragging = false;
+                            document.removeEventListener('mousemove', onMouseMove);
+                            document.removeEventListener('mouseup', onMouseUp);
+                        }
 
-                const fromCenter = { x: from.x + 55, y: from.y + 40 };
-                const toCenter = { x: to.x + 55, y: to.y + 40 };
+                        document.addEventListener('mousemove', onMouseMove);
+                        document.addEventListener('mouseup', onMouseUp);
+                    });
 
-                const line = document.createElement('div');
-                line.className = 'connection-line';
-                line.dataset.from = conn.from;
-                line.dataset.to = conn.to;
+                    // Event Listener untuk menyeret - Touch Events (Mobile)
+                    // Scoped to element only, not document-level
+                    el.addEventListener('touchstart', (e) => {
+                        if (state.cableMode) return;
 
-                const dx = toCenter.x - fromCenter.x;
-                const dy = toCenter.y - fromCenter.y;
-                const length = Math.sqrt(dx * dx + dy * dy);
-                const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                        const touch = e.touches[0];
+                        startX = touch.pageX - device.x;
+                        startY = touch.pageY - device.y;
+                        isDragging = true;
 
-                line.style.width = `${length}px`;
-                line.style.left = `${fromCenter.x}px`;
-                line.style.top = `${fromCenter.y}px`;
-                line.style.transform = `rotate(${angle}deg)`;
+                        // Prevent default only on device, not whole page
+                        e.stopPropagation();
 
-                canvasInner.appendChild(line);
-            });
-        }
+                        function moveAt(pageX, pageY) {
+                            device.x = pageX - startX;
+                            device.y = pageY - startY;
+                            el.style.left = `${device.x}px`;
+                            el.style.top = `${device.y}px`;
+                            drawConnections();
+                        }
 
-        // --- Configuration UI ---
-        function updateConfig() {
-            configContainer.innerHTML = '';
+                        function onTouchMove(e) {
+                            if (isDragging && e.touches.length > 0) {
+                                const touch = e.touches[0];
+                                moveAt(touch.pageX, touch.pageY);
+                                // Only prevent default when actually dragging device
+                                e.preventDefault();
+                                e.stopPropagation();
+                            }
+                        }
 
-            const deviceList = Object.values(state.devices);
-            if (deviceList.length === 0) {
-                configContainer.innerHTML = '<p style="color: #6c757d; text-align: center;">Tambahkan perangkat untuk mulai konfigurasi...</p>';
-                return;
-            }
+                        function onTouchEnd() {
+                            isDragging = false;
+                            el.removeEventListener('touchmove', onTouchMove);
+                            el.removeEventListener('touchend', onTouchEnd);
+                        }
 
-            const iconMap = {
-                'pc': 'computer',
-                'router': 'router',
-                'switch': 'hub'
-            };
+                        // Attach to element, NOT document
+                        el.addEventListener('touchmove', onTouchMove, { passive: false });
+                        el.addEventListener('touchend', onTouchEnd);
+                    });
 
-            deviceList.forEach(device => {
-                const configDiv = document.createElement('div');
-                configDiv.className = 'device-config';
+                    canvasInner.appendChild(el);
+                }
 
-                // Create header with delete button for mobile
-                const header = document.createElement('h4');
-                header.style.display = 'flex';
-                header.style.justifyContent = 'space-between';
-                header.style.alignItems = 'center';
-                
-                const nameSpan = document.createElement('span');
-                nameSpan.innerHTML = `
+                // Delete device from config panel (mobile-friendly)
+                function deleteDeviceFromConfig(deviceId) {
+                    console.log('=== deleteDeviceFromConfig START ===');
+                    console.log('deviceId:', deviceId);
+                    console.log('typeof deviceId:', typeof deviceId);
+                    console.log('state.devices:', Object.keys(state.devices));
+
+                    const device = state.devices[deviceId];
+                    console.log('device found:', device);
+
+                    if (!device) {
+                        console.error('ERROR: Device not found in state!');
+                        return;
+                    }
+
+                    console.log('Calling showDeleteConfirmation...');
+                    showDeleteConfirmation(deviceId);
+                    console.log('=== deleteDeviceFromConfig END ===');
+                }
+
+                // Delete confirmation dialog
+                let deviceToDelete = null;
+
+                function showDeleteConfirmation(deviceId) {
+                    console.log('=== showDeleteConfirmation START ===');
+                    console.log('deviceId:', deviceId);
+
+                    // Get elements inside function to ensure DOM is ready
+                    const deleteOverlay = document.getElementById('deleteOverlay');
+                    const deleteDeviceNameEl = document.getElementById('deleteDeviceName');
+
+                    console.log('deleteOverlay:', deleteOverlay);
+                    console.log('deleteDeviceNameEl:', deleteDeviceNameEl);
+
+                    if (!deleteOverlay || !deleteDeviceNameEl) {
+                        console.error('ERROR: Delete overlay elements not found in DOM!');
+                        alert('Error: Dialog tidak ditemukan. Silakan refresh halaman.');
+                        return;
+                    }
+
+                    deviceToDelete = deviceId;
+                    console.log('deviceToDelete set to:', deviceToDelete);
+
+                    const device = state.devices[deviceId];
+                    console.log('device:', device);
+
+                    if (!device) {
+                        console.error('ERROR: Device not found!');
+                        return;
+                    }
+
+                    console.log('Setting dialog text...');
+                    deleteDeviceNameEl.textContent = `Apakah Anda yakin ingin menghapus ${device.name}?`;
+
+                    console.log('Showing overlay...');
+                    deleteOverlay.classList.add('active');
+
+                    console.log('Overlay classes:', deleteOverlay.className);
+                    console.log('=== showDeleteConfirmation END ===');
+                }
+
+                function cancelDelete() {
+                    console.log('=== cancelDelete called ===');
+                    deviceToDelete = null;
+                    const deleteOverlay = document.getElementById('deleteOverlay');
+                    if (deleteOverlay) {
+                        deleteOverlay.classList.remove('active');
+                    }
+                }
+
+                function confirmDelete() {
+                    console.log('=== confirmDelete START ===');
+                    console.log('deviceToDelete:', deviceToDelete);
+
+                    if (deviceToDelete) {
+                        console.log('Calling deleteDevice with:', deviceToDelete);
+                        deleteDevice(deviceToDelete);
+                        deviceToDelete = null;
+                        console.log('Device deleted, deviceToDelete cleared');
+                    } else {
+                        console.error('ERROR: No deviceToDelete set!');
+                    }
+
+                    console.log('Hiding overlay...');
+                    const deleteOverlay = document.getElementById('deleteOverlay');
+                    if (deleteOverlay) {
+                        deleteOverlay.classList.remove('active');
+                    }
+                    console.log('=== confirmDelete END ===');
+                }
+
+                // Make functions globally accessible for onclick
+                window.deleteDeviceFromConfig = deleteDeviceFromConfig;
+                window.cancelDelete = cancelDelete;
+                window.confirmDelete = confirmDelete;
+
+                function deleteDevice(id) {
+                    console.log('=== deleteDevice START ===');
+                    console.log('id:', id);
+                    console.log('typeof id:', typeof id);
+                    console.log('Current devices:', Object.keys(state.devices));
+
+                    // Hapus koneksi yang terkait
+                    console.log('Removing connections...');
+                    const beforeConnCount = state.connections.length;
+                    state.connections = state.connections.filter(c => c.from !== id && c.to !== id);
+                    console.log(`Connections: ${beforeConnCount} -> ${state.connections.length}`);
+
+                    // Hapus elemen dari DOM
+                    console.log('Removing DOM element...');
+                    const element = document.getElementById(id);
+                    console.log('Element found:', element);
+                    if (element) {
+                        element.remove();
+                        console.log('Element removed from DOM');
+                    } else {
+                        console.error('ERROR: Element not found in DOM!');
+                    }
+
+                    // Hapus dari state
+                    console.log('Removing from state...');
+                    console.log('Device exists in state:', id in state.devices);
+                    delete state.devices[id];
+                    console.log('Remaining devices:', Object.keys(state.devices));
+
+                    console.log('Updating UI...');
+                    drawConnections();
+                    console.log('drawConnections done');
+                    updateConfig();
+                    console.log('updateConfig done');
+                    updatePcSelectors();
+                    console.log('updatePcSelectors done');
+                    console.log('=== deleteDevice END ===');
+                }
+
+                // --- Cable & Connection Logic ---
+                function toggleCableMode() {
+                    if (state.cableToDelete) {
+                        const conn = state.cableToDelete;
+                        state.connections = state.connections.filter(c =>
+                            !(c.from === conn.from && c.to === conn.to) &&
+                            !(c.from === conn.to && c.to === conn.from)
+                        );
+                        const dev1 = state.devices[conn.from];
+                        const dev2 = state.devices[conn.to];
+                        if (dev1 && dev1.type === 'router' && dev1.interfaces) {
+                            delete dev1.interfaces[conn.to];
+                        }
+                        if (dev2 && dev2.type === 'router' && dev2.interfaces) {
+                            delete dev2.interfaces[conn.from];
+                        }
+                        state.cableToDelete = null;
+                        document.querySelectorAll('.connection-line.deleting').forEach(el => {
+                            el.classList.remove('deleting');
+                        });
+                        drawConnections();
+                        updateConfig();
+                        console.log("Kabel dihapus.");
+                        return;
+                    }
+
+                    state.cableMode = !state.cableMode;
+                    if (state.cableMode) {
+                        cableModeBtn.style.background = '#28a745';
+                        cableModeBtn.textContent = '✓ Mode Kabel Aktif';
+                        canvas.style.cursor = 'crosshair';
+                        state.selectedDevice = null;
+                    } else {
+                        cableModeBtn.style.background = '#007bff';
+                        cableModeBtn.textContent = '🔌 Mode Kabel';
+                        canvas.style.cursor = 'default';
+                        if (state.selectedDevice) {
+                            document.getElementById(state.selectedDevice)?.classList.remove('selected');
+                            state.selectedDevice = null;
+                        }
+                    }
+                }
+
+                function handleCableClick(id) {
+                    if (!state.selectedDevice) {
+                        state.selectedDevice = id;
+                        document.getElementById(id)?.classList.add('selected');
+                    } else {
+                        if (state.selectedDevice !== id) {
+                            const exists = state.connections.some(c =>
+                                (c.from === state.selectedDevice && c.to === id) ||
+                                (c.from === id && c.to === state.selectedDevice)
+                            );
+
+                            if (!exists) {
+                                state.connections.push({ from: state.selectedDevice, to: id });
+                                drawConnections();
+                                assignInterfaceIPs(state.selectedDevice, id);
+                                console.log("Kabel dipasang.");
+                            } else {
+                                state.cableToDelete = { from: state.selectedDevice, to: id };
+                                console.log("Kabel dipilih untuk dihapus. Klik 'Mode Kabel' lagi untuk menghapus.");
+                                document.querySelectorAll('.connection-line').forEach(line => {
+                                    const fromId = line.dataset.from;
+                                    const toId = line.dataset.to;
+                                    if ((fromId === state.selectedDevice && toId === id) ||
+                                        (fromId === id && toId === state.selectedDevice)) {
+                                        line.classList.add('deleting');
+                                    }
+                                });
+                            }
+                        }
+                        document.getElementById(state.selectedDevice)?.classList.remove('selected');
+                        state.selectedDevice = null;
+                    }
+                }
+
+                function assignInterfaceIPs(id1, id2) {
+                    const dev1 = state.devices[id1];
+                    const dev2 = state.devices[id2];
+
+                    if (dev1?.type === 'router' && !dev1.interfaces[id2]) {
+                        dev1.interfaces[id2] = '';
+                    }
+                    if (dev2?.type === 'router' && !dev2.interfaces[id1]) {
+                        dev2.interfaces[id1] = '';
+                    }
+
+                    updateConfig();
+                }
+
+                function drawConnections() {
+                    document.querySelectorAll('.connection-line').forEach(el => el.remove());
+
+                    state.connections.forEach(conn => {
+                        const from = state.devices[conn.from];
+                        const to = state.devices[conn.to];
+                        if (!from || !to) return;
+
+                        const fromCenter = { x: from.x + 55, y: from.y + 40 };
+                        const toCenter = { x: to.x + 55, y: to.y + 40 };
+
+                        const line = document.createElement('div');
+                        line.className = 'connection-line';
+                        line.dataset.from = conn.from;
+                        line.dataset.to = conn.to;
+
+                        const dx = toCenter.x - fromCenter.x;
+                        const dy = toCenter.y - fromCenter.y;
+                        const length = Math.sqrt(dx * dx + dy * dy);
+                        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+                        line.style.width = `${length}px`;
+                        line.style.left = `${fromCenter.x}px`;
+                        line.style.top = `${fromCenter.y}px`;
+                        line.style.transform = `rotate(${angle}deg)`;
+
+                        canvasInner.appendChild(line);
+                    });
+                }
+
+                // --- Configuration UI ---
+                function updateConfig() {
+                    configContainer.innerHTML = '';
+
+                    const deviceList = Object.values(state.devices);
+                    if (deviceList.length === 0) {
+                        configContainer.innerHTML = '<p style="color: #6c757d; text-align: center;">Tambahkan perangkat untuk mulai konfigurasi...</p>';
+                        return;
+                    }
+
+                    const iconMap = {
+                        'pc': 'computer',
+                        'router': 'router',
+                        'switch': 'hub'
+                    };
+
+                    deviceList.forEach(device => {
+                        const configDiv = document.createElement('div');
+                        configDiv.className = 'device-config';
+
+                        // Create header with delete button for mobile
+                        const header = document.createElement('h4');
+                        header.style.display = 'flex';
+                        header.style.justifyContent = 'space-between';
+                        header.style.alignItems = 'center';
+
+                        const nameSpan = document.createElement('span');
+                        nameSpan.innerHTML = `
                     <span class="material-symbols-outlined" style="vertical-align: middle;">${iconMap[device.type]}</span>
                     ${device.name} (${device.type.toUpperCase()})
                 `;
-                header.appendChild(nameSpan);
+                        header.appendChild(nameSpan);
 
-                // Add delete button - always visible in config panel
-                const deleteBtn = document.createElement('button');
-                deleteBtn.className = 'delete-device-btn';
-                deleteBtn.title = `Hapus ${device.name}`;
-                deleteBtn.innerHTML = '<span class="material-symbols-outlined">delete</span>';
-                
-                // Use closure to capture device.id properly
-                (function(devId) {
-                    deleteBtn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        console.log('=== BUTTON CLICKED ===');
-                        console.log('Device ID:', devId);
-                        
-                        // Call function directly
-                        if (typeof deleteDeviceFromConfig === 'function') {
-                            console.log('Calling deleteDeviceFromConfig...');
-                            deleteDeviceFromConfig(devId);
-                        } else {
-                            console.error('deleteDeviceFromConfig is not a function!');
-                        }
-                    });
-                })(device.id);
-                
-                header.appendChild(deleteBtn);
+                        // Add delete button - always visible in config panel
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.className = 'delete-device-btn';
+                        deleteBtn.title = `Hapus ${device.name}`;
+                        deleteBtn.innerHTML = '<span class="material-symbols-outlined">delete</span>';
 
-                configDiv.appendChild(header);
+                        // Use closure to capture device.id properly
+                        (function (devId) {
+                            deleteBtn.addEventListener('click', function (e) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                console.log('=== BUTTON CLICKED ===');
+                                console.log('Device ID:', devId);
 
-                let html = '';
+                                // Call function directly
+                                if (typeof deleteDeviceFromConfig === 'function') {
+                                    console.log('Calling deleteDeviceFromConfig...');
+                                    deleteDeviceFromConfig(devId);
+                                } else {
+                                    console.error('deleteDeviceFromConfig is not a function!');
+                                }
+                            });
+                        })(device.id);
 
-                if (device.type !== 'switch') {
-                    html += `
+                        header.appendChild(deleteBtn);
+
+                        configDiv.appendChild(header);
+
+                        let html = '';
+
+                        if (device.type !== 'switch') {
+                            html += `
                         <div class="config-row">
                             <label>IP Address:</label>
                             <input type="text" value="${device.ip}" onchange="updateDeviceIP('${device.id}', this.value)" placeholder="192.168.1.10">
@@ -1444,888 +1471,884 @@
                         </div>
                     `;
 
-                    if (device.type === 'pc') {
-                        html += `
+                            if (device.type === 'pc') {
+                                html += `
                             <div class="config-row">
                                 <label>Gateway:</label>
                                 <input type="text" value="${device.gateway}" onchange="updateDeviceGateway('${device.id}', this.value)" placeholder="192.168.1.1">
                             </div>
                         `;
-                    }
+                            }
 
-                    if (device.type === 'router' && device.interfaces) {
-                        html += '<div style="margin-top: 8px; font-weight: bold; font-size: 14px;">Interfaces:</div>';
-                        Object.entries(device.interfaces).forEach(([targetId, ip]) => {
-                            const targetName = state.devices[targetId]?.name || 'Unknown';
-                            html += `
+                            if (device.type === 'router' && device.interfaces) {
+                                html += '<div style="margin-top: 8px; font-weight: bold; font-size: 14px;">Interfaces:</div>';
+                                Object.entries(device.interfaces).forEach(([targetId, ip]) => {
+                                    const targetName = state.devices[targetId]?.name || 'Unknown';
+                                    html += `
                                 <div class="config-row">
                                     <label>→ ${targetName}:</label>
                                     <input type="text" value="${ip}" onchange="updateInterface('${device.id}', '${targetId}', this.value)" placeholder="192.168.1.1">
                                 </div>
                             `;
-                        });
+                                });
 
-                        html += '<div class="routing-table">';
-                        html += '<div style="font-weight: bold; margin-top: 8px;">Routing Table:</div>';
-                        device.routingTable.forEach((route, idx) => {
-                            html += `
+                                html += '<div class="routing-table">';
+                                html += '<div style="font-weight: bold; margin-top: 8px;">Routing Table:</div>';
+                                device.routingTable.forEach((route, idx) => {
+                                    html += `
                                 <div class="route-row">
                                     <input type="text" value="${route.network}" onchange="updateRoute('${device.id}', ${idx}, 'network', this.value)" placeholder="Network">
                                     <input type="text" value="${route.mask}" onchange="updateRoute('${device.id}', ${idx}, 'mask', this.value)" placeholder="Mask">
                                     <input type="text" value="${route.nextHop}" onchange="updateRoute('${device.id}', ${idx}, 'nextHop', this.value)" placeholder="Next Hop">
                                 </div>
                             `;
-                        });
-                        html += '<button onclick="addRoute(\'' + device.id + '\')" style="margin-top: 5px; padding: 6px 12px; font-size: 14px;">+ Tambah Rute</button>';
-                        html += '</div>';
-                    }
-                } else {
-                    html += '<p style="color: #6c757d; font-style: italic;">Switch tidak memerlukan konfigurasi IP.</p>';
-                }
-
-                // Append HTML content without overwriting header
-                const contentDiv = document.createElement('div');
-                contentDiv.innerHTML = html;
-                configDiv.appendChild(contentDiv);
-                
-                configContainer.appendChild(configDiv);
-            });
-        }
-
-        // --- Configuration Update Functions ---
-        function updateDeviceIP(id, value) {
-            state.devices[id].ip = value;
-            const ipDisplay = document.querySelector(`#${id} .device-ip`);
-            if (ipDisplay) {
-                ipDisplay.textContent = value || 'Belum dikonfigurasi';
-            }
-
-            // Check for IP conflict and show warning
-            if (value && value !== '') {
-                const conflicts = checkIPConflict();
-                const currentConflict = conflicts.find(c => c.ip === value);
-                if (currentConflict) {
-                    alert(`⚠️ Peringatan: IP Address ${value} sudah digunakan oleh ${currentConflict.devices[0]}!\n\nKonflik IP akan menyebabkan koneksi gagal.`);
-                }
-            }
-
-            // Update conflict badges on all devices
-            updateConflictBadges();
-        }
-
-        function updateDeviceSubnet(id, value) {
-            state.devices[id].subnet = value;
-            // Update conflict badges to check for subnet mask mismatches
-            updateConflictBadges();
-        }
-
-        function updateDeviceGateway(id, value) {
-            state.devices[id].gateway = value;
-            // Update conflict badges to check for gateway mismatches
-            updateConflictBadges();
-        }
-
-        function updateInterface(routerId, targetId, value) {
-            state.devices[routerId].interfaces[targetId] = value;
-
-            // Check for IP conflict on interface and show warning
-            if (value && value !== '') {
-                const conflicts = checkIPConflict();
-                const currentConflict = conflicts.find(c => c.ip === value);
-                if (currentConflict) {
-                    alert(`⚠️ Peringatan: IP Interface ${value} sudah digunakan oleh ${currentConflict.devices[0]}!\n\nKonflik IP akan menyebabkan koneksi gagal.`);
-                }
-            }
-
-            // Update conflict badges on all devices
-            updateConflictBadges();
-        }
-
-        function addRoute(routerId) {
-            state.devices[routerId].routingTable.push({
-                network: '',
-                mask: '',
-                nextHop: ''
-            });
-            updateConfig();
-        }
-
-        function updateRoute(routerId, idx, field, value) {
-            state.devices[routerId].routingTable[idx][field] = value;
-        }
-
-        // --- PC Selector Update ---
-        function updatePcSelectors() {
-            const pcs = Object.values(state.devices).filter(d => d.type === 'pc');
-
-            const fillSelector = (selectElement) => {
-                selectElement.innerHTML = '<option value="">-- Pilih PC --</option>';
-                pcs.forEach(pc => {
-                    const option = document.createElement('option');
-                    option.value = pc.id;
-                    option.textContent = pc.name;
-                    selectElement.appendChild(option);
-                });
-            };
-
-            fillSelector(sourcePcSelect);
-            fillSelector(destPcSelect);
-        }
-
-        // --- Utility Functions ---
-        function autoArrange() {
-            const deviceList = Object.values(state.devices);
-            const pcs = deviceList.filter(d => d.type === 'pc');
-            const routers = deviceList.filter(d => d.type === 'router');
-            const switches = deviceList.filter(d => d.type === 'switch');
-
-            // Use larger canvas area for arrangement with better spacing
-            const isMobile = window.innerWidth <= 768;
-            const width = isMobile ? 1200 : 800;
-            const height = isMobile ? 800 : 600;
-            const spacing = isMobile ? 110 : 130;
-            const columns = isMobile ? 8 : 6;
-
-            pcs.forEach((pc, i) => {
-                pc.x = 20 + (i % columns) * spacing;
-                pc.y = 20 + Math.floor(i / columns) * 120;
-                document.getElementById(pc.id).style.left = `${pc.x}px`;
-                document.getElementById(pc.id).style.top = `${pc.y}px`;
-            });
-
-            routers.forEach((router, i) => {
-                router.x = 20 + (i % columns) * spacing;
-                router.y = height * 0.5;
-                document.getElementById(router.id).style.left = `${router.x}px`;
-                document.getElementById(router.id).style.top = `${router.y}px`;
-            });
-
-            switches.forEach((sw, i) => {
-                sw.x = 20 + (i % columns) * spacing;
-                sw.y = height * 0.75;
-                document.getElementById(sw.id).style.left = `${sw.x}px`;
-                document.getElementById(sw.id).style.top = `${sw.y}px`;
-            });
-
-            drawConnections();
-        }
-
-        function clearAll() {
-            if (confirm('Hapus semua perangkat?')) {
-                Object.keys(state.devices).forEach(id => {
-                    document.getElementById(id)?.remove();
-                });
-                state.devices = {};
-                state.connections = [];
-                state.deviceIdCounter = 0;
-                state.selectedDevice = null;
-                state.cableToDelete = null;
-
-                drawConnections();
-                updateConfig();
-                updatePcSelectors();
-                animationLogDiv.style.display = 'none';
-                hasilDiv.style.display = 'none';
-            }
-        }
-
-        // --- Logging ---
-        function addLog(message, isError = false) {
-            const logDiv = animationLogDiv;
-            logDiv.style.display = 'block';
-            const entry = document.createElement('div');
-            entry.className = isError ? 'log-entry error' : 'log-entry';
-            entry.textContent = isError ? `❌ ${message}` : `⏱ ${message}`;
-            logDiv.appendChild(entry);
-            logDiv.scrollTop = logDiv.scrollHeight;
-        }
-
-        // --- Animation ---
-        function findLineElement(fromId, toId) {
-            return Array.from(document.querySelectorAll('.connection-line')).find(line => {
-                const lineFrom = line.dataset.from;
-                const lineTo = line.dataset.to;
-                return (lineFrom === fromId && lineTo === toId) || (lineFrom === toId && lineTo === fromId);
-            });
-        }
-
-        function animatePacket(fromId, toId, delay, message) {
-            return new Promise((resolve) => {
-                const from = state.devices[fromId];
-                const to = state.devices[toId];
-
-                if (!from || !to) {
-                    console.error("Perangkat tidak ditemukan untuk animasi:", fromId, toId);
-                    resolve();
-                    return;
-                }
-
-                const fromCenter = { x: from.x + 55, y: from.y + 40 };
-                const toCenter = { x: to.x + 55, y: to.y + 40 };
-
-                setTimeout(() => {
-                    addLog(message);
-
-                    const cableElement = findLineElement(fromId, toId);
-                    if (cableElement) {
-                        cableElement.classList.add('highlighted');
-                    }
-
-                    const packet = document.createElement('div');
-                    packet.className = 'packet';
-                    packet.textContent = '📦';
-                    packet.style.left = `${fromCenter.x - 12}px`;
-                    packet.style.top = `${fromCenter.y - 12}px`;
-                    canvasInner.appendChild(packet);
-
-                    const duration = 1500;
-                    const startTime = Date.now();
-                    let animationId;
-
-                    function animate() {
-                        // Check if animation should stop
-                        if (state.stopAnimation) {
-                            packet.remove();
-                            if (cableElement) {
-                                cableElement.classList.remove('highlighted');
+                                });
+                                html += '<button onclick="addRoute(\'' + device.id + '\')" style="margin-top: 5px; padding: 6px 12px; font-size: 14px;">+ Tambah Rute</button>';
+                                html += '</div>';
                             }
+                        } else {
+                            html += '<p style="color: #6c757d; font-style: italic;">Switch tidak memerlukan konfigurasi IP.</p>';
+                        }
+
+                        // Append HTML content without overwriting header
+                        const contentDiv = document.createElement('div');
+                        contentDiv.innerHTML = html;
+                        configDiv.appendChild(contentDiv);
+
+                        configContainer.appendChild(configDiv);
+                    });
+                }
+
+                // --- Configuration Update Functions ---
+                function updateDeviceIP(id, value) {
+                    state.devices[id].ip = value;
+                    const ipDisplay = document.querySelector(`#${id} .device-ip`);
+                    if (ipDisplay) {
+                        ipDisplay.textContent = value || 'Belum dikonfigurasi';
+                    }
+
+                    // Check for IP conflict and show warning
+                    if (value && value !== '') {
+                        const conflicts = checkIPConflict();
+                        const currentConflict = conflicts.find(c => c.ip === value);
+                        if (currentConflict) {
+                            alert(`⚠️ Peringatan: IP Address ${value} sudah digunakan oleh ${currentConflict.devices[0]}!\n\nKonflik IP akan menyebabkan koneksi gagal.`);
+                        }
+                    }
+
+                    // Update conflict badges on all devices
+                    updateConflictBadges();
+                }
+
+                function updateDeviceSubnet(id, value) {
+                    state.devices[id].subnet = value;
+                    // Update conflict badges to check for subnet mask mismatches
+                    updateConflictBadges();
+                }
+
+                function updateDeviceGateway(id, value) {
+                    state.devices[id].gateway = value;
+                    // Update conflict badges to check for gateway mismatches
+                    updateConflictBadges();
+                }
+
+                function updateInterface(routerId, targetId, value) {
+                    state.devices[routerId].interfaces[targetId] = value;
+
+                    // Check for IP conflict on interface and show warning
+                    if (value && value !== '') {
+                        const conflicts = checkIPConflict();
+                        const currentConflict = conflicts.find(c => c.ip === value);
+                        if (currentConflict) {
+                            alert(`⚠️ Peringatan: IP Interface ${value} sudah digunakan oleh ${currentConflict.devices[0]}!\n\nKonflik IP akan menyebabkan koneksi gagal.`);
+                        }
+                    }
+
+                    // Update conflict badges on all devices
+                    updateConflictBadges();
+                }
+
+                function addRoute(routerId) {
+                    state.devices[routerId].routingTable.push({
+                        network: '',
+                        mask: '',
+                        nextHop: ''
+                    });
+                    updateConfig();
+                }
+
+                function updateRoute(routerId, idx, field, value) {
+                    state.devices[routerId].routingTable[idx][field] = value;
+                }
+
+                // --- PC Selector Update ---
+                function updatePcSelectors() {
+                    const pcs = Object.values(state.devices).filter(d => d.type === 'pc');
+
+                    const fillSelector = (selectElement) => {
+                        selectElement.innerHTML = '<option value="">-- Pilih PC --</option>';
+                        pcs.forEach(pc => {
+                            const option = document.createElement('option');
+                            option.value = pc.id;
+                            option.textContent = pc.name;
+                            selectElement.appendChild(option);
+                        });
+                    };
+
+                    fillSelector(sourcePcSelect);
+                    fillSelector(destPcSelect);
+                }
+
+                // --- Utility Functions ---
+                function autoArrange() {
+                    const deviceList = Object.values(state.devices);
+                    const pcs = deviceList.filter(d => d.type === 'pc');
+                    const routers = deviceList.filter(d => d.type === 'router');
+                    const switches = deviceList.filter(d => d.type === 'switch');
+
+                    // Use larger canvas area for arrangement with better spacing
+                    const isMobile = window.innerWidth <= 768;
+                    const width = isMobile ? 1200 : 800;
+                    const height = isMobile ? 800 : 600;
+                    const spacing = isMobile ? 110 : 130;
+                    const columns = isMobile ? 8 : 6;
+
+                    pcs.forEach((pc, i) => {
+                        pc.x = 20 + (i % columns) * spacing;
+                        pc.y = 20 + Math.floor(i / columns) * 120;
+                        document.getElementById(pc.id).style.left = `${pc.x}px`;
+                        document.getElementById(pc.id).style.top = `${pc.y}px`;
+                    });
+
+                    routers.forEach((router, i) => {
+                        router.x = 20 + (i % columns) * spacing;
+                        router.y = height * 0.5;
+                        document.getElementById(router.id).style.left = `${router.x}px`;
+                        document.getElementById(router.id).style.top = `${router.y}px`;
+                    });
+
+                    switches.forEach((sw, i) => {
+                        sw.x = 20 + (i % columns) * spacing;
+                        sw.y = height * 0.75;
+                        document.getElementById(sw.id).style.left = `${sw.x}px`;
+                        document.getElementById(sw.id).style.top = `${sw.y}px`;
+                    });
+
+                    drawConnections();
+                }
+
+                function clearAll() {
+                    if (confirm('Hapus semua perangkat?')) {
+                        Object.keys(state.devices).forEach(id => {
+                            document.getElementById(id)?.remove();
+                        });
+                        state.devices = {};
+                        state.connections = [];
+                        state.deviceIdCounter = 0;
+                        state.selectedDevice = null;
+                        state.cableToDelete = null;
+
+                        drawConnections();
+                        updateConfig();
+                        updatePcSelectors();
+                        animationLogDiv.style.display = 'none';
+                        hasilDiv.style.display = 'none';
+                    }
+                }
+
+                // --- Logging ---
+                function addLog(message, isError = false) {
+                    const logDiv = animationLogDiv;
+                    logDiv.style.display = 'block';
+                    const entry = document.createElement('div');
+                    entry.className = isError ? 'log-entry error' : 'log-entry';
+                    entry.textContent = isError ? `❌ ${message}` : `⏱ ${message}`;
+                    logDiv.appendChild(entry);
+                    logDiv.scrollTop = logDiv.scrollHeight;
+                }
+
+                // --- Animation ---
+                function findLineElement(fromId, toId) {
+                    return Array.from(document.querySelectorAll('.connection-line')).find(line => {
+                        const lineFrom = line.dataset.from;
+                        const lineTo = line.dataset.to;
+                        return (lineFrom === fromId && lineTo === toId) || (lineFrom === toId && lineTo === fromId);
+                    });
+                }
+
+                function animatePacket(fromId, toId, delay, message) {
+                    return new Promise((resolve) => {
+                        const from = state.devices[fromId];
+                        const to = state.devices[toId];
+
+                        if (!from || !to) {
+                            console.error("Perangkat tidak ditemukan untuk animasi:", fromId, toId);
                             resolve();
                             return;
                         }
 
-                        const elapsed = Date.now() - startTime;
-                        const progress = Math.min(elapsed / duration, 1);
+                        const fromCenter = { x: from.x + 55, y: from.y + 40 };
+                        const toCenter = { x: to.x + 55, y: to.y + 40 };
 
-                        const currentX = fromCenter.x + (toCenter.x - fromCenter.x) * progress;
-                        const currentY = fromCenter.y + (toCenter.y - fromCenter.y) * progress;
+                        setTimeout(() => {
+                            addLog(message);
 
-                        packet.style.left = `${currentX - 12}px`;
-                        packet.style.top = `${currentY - 12}px`;
-
-                        if (progress < 1) {
-                            animationId = requestAnimationFrame(animate);
-                        } else {
-                            packet.remove();
+                            const cableElement = findLineElement(fromId, toId);
                             if (cableElement) {
-                                setTimeout(() => {
-                                    cableElement.classList.remove('highlighted');
-                                }, 200);
-                            }
-                            resolve();
-                        }
-                    }
-
-                    animate();
-                }, delay);
-            });
-        }
-
-        // --- Path Finding & Validation ---
-        function findPathWithRouting(startId, endId) {
-            const startDevice = state.devices[startId];
-            const endDevice = state.devices[endId];
-
-            if (!startDevice || !endDevice) {
-                return { success: false, error: "Perangkat asal atau tujuan tidak ditemukan." };
-            }
-
-            // Check if they can communicate directly (same subnet AND same subnet mask)
-            if (canCommunicateDirectly(startDevice, endDevice)) {
-                const isDirectlyConnected = state.connections.some(c =>
-                    (c.from === startId && c.to === endId) ||
-                    (c.from === endId && c.to === startId)
-                );
-
-                if (!isDirectlyConnected) {
-                    const connectedToSwitch = (deviceId) => {
-                        return state.connections.some(c => (c.from === deviceId || c.to === deviceId) && state.devices[(c.from === deviceId ? c.to : c.from)].type === 'switch');
-                    };
-
-                    const startConnectedToSwitch = connectedToSwitch(startId);
-                    const endConnectedToSwitch = connectedToSwitch(endId);
-
-                    if (startConnectedToSwitch && endConnectedToSwitch) {
-                        return { success: true, path: [startId, endId] };
-                    }
-                } else {
-                    return { success: true, path: [startId, endId] };
-                }
-            } else {
-                // Check if they have different subnet masks
-                if (startDevice.subnet && endDevice.subnet && startDevice.subnet !== endDevice.subnet) {
-                    return { 
-                        success: false, 
-                        error: `Tidak dapat terkoneksi: ${startDevice.name} (subnet: ${startDevice.subnet}) dan ${endDevice.name} (subnet: ${endDevice.subnet}) memiliki subnet mask yang berbeda. Gunakan router untuk menghubungkan network yang berbeda.` 
-                    };
-                }
-            }
-
-            const visited = new Set();
-            const queue = [[startId]];
-
-            while (queue.length > 0) {
-                const path = queue.shift();
-                const currentId = path[path.length - 1];
-                const currentDevice = state.devices[currentId];
-
-                if (currentId === endId) {
-                    return { success: true, path: path };
-                }
-
-                if (visited.has(currentId)) continue;
-                visited.add(currentId);
-
-                const connectedNeighbors = state.connections
-                    .filter(c => c.from === currentId || c.to === currentId)
-                    .map(c => c.from === currentId ? c.to : c.from);
-
-                for (const neighborId of connectedNeighbors) {
-                    if (visited.has(neighborId)) continue;
-
-                    const neighbor = state.devices[neighborId];
-
-                    let isValidConnection = false;
-
-                    if (currentDevice.type === 'switch' || neighbor.type === 'switch') {
-                        if (!(currentDevice.type === 'switch' && neighbor.type === 'switch')) {
-                            isValidConnection = true;
-                        }
-                    } else if (currentDevice.type === 'pc') {
-                        if (neighbor.type === 'router') {
-                            const interfaceIp = neighbor.interfaces[currentId];
-                            if (interfaceIp && currentDevice.gateway === interfaceIp) {
-                                isValidConnection = true;
-                            } else {
-                                console.log(`Validasi PC-${neighbor.name} gagal: gateway=${currentDevice.gateway}, interface=${interfaceIp}`);
-                            }
-                        }
-                    } else if (currentDevice.type === 'router') {
-                        if (neighbor.type === 'pc') {
-                            const interfaceIp = currentDevice.interfaces[neighborId];
-                            if (interfaceIp && subnetMatch(neighbor.ip, interfaceIp, neighbor.subnet)) {
-                                isValidConnection = true;
-                            } else {
-                                console.log(`Validasi Router-${neighbor.name} gagal: subnet tidak cocok atau interface kosong.`);
-                            }
-                        } else if (neighbor.type === 'router') {
-                            const destNetworkId = networkId(endDevice.ip, endDevice.subnet);
-                            if (destNetworkId === null) {
-                                console.log(`Validasi Router-${neighbor.name} gagal: tidak bisa hitung network ID tujuan.`);
-                                continue;
+                                cableElement.classList.add('highlighted');
                             }
 
-                            const hasRoute = currentDevice.routingTable.some(route =>
-                                networkId(route.network, route.mask) === destNetworkId
-                            );
+                            const packet = document.createElement('div');
+                            packet.className = 'packet';
+                            packet.textContent = '📦';
+                            packet.style.left = `${fromCenter.x - 12}px`;
+                            packet.style.top = `${fromCenter.y - 12}px`;
+                            canvasInner.appendChild(packet);
 
-                            if (!hasRoute) {
-                                console.log(`Validasi Router-${neighbor.name} gagal: tidak ada rute ke network tujuan.`);
-                                continue;
+                            const duration = 1500;
+                            const startTime = Date.now();
+                            let animationId;
+
+                            function animate() {
+                                // Check if animation should stop
+                                if (state.stopAnimation) {
+                                    packet.remove();
+                                    if (cableElement) {
+                                        cableElement.classList.remove('highlighted');
+                                    }
+                                    resolve();
+                                    return;
+                                }
+
+                                const elapsed = Date.now() - startTime;
+                                const progress = Math.min(elapsed / duration, 1);
+
+                                const currentX = fromCenter.x + (toCenter.x - fromCenter.x) * progress;
+                                const currentY = fromCenter.y + (toCenter.y - fromCenter.y) * progress;
+
+                                packet.style.left = `${currentX - 12}px`;
+                                packet.style.top = `${currentY - 12}px`;
+
+                                if (progress < 1) {
+                                    animationId = requestAnimationFrame(animate);
+                                } else {
+                                    packet.remove();
+                                    if (cableElement) {
+                                        setTimeout(() => {
+                                            cableElement.classList.remove('highlighted');
+                                        }, 200);
+                                    }
+                                    resolve();
+                                }
                             }
 
-                            const route = currentDevice.routingTable.find(r =>
-                                networkId(r.network, r.mask) === destNetworkId
-                            );
-                            const nextHopInterface = neighbor.interfaces[currentId];
-                            if (route.nextHop !== nextHopInterface) {
-                                console.log(`Validasi Router-${neighbor.name} gagal: next hop salah. Seharusnya ${nextHopInterface}, dikonfigurasi ${route.nextHop}.`);
-                                continue;
-                            }
-
-                            // Validasi subnet antar router (gunakan /24)
-                            const linkMask = "255.255.255.0";
-                            const currentInterface = currentDevice.interfaces[neighborId];
-                            if (currentInterface && nextHopInterface && subnetMatch(currentInterface, nextHopInterface, linkMask)) {
-                                isValidConnection = true;
-                            } else {
-                                console.log(`Validasi Router-${neighbor.name} gagal: interface subnet antar router tidak cocok dengan mask ${linkMask}.`);
-                                // Untuk simulasi, kita biarkan tetap valid jika linkMask /24 digunakan
-                                // Jadi, kita tidak paksa 'continue'
-                                isValidConnection = true; // Biarkan selalu valid jika menggunakan /24
-                            }
-                        }
-                    }
-
-                    if (isValidConnection) {
-                        queue.push([...path, neighborId]);
-                    }
-                }
-            }
-
-            return { success: false, error: `Tidak ditemukan jalur dari ${startDevice.name} ke ${endDevice.name}. Periksa koneksi dan konfigurasi routing.` };
-        }
-
-        // --- Check IP Conflict ---
-        function checkIPConflict() {
-            const ipMap = {};
-            const conflicts = [];
-
-            Object.values(state.devices).forEach(device => {
-                // Skip switch dan device tanpa IP
-                if (device.type === 'switch' || !device.ip || device.ip === 'N/A' || device.ip === '') {
-                    return;
-                }
-
-                if (ipMap[device.ip]) {
-                    conflicts.push({
-                        ip: device.ip,
-                        devices: [ipMap[device.ip], device.name]
+                            animate();
+                        }, delay);
                     });
-                } else {
-                    ipMap[device.ip] = device.name;
                 }
 
-                // Check router interfaces for conflicts
-                if (device.type === 'router' && device.interfaces) {
-                    Object.values(device.interfaces).forEach(interfaceIP => {
-                        if (interfaceIP && interfaceIP !== '') {
-                            if (ipMap[interfaceIP]) {
-                                conflicts.push({
-                                    ip: interfaceIP,
-                                    devices: [ipMap[interfaceIP], `${device.name} (Interface)`]
+                // --- Path Finding & Validation ---
+                function findPathWithRouting(startId, endId) {
+                    const startDevice = state.devices[startId];
+                    const endDevice = state.devices[endId];
+
+                    if (!startDevice || !endDevice) {
+                        return { success: false, error: "Perangkat asal atau tujuan tidak ditemukan." };
+                    }
+
+                    // Check if they can communicate directly (same subnet AND same subnet mask)
+                    if (canCommunicateDirectly(startDevice, endDevice)) {
+                        const isDirectlyConnected = state.connections.some(c =>
+                            (c.from === startId && c.to === endId) ||
+                            (c.from === endId && c.to === startId)
+                        );
+
+                        if (!isDirectlyConnected) {
+                            const connectedToSwitch = (deviceId) => {
+                                return state.connections.some(c => (c.from === deviceId || c.to === deviceId) && state.devices[(c.from === deviceId ? c.to : c.from)].type === 'switch');
+                            };
+
+                            const startConnectedToSwitch = connectedToSwitch(startId);
+                            const endConnectedToSwitch = connectedToSwitch(endId);
+
+                            if (startConnectedToSwitch && endConnectedToSwitch) {
+                                return { success: true, path: [startId, endId] };
+                            }
+                        } else {
+                            return { success: true, path: [startId, endId] };
+                        }
+                    } else {
+                        // Check if they have different subnet masks
+                        if (startDevice.subnet && endDevice.subnet && startDevice.subnet !== endDevice.subnet) {
+                            return {
+                                success: false,
+                                error: `Tidak dapat terkoneksi: ${startDevice.name} (subnet: ${startDevice.subnet}) dan ${endDevice.name} (subnet: ${endDevice.subnet}) memiliki subnet mask yang berbeda. Gunakan router untuk menghubungkan network yang berbeda.`
+                            };
+                        }
+                    }
+
+                    const visited = new Set();
+                    const queue = [[startId]];
+
+                    while (queue.length > 0) {
+                        const path = queue.shift();
+                        const currentId = path[path.length - 1];
+                        const currentDevice = state.devices[currentId];
+
+                        if (currentId === endId) {
+                            return { success: true, path: path };
+                        }
+
+                        if (visited.has(currentId)) continue;
+                        visited.add(currentId);
+
+                        const connectedNeighbors = state.connections
+                            .filter(c => c.from === currentId || c.to === currentId)
+                            .map(c => c.from === currentId ? c.to : c.from);
+
+                        for (const neighborId of connectedNeighbors) {
+                            if (visited.has(neighborId)) continue;
+
+                            const neighbor = state.devices[neighborId];
+
+                            let isValidConnection = false;
+
+                            if (currentDevice.type === 'switch' || neighbor.type === 'switch') {
+                                if (!(currentDevice.type === 'switch' && neighbor.type === 'switch')) {
+                                    isValidConnection = true;
+                                }
+                            } else if (currentDevice.type === 'pc') {
+                                if (neighbor.type === 'router') {
+                                    const interfaceIp = neighbor.interfaces[currentId];
+                                    if (interfaceIp && currentDevice.gateway === interfaceIp) {
+                                        isValidConnection = true;
+                                    } else {
+                                        console.log(`Validasi PC-${neighbor.name} gagal: gateway=${currentDevice.gateway}, interface=${interfaceIp}`);
+                                    }
+                                }
+                            } else if (currentDevice.type === 'router') {
+                                if (neighbor.type === 'pc') {
+                                    const interfaceIp = currentDevice.interfaces[neighborId];
+                                    if (interfaceIp && subnetMatch(neighbor.ip, interfaceIp, neighbor.subnet)) {
+                                        isValidConnection = true;
+                                    } else {
+                                        console.log(`Validasi Router-${neighbor.name} gagal: subnet tidak cocok atau interface kosong.`);
+                                    }
+                                } else if (neighbor.type === 'router') {
+                                    const destNetworkId = networkId(endDevice.ip, endDevice.subnet);
+                                    if (destNetworkId === null) {
+                                        console.log(`Validasi Router-${neighbor.name} gagal: tidak bisa hitung network ID tujuan.`);
+                                        continue;
+                                    }
+
+                                    const hasRoute = currentDevice.routingTable.some(route =>
+                                        networkId(route.network, route.mask) === destNetworkId
+                                    );
+
+                                    if (!hasRoute) {
+                                        console.log(`Validasi Router-${neighbor.name} gagal: tidak ada rute ke network tujuan.`);
+                                        continue;
+                                    }
+
+                                    const route = currentDevice.routingTable.find(r =>
+                                        networkId(r.network, r.mask) === destNetworkId
+                                    );
+                                    const nextHopInterface = neighbor.interfaces[currentId];
+                                    if (route.nextHop !== nextHopInterface) {
+                                        console.log(`Validasi Router-${neighbor.name} gagal: next hop salah. Seharusnya ${nextHopInterface}, dikonfigurasi ${route.nextHop}.`);
+                                        continue;
+                                    }
+
+                                    // Validasi subnet antar router (gunakan /24)
+                                    const linkMask = "255.255.255.0";
+                                    const currentInterface = currentDevice.interfaces[neighborId];
+                                    if (currentInterface && nextHopInterface && subnetMatch(currentInterface, nextHopInterface, linkMask)) {
+                                        isValidConnection = true;
+                                    } else {
+                                        console.log(`Validasi Router-${neighbor.name} gagal: interface subnet antar router tidak cocok dengan mask ${linkMask}.`);
+                                        // Untuk simulasi, kita biarkan tetap valid jika linkMask /24 digunakan
+                                        // Jadi, kita tidak paksa 'continue'
+                                        isValidConnection = true; // Biarkan selalu valid jika menggunakan /24
+                                    }
+                                }
+                            }
+
+                            if (isValidConnection) {
+                                queue.push([...path, neighborId]);
+                            }
+                        }
+                    }
+
+                    return { success: false, error: `Tidak ditemukan jalur dari ${startDevice.name} ke ${endDevice.name}. Periksa koneksi dan konfigurasi routing.` };
+                }
+
+                // --- Check IP Conflict ---
+                function checkIPConflict() {
+                    const ipMap = {};
+                    const conflicts = [];
+
+                    Object.values(state.devices).forEach(device => {
+                        // Skip switch dan device tanpa IP
+                        if (device.type === 'switch' || !device.ip || device.ip === 'N/A' || device.ip === '') {
+                            return;
+                        }
+
+                        if (ipMap[device.ip]) {
+                            conflicts.push({
+                                ip: device.ip,
+                                devices: [ipMap[device.ip], device.name]
+                            });
+                        } else {
+                            ipMap[device.ip] = device.name;
+                        }
+
+                        // Check router interfaces for conflicts
+                        if (device.type === 'router' && device.interfaces) {
+                            Object.values(device.interfaces).forEach(interfaceIP => {
+                                if (interfaceIP && interfaceIP !== '') {
+                                    if (ipMap[interfaceIP]) {
+                                        conflicts.push({
+                                            ip: interfaceIP,
+                                            devices: [ipMap[interfaceIP], `${device.name} (Interface)`]
+                                        });
+                                    } else {
+                                        ipMap[interfaceIP] = `${device.name} (Interface)`;
+                                    }
+                                }
+                            });
+                        }
+                    });
+
+                    return conflicts;
+                }
+
+                // --- Update Conflict Badges ---
+                function updateConflictBadges() {
+                    const conflicts = checkIPConflict();
+                    const conflictIPs = new Set();
+
+                    // Collect all IPs that have conflicts
+                    conflicts.forEach(conflict => {
+                        conflictIPs.add(conflict.ip);
+                    });
+
+                    // Check for subnet mask inconsistencies
+                    const networkGroups = {};
+                    Object.values(state.devices).forEach(device => {
+                        if (device.type === 'pc' && device.ip && device.subnet) {
+                            const netId = networkId(device.ip, device.subnet);
+                            if (netId !== null) {
+                                if (!networkGroups[netId]) {
+                                    networkGroups[netId] = [];
+                                }
+                                networkGroups[netId].push(device);
+                            }
+                        }
+                    });
+
+                    // Check if devices in same network have different subnet masks
+                    const subnetMismatchDevices = new Set();
+                    const gatewayMismatchDevices = new Set();
+
+                    Object.values(networkGroups).forEach(group => {
+                        if (group.length > 1) {
+                            const subnets = [...new Set(group.map(d => d.subnet))];
+                            if (subnets.length > 1) {
+                                // Different subnet masks in same network - this is wrong!
+                                group.forEach(d => subnetMismatchDevices.add(d.id));
+                            }
+
+                            // Check if gateways are different in same network
+                            const gateways = [...new Set(group.map(d => d.gateway).filter(g => g && g !== ''))];
+                            if (gateways.length > 1) {
+                                // Different gateways in same network - this is wrong!
+                                group.forEach(d => {
+                                    if (d.gateway && d.gateway !== '') {
+                                        gatewayMismatchDevices.add(d.id);
+                                    }
                                 });
-                            } else {
-                                ipMap[interfaceIP] = `${device.name} (Interface)`;
                             }
                         }
                     });
-                }
-            });
 
-            return conflicts;
-        }
+                    // Update all devices
+                    Object.values(state.devices).forEach(device => {
+                        const deviceEl = document.getElementById(device.id);
+                        if (!deviceEl) return;
 
-        // --- Update Conflict Badges ---
-        function updateConflictBadges() {
-            const conflicts = checkIPConflict();
-            const conflictIPs = new Set();
-            
-            // Collect all IPs that have conflicts
-            conflicts.forEach(conflict => {
-                conflictIPs.add(conflict.ip);
-            });
+                        let hasConflict = false;
+                        let hasSubnetMismatch = false;
+                        let hasGatewayMismatch = false;
 
-            // Check for subnet mask inconsistencies
-            const networkGroups = {};
-            Object.values(state.devices).forEach(device => {
-                if (device.type === 'pc' && device.ip && device.subnet) {
-                    const netId = networkId(device.ip, device.subnet);
-                    if (netId !== null) {
-                        if (!networkGroups[netId]) {
-                            networkGroups[netId] = [];
-                        }
-                        networkGroups[netId].push(device);
-                    }
-                }
-            });
-
-            // Check if devices in same network have different subnet masks
-            const subnetMismatchDevices = new Set();
-            const gatewayMismatchDevices = new Set();
-            
-            Object.values(networkGroups).forEach(group => {
-                if (group.length > 1) {
-                    const subnets = [...new Set(group.map(d => d.subnet))];
-                    if (subnets.length > 1) {
-                        // Different subnet masks in same network - this is wrong!
-                        group.forEach(d => subnetMismatchDevices.add(d.id));
-                    }
-
-                    // Check if gateways are different in same network
-                    const gateways = [...new Set(group.map(d => d.gateway).filter(g => g && g !== ''))];
-                    if (gateways.length > 1) {
-                        // Different gateways in same network - this is wrong!
-                        group.forEach(d => {
-                            if (d.gateway && d.gateway !== '') {
-                                gatewayMismatchDevices.add(d.id);
-                            }
-                        });
-                    }
-                }
-            });
-
-            // Update all devices
-            Object.values(state.devices).forEach(device => {
-                const deviceEl = document.getElementById(device.id);
-                if (!deviceEl) return;
-
-                let hasConflict = false;
-                let hasSubnetMismatch = false;
-                let hasGatewayMismatch = false;
-
-                // Check if device IP has conflict
-                if (device.ip && conflictIPs.has(device.ip)) {
-                    hasConflict = true;
-                }
-
-                // Check if any router interface has conflict
-                if (device.type === 'router' && device.interfaces) {
-                    Object.values(device.interfaces).forEach(interfaceIP => {
-                        if (interfaceIP && conflictIPs.has(interfaceIP)) {
+                        // Check if device IP has conflict
+                        if (device.ip && conflictIPs.has(device.ip)) {
                             hasConflict = true;
                         }
+
+                        // Check if any router interface has conflict
+                        if (device.type === 'router' && device.interfaces) {
+                            Object.values(device.interfaces).forEach(interfaceIP => {
+                                if (interfaceIP && conflictIPs.has(interfaceIP)) {
+                                    hasConflict = true;
+                                }
+                            });
+                        }
+
+                        // Check if device has subnet mask mismatch with others in same network
+                        if (subnetMismatchDevices.has(device.id)) {
+                            hasSubnetMismatch = true;
+                        }
+
+                        // Check if device has gateway mismatch with others in same network
+                        if (gatewayMismatchDevices.has(device.id)) {
+                            hasGatewayMismatch = true;
+                        }
+
+                        // Add or remove conflict indicator
+                        if (hasConflict) {
+                            deviceEl.classList.add('has-conflict');
+                            let badge = deviceEl.querySelector('.device-conflict-badge');
+                            if (!badge) {
+                                badge = document.createElement('div');
+                                badge.className = 'device-conflict-badge';
+                                badge.textContent = '⚠';
+                                badge.title = 'IP Address Conflict!';
+                                deviceEl.appendChild(badge);
+                            }
+                        } else {
+                            deviceEl.classList.remove('has-conflict');
+                            const badge = deviceEl.querySelector('.device-conflict-badge');
+                            if (badge) {
+                                badge.remove();
+                            }
+                        }
+
+                        // Add or remove subnet mismatch indicator
+                        if (hasSubnetMismatch) {
+                            let subnetBadge = deviceEl.querySelector('.device-subnet-warning');
+                            if (!subnetBadge) {
+                                subnetBadge = document.createElement('div');
+                                subnetBadge.className = 'device-subnet-warning';
+                                subnetBadge.textContent = 'S';
+                                subnetBadge.title = 'Subnet Mask berbeda dengan device lain di network yang sama!';
+                                deviceEl.appendChild(subnetBadge);
+                            }
+                        } else {
+                            const subnetBadge = deviceEl.querySelector('.device-subnet-warning');
+                            if (subnetBadge) {
+                                subnetBadge.remove();
+                            }
+                        }
+
+                        // Add or remove gateway mismatch indicator
+                        if (hasGatewayMismatch) {
+                            let gatewayBadge = deviceEl.querySelector('.device-gateway-warning');
+                            if (!gatewayBadge) {
+                                gatewayBadge = document.createElement('div');
+                                gatewayBadge.className = 'device-gateway-warning';
+                                gatewayBadge.textContent = 'G';
+                                gatewayBadge.title = 'Gateway berbeda dengan device lain di network yang sama!';
+                                deviceEl.appendChild(gatewayBadge);
+                            }
+                        } else {
+                            const gatewayBadge = deviceEl.querySelector('.device-gateway-warning');
+                            if (gatewayBadge) {
+                                gatewayBadge.remove();
+                            }
+                        }
                     });
                 }
 
-                // Check if device has subnet mask mismatch with others in same network
-                if (subnetMismatchDevices.has(device.id)) {
-                    hasSubnetMismatch = true;
-                }
-
-                // Check if device has gateway mismatch with others in same network
-                if (gatewayMismatchDevices.has(device.id)) {
-                    hasGatewayMismatch = true;
-                }
-
-                // Add or remove conflict indicator
-                if (hasConflict) {
-                    deviceEl.classList.add('has-conflict');
-                    let badge = deviceEl.querySelector('.device-conflict-badge');
-                    if (!badge) {
-                        badge = document.createElement('div');
-                        badge.className = 'device-conflict-badge';
-                        badge.textContent = '⚠';
-                        badge.title = 'IP Address Conflict!';
-                        deviceEl.appendChild(badge);
-                    }
-                } else {
-                    deviceEl.classList.remove('has-conflict');
-                    const badge = deviceEl.querySelector('.device-conflict-badge');
-                    if (badge) {
-                        badge.remove();
+                // --- Main Test Function ---
+                function handleTestButton() {
+                    if (state.isAnimating) {
+                        stopTest();
+                    } else {
+                        ujiKoneksi();
                     }
                 }
 
-                // Add or remove subnet mismatch indicator
-                if (hasSubnetMismatch) {
-                    let subnetBadge = deviceEl.querySelector('.device-subnet-warning');
-                    if (!subnetBadge) {
-                        subnetBadge = document.createElement('div');
-                        subnetBadge.className = 'device-subnet-warning';
-                        subnetBadge.textContent = 'S';
-                        subnetBadge.title = 'Subnet Mask berbeda dengan device lain di network yang sama!';
-                        deviceEl.appendChild(subnetBadge);
-                    }
-                } else {
-                    const subnetBadge = deviceEl.querySelector('.device-subnet-warning');
-                    if (subnetBadge) {
-                        subnetBadge.remove();
-                    }
+                function stopTest() {
+                    state.stopAnimation = true;
+                    addLog("⏹️ Animasi dihentikan oleh user", true);
+                    tampilkanHasil("⏹️ Simulasi dihentikan!", false, "info");
+
+                    // Reset button
+                    setTimeout(() => {
+                        state.isAnimating = false;
+                        state.stopAnimation = false;
+                        testBtn.textContent = '🚀 Uji Koneksi';
+                        testBtn.className = 'success';
+                        testBtn.disabled = false;
+
+                        // Remove any remaining packets
+                        document.querySelectorAll('.packet').forEach(p => p.remove());
+
+                        // Remove highlighted cables
+                        document.querySelectorAll('.cable.highlighted').forEach(c => {
+                            c.classList.remove('highlighted');
+                        });
+                    }, 100);
                 }
 
-                // Add or remove gateway mismatch indicator
-                if (hasGatewayMismatch) {
-                    let gatewayBadge = deviceEl.querySelector('.device-gateway-warning');
-                    if (!gatewayBadge) {
-                        gatewayBadge = document.createElement('div');
-                        gatewayBadge.className = 'device-gateway-warning';
-                        gatewayBadge.textContent = 'G';
-                        gatewayBadge.title = 'Gateway berbeda dengan device lain di network yang sama!';
-                        deviceEl.appendChild(gatewayBadge);
-                    }
-                } else {
-                    const gatewayBadge = deviceEl.querySelector('.device-gateway-warning');
-                    if (gatewayBadge) {
-                        gatewayBadge.remove();
-                    }
-                }
-            });
-        }
+                async function ujiKoneksi() {
+                    if (state.isAnimating) return;
 
-        // --- Main Test Function ---
-        function handleTestButton() {
-            if (state.isAnimating) {
-                stopTest();
-            } else {
-                ujiKoneksi();
-            }
-        }
+                    const sourceId = sourcePcSelect.value;
+                    const destId = destPcSelect.value;
 
-        function stopTest() {
-            state.stopAnimation = true;
-            addLog("⏹️ Animasi dihentikan oleh user", true);
-            tampilkanHasil("⏹️ Simulasi dihentikan!", false, "info");
-            
-            // Reset button
-            setTimeout(() => {
-                state.isAnimating = false;
-                state.stopAnimation = false;
-                testBtn.textContent = '🚀 Uji Koneksi';
-                testBtn.className = 'success';
-                testBtn.disabled = false;
-                
-                // Remove any remaining packets
-                document.querySelectorAll('.packet').forEach(p => p.remove());
-                
-                // Remove highlighted cables
-                document.querySelectorAll('.cable.highlighted').forEach(c => {
-                    c.classList.remove('highlighted');
-                });
-            }, 100);
-        }
-
-        async function ujiKoneksi() {
-            if (state.isAnimating) return;
-
-            const sourceId = sourcePcSelect.value;
-            const destId = destPcSelect.value;
-
-            if (!sourceId || !destId) {
-                tampilkanHasil("❌ Pilih PC asal dan tujuan terlebih dahulu!", false);
-                return;
-            }
-
-            if (sourceId === destId) {
-                tampilkanHasil("❌ PC asal dan tujuan harus berbeda!", false);
-                return;
-            }
-
-            // Check for IP conflicts
-            const conflicts = checkIPConflict();
-            if (conflicts.length > 0) {
-                let errorMsg = "❌ Konflik IP Address terdeteksi!\n\n";
-                conflicts.forEach(conflict => {
-                    errorMsg += `IP ${conflict.ip} digunakan oleh: ${conflict.devices.join(' dan ')}\n`;
-                });
-                errorMsg += "\nKoneksi tidak dapat dilakukan karena ada IP yang sama. Silakan perbaiki konfigurasi IP terlebih dahulu.";
-                tampilkanHasil(errorMsg, false);
-                addLog("Konflik IP terdeteksi, uji koneksi dibatalkan", true);
-                return;
-            }
-
-            const sourcePc = state.devices[sourceId];
-            const destPc = state.devices[destId];
-
-            // Check if they are in same subnet and have different gateways
-            if (canCommunicateDirectly(sourcePc, destPc)) {
-                if (sourcePc.gateway && destPc.gateway && sourcePc.gateway !== destPc.gateway) {
-                    tampilkanHasil(`❌ Gateway tidak sama! ${sourcePc.name} gateway: ${sourcePc.gateway}, ${destPc.name} gateway: ${destPc.gateway}. Device dalam satu subnet harus memiliki gateway yang sama.`, false);
-                    addLog("Gateway berbeda dalam satu subnet terdeteksi, uji koneksi dibatalkan", true);
-                    return;
-                }
-            }
-
-            const sameSubnet = subnetMatch(sourcePc.ip, destPc.ip, sourcePc.subnet);
-            const connectedToSameSwitch = findPathWithRouting(sourceId, destId).success && findPathWithRouting(sourceId, destId).path.length === 2;
-
-            if (!sameSubnet || !connectedToSameSwitch) {
-                if (!sourcePc.ip || !sourcePc.subnet || !sourcePc.gateway) {
-                    tampilkanHasil(`❌ ${sourcePc.name} belum dikonfigurasi IP, Subnet, atau Gateway!`, false);
-                    addLog(`${sourcePc.name} belum lengkap konfigurasinya`, true);
-                    return;
-                }
-                if (!destPc.ip || !destPc.subnet) {
-                    tampilkanHasil(`❌ ${destPc.name} belum dikonfigurasi IP atau Subnet!`, false);
-                    addLog(`${destPc.name} belum memiliki IP atau Subnet`, true);
-                    return;
-                }
-            } else {
-                if (!sourcePc.ip || !sourcePc.subnet || !destPc.ip || !destPc.subnet) {
-                    tampilkanHasil(`❌ Salah satu PC tidak memiliki IP atau Subnet!`, false);
-                    addLog(`Konfigurasi IP tidak lengkap untuk PC dalam satu subnet.`, true);
-                    return;
-                }
-            }
-
-            animationLogDiv.innerHTML = '';
-            animationLogDiv.style.display = 'block';
-            state.isAnimating = true;
-            state.stopAnimation = false;
-            
-            // Change button to Stop
-            testBtn.textContent = '⏹️ Stop';
-            testBtn.className = 'danger';
-            testBtn.disabled = false;
-            
-            tampilkanHasil("🚀 Memulai simulasi pengiriman paket...", false, "info");
-
-            const pathResult = findPathWithRouting(sourceId, destId);
-
-            if (!pathResult.success) {
-                tampilkanHasil("❌ " + pathResult.error, false);
-                addLog(pathResult.error, true);
-                state.isAnimating = false;
-                state.stopAnimation = false;
-                
-                // Reset button
-                testBtn.textContent = '🚀 Uji Koneksi';
-                testBtn.className = 'success';
-                testBtn.disabled = false;
-                return;
-            }
-
-            const path = pathResult.path;
-            addLog(`Jalur ditemukan: ${path.map(id => state.devices[id].name).join(' -> ')}`);
-
-            // Loop 10 kali
-            for (let loop = 1; loop <= 10; loop++) {
-                if (state.stopAnimation) {
-                    addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
-                    return;
-                }
-
-                addLog(`🔄 Loop ${loop}/10 - Mengirim paket...`);
-
-                // Forward: kirim paket dari source ke destination
-                for (let i = 0; i < path.length - 1; i++) {
-                    const from = state.devices[path[i]];
-                    const to = state.devices[path[i + 1]];
-                    const logMessage = (from.type === 'switch' || to.type === 'switch') ?
-                        `Paket melintasi ${from.type === 'switch' ? from.name : to.name}` :
-                        `Paket dari ${from.name} ke ${to.name}`;
-                    await animatePacket(path[i], path[i + 1], 0, logMessage);
-                    
-                    if (state.stopAnimation) {
-                        addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
+                    if (!sourceId || !destId) {
+                        tampilkanHasil("❌ Pilih PC asal dan tujuan terlebih dahulu!", false);
                         return;
                     }
-                }
 
-                if (state.stopAnimation) {
-                    addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
-                    return;
-                }
-
-                await new Promise(resolve => setTimeout(resolve, 300));
-                
-                if (state.stopAnimation) {
-                    addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
-                    return;
-                }
-                
-                addLog(`↩️ Loop ${loop}/10 - Mengirim paket balasan...`);
-
-                // Reply: kirim paket balasan dari destination ke source
-                for (let i = path.length - 1; i > 0; i--) {
-                    const from = state.devices[path[i]];
-                    const to = state.devices[path[i - 1]];
-                    const logMessage = (from.type === 'switch' || to.type === 'switch') ?
-                        `Balasan melintasi ${from.type === 'switch' ? from.name : to.name}` :
-                        `Balasan dari ${from.name} ke ${to.name}`;
-                    await animatePacket(path[i], path[i - 1], 0, logMessage);
-                    
-                    if (state.stopAnimation) {
-                        addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
+                    if (sourceId === destId) {
+                        tampilkanHasil("❌ PC asal dan tujuan harus berbeda!", false);
                         return;
+                    }
+
+                    // Check for IP conflicts
+                    const conflicts = checkIPConflict();
+                    if (conflicts.length > 0) {
+                        let errorMsg = "❌ Konflik IP Address terdeteksi!\n\n";
+                        conflicts.forEach(conflict => {
+                            errorMsg += `IP ${conflict.ip} digunakan oleh: ${conflict.devices.join(' dan ')}\n`;
+                        });
+                        errorMsg += "\nKoneksi tidak dapat dilakukan karena ada IP yang sama. Silakan perbaiki konfigurasi IP terlebih dahulu.";
+                        tampilkanHasil(errorMsg, false);
+                        addLog("Konflik IP terdeteksi, uji koneksi dibatalkan", true);
+                        return;
+                    }
+
+                    const sourcePc = state.devices[sourceId];
+                    const destPc = state.devices[destId];
+
+                    // Check if they are in same subnet and have different gateways
+                    if (canCommunicateDirectly(sourcePc, destPc)) {
+                        if (sourcePc.gateway && destPc.gateway && sourcePc.gateway !== destPc.gateway) {
+                            tampilkanHasil(`❌ Gateway tidak sama! ${sourcePc.name} gateway: ${sourcePc.gateway}, ${destPc.name} gateway: ${destPc.gateway}. Device dalam satu subnet harus memiliki gateway yang sama.`, false);
+                            addLog("Gateway berbeda dalam satu subnet terdeteksi, uji koneksi dibatalkan", true);
+                            return;
+                        }
+                    }
+
+                    const sameSubnet = subnetMatch(sourcePc.ip, destPc.ip, sourcePc.subnet);
+                    const connectedToSameSwitch = findPathWithRouting(sourceId, destId).success && findPathWithRouting(sourceId, destId).path.length === 2;
+
+                    if (!sameSubnet || !connectedToSameSwitch) {
+                        if (!sourcePc.ip || !sourcePc.subnet || !sourcePc.gateway) {
+                            tampilkanHasil(`❌ ${sourcePc.name} belum dikonfigurasi IP, Subnet, atau Gateway!`, false);
+                            addLog(`${sourcePc.name} belum lengkap konfigurasinya`, true);
+                            return;
+                        }
+                        if (!destPc.ip || !destPc.subnet) {
+                            tampilkanHasil(`❌ ${destPc.name} belum dikonfigurasi IP atau Subnet!`, false);
+                            addLog(`${destPc.name} belum memiliki IP atau Subnet`, true);
+                            return;
+                        }
+                    } else {
+                        if (!sourcePc.ip || !sourcePc.subnet || !destPc.ip || !destPc.subnet) {
+                            tampilkanHasil(`❌ Salah satu PC tidak memiliki IP atau Subnet!`, false);
+                            addLog(`Konfigurasi IP tidak lengkap untuk PC dalam satu subnet.`, true);
+                            return;
+                        }
+                    }
+
+                    animationLogDiv.innerHTML = '';
+                    animationLogDiv.style.display = 'block';
+                    state.isAnimating = true;
+                    state.stopAnimation = false;
+
+                    // Change button to Stop
+                    testBtn.textContent = '⏹️ Stop';
+                    testBtn.className = 'danger';
+                    testBtn.disabled = false;
+
+                    tampilkanHasil("🚀 Memulai simulasi pengiriman paket...", false, "info");
+
+                    const pathResult = findPathWithRouting(sourceId, destId);
+
+                    if (!pathResult.success) {
+                        tampilkanHasil("❌ " + pathResult.error, false);
+                        addLog(pathResult.error, true);
+                        state.isAnimating = false;
+                        state.stopAnimation = false;
+
+                        // Reset button
+                        testBtn.textContent = '🚀 Uji Koneksi';
+                        testBtn.className = 'success';
+                        testBtn.disabled = false;
+                        return;
+                    }
+
+                    const path = pathResult.path;
+                    addLog(`Jalur ditemukan: ${path.map(id => state.devices[id].name).join(' -> ')}`);
+
+                    // Loop 10 kali
+                    for (let loop = 1; loop <= 10; loop++) {
+                        if (state.stopAnimation) {
+                            addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
+                            return;
+                        }
+
+                        addLog(`🔄 Loop ${loop}/10 - Mengirim paket...`);
+
+                        // Forward: kirim paket dari source ke destination
+                        for (let i = 0; i < path.length - 1; i++) {
+                            const from = state.devices[path[i]];
+                            const to = state.devices[path[i + 1]];
+                            const logMessage = (from.type === 'switch' || to.type === 'switch') ?
+                                `Paket melintasi ${from.type === 'switch' ? from.name : to.name}` :
+                                `Paket dari ${from.name} ke ${to.name}`;
+                            await animatePacket(path[i], path[i + 1], 0, logMessage);
+
+                            if (state.stopAnimation) {
+                                addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
+                                return;
+                            }
+                        }
+
+                        if (state.stopAnimation) {
+                            addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
+                            return;
+                        }
+
+                        await new Promise(resolve => setTimeout(resolve, 300));
+
+                        if (state.stopAnimation) {
+                            addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
+                            return;
+                        }
+
+                        addLog(`↩️ Loop ${loop}/10 - Mengirim paket balasan...`);
+
+                        // Reply: kirim paket balasan dari destination ke source
+                        for (let i = path.length - 1; i > 0; i--) {
+                            const from = state.devices[path[i]];
+                            const to = state.devices[path[i - 1]];
+                            const logMessage = (from.type === 'switch' || to.type === 'switch') ?
+                                `Balasan melintasi ${from.type === 'switch' ? from.name : to.name}` :
+                                `Balasan dari ${from.name} ke ${to.name}`;
+                            await animatePacket(path[i], path[i - 1], 0, logMessage);
+
+                            if (state.stopAnimation) {
+                                addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
+                                return;
+                            }
+                        }
+
+                        // Delay sebelum loop berikutnya (kecuali loop terakhir)
+                        if (loop < 10) {
+                            await new Promise(resolve => setTimeout(resolve, 500));
+                            if (state.stopAnimation) {
+                                addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
+                                return;
+                            }
+                        }
+                    }
+
+                    if (state.stopAnimation) {
+                        return;
+                    }
+
+                    setTimeout(() => {
+                        tampilkanHasil(`✅ Koneksi berhasil! ${sourcePc.name} dapat mencapai ${destPc.name}. (10 paket dikirim dan diterima)`, true);
+                        addLog(`✅ Koneksi antara ${sourcePc.name} dan ${destPc.name} berhasil disimulasikan (10x loop).`);
+                        state.isAnimating = false;
+                        state.stopAnimation = false;
+
+                        // Reset button back to test
+                        testBtn.textContent = '🚀 Uji Koneksi';
+                        testBtn.className = 'success';
+                        testBtn.disabled = false;
+                    }, 500);
+                }
+
+                // --- Result Display ---
+                function tampilkanHasil(teks, sukses, type = null) {
+                    hasilDiv.textContent = teks;
+                    hasilDiv.className = "result " + (type || (sukses ? "success" : "error"));
+                    hasilDiv.style.display = "block";
+                }
+
+                // Scroll to Canvas helper function
+                function scrollToCanvas() {
+                    console.log('Scrolling to canvas...');
+
+                    const container = document.getElementById('main-container');
+                    const canvas = document.getElementById('canvas-wrapper');
+
+                    if (container && canvas) {
+                        // Scroll container to canvas position
+                        const canvasTop = canvas.offsetTop;
+                        container.scrollTo({
+                            top: canvasTop - 60,
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        // Fallback
+                        if (container) {
+                            container.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    }
+
+                    console.log('Scrolled to canvas');
+                }
+
+                // Scroll to specific section
+                function scrollToSection(sectionId) {
+                    console.log('Scrolling to:', sectionId);
+
+                    const container = document.getElementById('main-container');
+                    const element = document.getElementById(sectionId);
+
+                    if (container && element) {
+                        const elementTop = element.offsetTop;
+                        container.scrollTo({
+                            top: elementTop - 60,
+                            behavior: 'smooth'
+                        });
+                        console.log('Scrolled to', sectionId);
+                    } else {
+                        console.error('Container or element not found');
                     }
                 }
 
-                // Delay sebelum loop berikutnya (kecuali loop terakhir)
-                if (loop < 10) {
-                    await new Promise(resolve => setTimeout(resolve, 500));
-                    if (state.stopAnimation) {
-                        addLog(`⏹️ Animasi dihentikan pada loop ke-${loop}`, true);
-                        return;
-                    }
-                }
-            }
+                // Make functions global for onclick attributes
+                window.addDeviceFromToolbar = addDeviceFromToolbar;
+                window.toggleCableMode = toggleCableMode;
+                window.clearAll = clearAll;
+                window.autoArrange = autoArrange;
+                window.zoomIn = zoomIn;
+                window.zoomOut = zoomOut;
+                window.resetZoom = resetZoom;
+                window.handleTestButton = handleTestButton;
+                window.updateDeviceIP = updateDeviceIP;
+                window.updateSubnet = updateSubnet;
+                window.updateGateway = updateGateway;
+                window.updateInterface = updateInterface;
+                window.addRoute = addRoute;
+                window.updateRoute = updateRoute;
+                window.deleteDeviceFromConfig = deleteDeviceFromConfig;
+                window.cancelDelete = cancelDelete;
+                window.confirmDelete = confirmDelete;
+                window.scrollToCanvas = scrollToCanvas;
+                window.scrollToSection = scrollToSection;
 
-            if (state.stopAnimation) {
-                return;
-            }
+            </script>
 
-            setTimeout(() => {
-                tampilkanHasil(`✅ Koneksi berhasil! ${sourcePc.name} dapat mencapai ${destPc.name}. (10 paket dikirim dan diterima)`, true);
-                addLog(`✅ Koneksi antara ${sourcePc.name} dan ${destPc.name} berhasil disimulasikan (10x loop).`);
-                state.isAnimating = false;
-                state.stopAnimation = false;
-                
-                // Reset button back to test
-                testBtn.textContent = '🚀 Uji Koneksi';
-                testBtn.className = 'success';
-                testBtn.disabled = false;
-            }, 500);
-        }
-
-        // --- Result Display ---
-        function tampilkanHasil(teks, sukses, type = null) {
-            hasilDiv.textContent = teks;
-            hasilDiv.className = "result " + (type || (sukses ? "success" : "error"));
-            hasilDiv.style.display = "block";
-        }
-
-        // Scroll to Canvas helper function
-        function scrollToCanvas() {
-            console.log('Scrolling to canvas...');
-            
-            const container = document.getElementById('main-container');
-            const canvas = document.getElementById('canvas-wrapper');
-            
-            if (container && canvas) {
-                // Scroll container to canvas position
-                const canvasTop = canvas.offsetTop;
-                container.scrollTo({
-                    top: canvasTop - 60,
-                    behavior: 'smooth'
-                });
-            } else {
-                // Fallback
-                if (container) {
-                    container.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            }
-            
-            console.log('Scrolled to canvas');
-        }
-
-        // Scroll to specific section
-        function scrollToSection(sectionId) {
-            console.log('Scrolling to:', sectionId);
-            
-            const container = document.getElementById('main-container');
-            const element = document.getElementById(sectionId);
-            
-            if (container && element) {
-                const elementTop = element.offsetTop;
-                container.scrollTo({
-                    top: elementTop - 60,
-                    behavior: 'smooth'
-                });
-                console.log('Scrolled to', sectionId);
-            } else {
-                console.error('Container or element not found');
-            }
-        }
-
-        // Make functions global for onclick attributes
-        window.addDeviceFromToolbar = addDeviceFromToolbar;
-        window.toggleCableMode = toggleCableMode;
-        window.clearAll = clearAll;
-        window.autoArrange = autoArrange;
-        window.zoomIn = zoomIn;
-        window.zoomOut = zoomOut;
-        window.resetZoom = resetZoom;
-        window.handleTestButton = handleTestButton;
-        window.updateDeviceIP = updateDeviceIP;
-        window.updateSubnet = updateSubnet;
-        window.updateGateway = updateGateway;
-        window.updateInterface = updateInterface;
-        window.addRoute = addRoute;
-        window.updateRoute = updateRoute;
-        window.deleteDeviceFromConfig = deleteDeviceFromConfig;
-        window.cancelDelete = cancelDelete;
-        window.confirmDelete = confirmDelete;
-        window.scrollToCanvas = scrollToCanvas;
-        window.scrollToSection = scrollToSection;
-
-    </script>
-
-    <!-- Delete Confirmation Overlay -->
-    <div id="deleteOverlay" class="delete-overlay">
-        <div class="delete-confirm">
-            <h3>🗑️ Hapus Perangkat?</h3>
-            <p id="deleteDeviceName">Apakah Anda yakin ingin menghapus perangkat ini?</p>
-            <div class="delete-confirm-buttons">
-                <button class="delete-confirm-no" onclick="cancelDelete()">Batal</button>
-                <button class="delete-confirm-yes" onclick="confirmDelete()">Hapus</button>
+            <!-- Delete Confirmation Overlay -->
+            <div id="deleteOverlay" class="delete-overlay">
+                <div class="delete-confirm">
+                    <h3>🗑️ Hapus Perangkat?</h3>
+                    <p id="deleteDeviceName">Apakah Anda yakin ingin menghapus perangkat ini?</p>
+                    <div class="delete-confirm-buttons">
+                        <button class="delete-confirm-no" onclick="cancelDelete()">Batal</button>
+                        <button class="delete-confirm-yes" onclick="confirmDelete()">Hapus</button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
         </div><!-- /content-wrapper -->
     </div><!-- /main-container -->
-</body>
-
-</html>
-
-
+    </body>
