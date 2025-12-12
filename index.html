@@ -697,7 +697,7 @@
     <h2 style="text-align: center; margin: 10px 0;">🌐 Simulasi Routing Statis Interaktif</h2>
 
     <div class="instructions">
-        <h4>📋 Cara Penggunaan 99:</h4>
+        <h4>📋 Cara Penggunaan:</h4>
         <ul>
             <li><strong>Tambah Perangkat:</strong> Klik tombol "Tambah PC", "Tambah Router", atau "Tambah Switch" untuk
                 menambahkan ke canvas</li>
@@ -989,23 +989,13 @@
                 document.addEventListener('mouseup', onMouseUp);
             });
 
-            // Event Listener untuk menyeret (touch)
-            let touchStartX = 0;
-            let touchStartY = 0;
-            let hasDragged = false;
-            let touchMoveHandler = null;
-            let touchEndHandler = null;
-            
-            el.addEventListener('touchstart', (e) => {
+            // Event Listener untuk menyeret (mouse/touch - via pointer events)
+            el.addEventListener('mousedown', (e) => {
                 if (state.cableMode) return;
                 
-                const touch = e.touches[0];
-                touchStartX = touch.clientX;
-                touchStartY = touch.clientY;
-                startX = touch.clientX - device.x;
-                startY = touch.clientY - device.y;
-                isDragging = false;
-                hasDragged = false;
+                startX = e.pageX - device.x;
+                startY = e.pageY - device.y;
+                isDragging = true;
 
                 function moveAt(pageX, pageY) {
                     device.x = pageX - startX;
@@ -1015,49 +1005,18 @@
                     drawConnections();
                 }
 
-                function onTouchMove(e) {
-                    const touch = e.touches[0];
-                    const deltaX = Math.abs(touch.clientX - touchStartX);
-                    const deltaY = Math.abs(touch.clientY - touchStartY);
-                    
-                    // Only start dragging if moved significantly horizontally
-                    if (deltaX > 15 && deltaX > deltaY * 1.5) {
-                        // Only prevent default when actually dragging
-                        e.preventDefault();
-                        e.stopPropagation();
-                        isDragging = true;
-                        hasDragged = true;
-                        moveAt(touch.clientX, touch.clientY);
-                    }
-                    // Otherwise, allow normal scroll
+                function onMouseMove(e) {
+                    if (isDragging) moveAt(e.pageX, e.pageY);
                 }
 
-                function onTouchEnd(e) {
+                function onMouseUp() {
                     isDragging = false;
-                    // Clean up listeners immediately
-                    if (touchMoveHandler) {
-                        document.removeEventListener('touchmove', touchMoveHandler);
-                        touchMoveHandler = null;
-                    }
-                    if (touchEndHandler) {
-                        document.removeEventListener('touchend', touchEndHandler);
-                        touchEndHandler = null;
-                    }
-                    
-                    // Force enable scroll after touch ends
-                    setTimeout(function() {
-                        document.body.style.overflow = 'visible';
-                        document.body.style.overflowY = 'scroll';
-                    }, 50);
+                    document.removeEventListener('mousemove', onMouseMove);
+                    document.removeEventListener('mouseup', onMouseUp);
                 }
 
-                // Store handlers for cleanup
-                touchMoveHandler = onTouchMove;
-                touchEndHandler = onTouchEnd;
-
-                // Use passive: false only when necessary
-                document.addEventListener('touchmove', onTouchMove, { passive: false });
-                document.addEventListener('touchend', onTouchEnd, { passive: true });
+                document.addEventListener('mousemove', onMouseMove);
+                document.addEventListener('mouseup', onMouseUp);
             });
 
             canvasInner.appendChild(el);
@@ -2257,34 +2216,6 @@
         // Make functions global
         window.scrollToCanvas = scrollToCanvas;
         window.scrollToSection = scrollToSection;
-
-        // --- WebView Scroll Fix ---
-        // Lightweight scroll restoration
-        (function() {
-            console.log('Initializing scroll fix...');
-            
-            // Simple: ensure scroll enabled after any touch interaction ends
-            document.addEventListener('touchend', function() {
-                setTimeout(function() {
-                    document.body.style.overflow = 'visible';
-                    document.body.style.overflowY = 'scroll';
-                    document.documentElement.style.overflow = 'visible';
-                }, 100);
-            }, { passive: true });
-            
-            // After input blur
-            document.addEventListener('focusout', function(e) {
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-                    setTimeout(function() {
-                        document.body.style.overflow = 'visible';
-                        document.body.style.overflowY = 'scroll';
-                        document.documentElement.style.overflow = 'visible';
-                    }, 150);
-                }
-            });
-            
-            console.log('Scroll fix initialized');
-        })();
 
     </script>
 
